@@ -57,9 +57,9 @@ es.ObjectBuilder = cc.Class.extend({
         this._totalResCount = 0;
         this._loadedResCount = 0;
 
-        var jsonFiles = [];
-        if (typeof jsonFileOrFiles === 'string') jsonFiles.push(jsonFileOrFiles);
-        else jsonFiles.concat(jsonFileOrFiles);
+        var jsonFiles = null;
+        if (typeof jsonFileOrFiles === 'string') jsonFiles = [jsonFileOrFiles];
+        else jsonFiles = [].concat(jsonFileOrFiles);
         jsonFiles = this._getFullUrl(jsonFiles);
 
         this._jsonData = {};
@@ -471,7 +471,7 @@ es.ObjectBuilder = cc.Class.extend({
                 var obj = this._armaturesCachedPaths[this._resIter];
                 cc.log('Loading armature: ' + obj);
                 ccs.armatureDataManager.addArmatureFileInfo(obj);
-                isLast = ++this._resIter === this._soundsCachedPaths.length;
+                isLast = ++this._resIter === this._armaturesCachedPaths.length;
                 break;
         }
 
@@ -481,8 +481,12 @@ es.ObjectBuilder = cc.Class.extend({
         if (isLast) {
             this._resIter = 0;
             if (++this._typeIter === es.ResourceType.END) {
-                if (this._updateFn)
+                if (this._updateFn) {
                     cc.director.getScheduler().unscheduleCallbackForTarget(this, arguments.callee);
+                    if (0 === this._loadedResCount)
+                        this._updateFn(100);
+                }
+
                 return false;
             }
         }
