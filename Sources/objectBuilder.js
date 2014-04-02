@@ -17,6 +17,7 @@ es.ResourceType = {
 
 es.ObjectBuilder = cc.Class.extend({
     _animations:null,
+    _animationsCachedPaths:null,
     _sounds:null,
     _soundsCachedPaths:null,
     _music:null,
@@ -28,6 +29,7 @@ es.ObjectBuilder = cc.Class.extend({
     _armatures:null,
     _armaturesCachedPaths:null,
     _data:null,
+    _dataCachedPaths:null,
     _jsonData:null,
     _updateFn:null,
 
@@ -314,12 +316,12 @@ es.ObjectBuilder = cc.Class.extend({
             }
         }
 
-        var plists = this._getFullUrl(animPlists);
-        cc.loader.load(plists, function() {
+        this._animationsCachedPaths = this._getFullUrl(animPlists);
+        cc.loader.load(this._animationsCachedPaths, function() {
             for (var i = 0; i < animPlists.length; ++i) {
                 var animator = animPlists[i];
 
-                var dict = cc.loader.getRes(plists[i]);
+                var dict = cc.loader.getRes(that._animationsCachedPaths[i]);
                 if (!dict)
                     throw {
                         name:'es.ObjectBuilder Error',
@@ -365,7 +367,7 @@ es.ObjectBuilder = cc.Class.extend({
             for (var key in that._data)
                 if (that._data.hasOwnProperty(key))
                     dataFiles.push(that._data[key]);
-            var dataFiles = that._getFullUrl(dataFiles);
+            that._dataCachedPaths = that._getFullUrl(dataFiles);
 
             var list = [].concat(
                 that._texturesCachedPaths,
@@ -373,7 +375,7 @@ es.ObjectBuilder = cc.Class.extend({
                 that._armaturesCachedPaths,
                 that._soundsCachedPaths,
                 that._musicCachedPaths,
-                dataFiles);
+                that._dataCachedPaths);
 
             cc.loader.load(list, cb);
         });
@@ -496,14 +498,17 @@ es.ObjectBuilder = cc.Class.extend({
     purge:function() {
         this._texturesCachedPaths.forEach(function(tex) {
             cc.log('Unloading texture: ' + tex);
+            cc.loader.release(tex);
             cc.textureCache.removeTextureForKey(tex);
         });
         this._spriteFramesCachedPaths.forEach(function(obj) {
             cc.log('Unloading sprite frames: ' + obj);
+            cc.loader.release(obj);
             cc.spriteFrameCache.removeSpriteFramesFromFile(obj);
         });
         this._armaturesCachedPaths.forEach(function(obj) {
             cc.log('Unloading armature: ' + obj);
+            cc.loader.release(obj);
             ccs.armatureDataManager.removeArmatureFileInfo(obj);
         });
         for (var keyFileName in this._animations) {
@@ -514,7 +519,16 @@ es.ObjectBuilder = cc.Class.extend({
         }
         this._soundsCachedPaths.forEach(function(obj) {
             cc.log('Unloading sound: ' + obj);
+            cc.loader.release(obj);
             cc.audioEngine.unloadEffect(obj);
+        });
+        this._dataCachedPaths.forEach(function(obj) {
+            cc.log('Unloading JSON: ' + obj);
+            cc.loader.release(obj);
+        });
+        this._animationsCachedPaths.forEach(function(obj) {
+            cc.log('Unloading Animation plist: ' + obj);
+            cc.loader.release(obj);
         });
     }
 });

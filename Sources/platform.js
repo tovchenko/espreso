@@ -98,6 +98,7 @@ es.platform = {
             superPlayFn.call(this, name, durationTo, loop);
         } else {
             superPlayFn.call(this, name, durationTo, -1, loop, -1);
+            this.setProcessScale(this._processScale);
         }
     };
 }());

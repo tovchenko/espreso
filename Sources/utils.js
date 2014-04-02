@@ -3,17 +3,19 @@
  */
 
 var es = es || {};
-es.Util = es.Util || {};
+es.utils = es.utils || {};
 
 // --------------------------------------------------------------------------------------------------------------
 
-es.Util.readRectsFromCocoStudioGUI = function(fileName) {
-    var jsonData = cc.loader.getRes(es.manager.makeResourcePath(fileName));
-    var widgetTree = jsonData['widgetTree'];
+es.utils.readRectsFromCocoStudioGUI = function(jsonOfFileName) {
+    if (typeof jsonOfFileName === 'string')
+        jsonOfFileName = cc.loader.getRes(es.manager.makeResourcePath(jsonOfFileName));
+
+    var widgetTree = jsonOfFileName['widgetTree'];
     var rectNodes = widgetTree && widgetTree['children'];
     if (!rectNodes)
         throw {
-            name:'es.Util.readRectsFromCocoStudioGUI Error',
+            name:'es.utils.readRectsFromCocoStudioGUI Error',
             message:'File should have been created in CocoStudio GUI editor.',
             toString:function() {return this.name + ": " + this.message}
         };
@@ -22,13 +24,17 @@ es.Util.readRectsFromCocoStudioGUI = function(fileName) {
         var node = rectNodes[i]['options'];
         if (!node)
             throw {
-                name:'es.Util.readRectsFromCocoStudioGUI Error',
+                name:'es.utils.readRectsFromCocoStudioGUI Error',
                 message:'Incorrect node structure in CocoStudio GUI editor.',
                 toString:function() {return this.name + ": " + this.message}
             };
         rects.push({name:node['name'], rect:cc.rect(node['x'], node['y'], node['width'], node['height']), z:node['ZOrder']});
     }
     return rects;
-}
+};
+
+es.utils.json = function(object) {
+    return object.getComponent(es.DataCom.identifier).getData();
+};
 
 // --------------------------------------------------------------------------------------------------------------
