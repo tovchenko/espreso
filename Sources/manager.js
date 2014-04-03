@@ -4,6 +4,7 @@
 
 var es = es || {};
 
+
 es.manager = {
     _resolutionDependedPath:null,
     _resPath:'',
@@ -47,10 +48,6 @@ es.manager = {
         }
     },
 
-    setResourcePath:function(path) {
-        this._resPath = path;
-    },
-
     setSearchPathsByScales:function(maxTextureSize, paths) {
         var fs =  this.getScreenSize();
 
@@ -75,7 +72,7 @@ es.manager = {
         cc.director.setContentScaleFactor(sf);
     },
 
-    makeResourcePath:function(path, useResolutionPath) {
+    makeResourcePath:function(path, useResolutionPath, useResPath) {
         var pathParts = path.split('/');
         var len = pathParts.length;
         var base = cc.path.basename(path);
@@ -86,12 +83,19 @@ es.manager = {
                               (!hasResolution && pathParts[len - 2] === this._resPath);
 
             if (useResolutionPath) {
-                if (hasResource && hasResolution)
+                if (hasResource && hasResolution) {
+                    if (useResPath) return path;
+                    return cc.path.join(this._resolutionDependedPath, base);
+                }
+                if (hasResource) {
+                    if (useResPath)
+                        return cc.path.join(cc.path.join(cc.path.dirname(path), this._resolutionDependedPath), base);
+                    return cc.path.join(this._resolutionDependedPath, base);
+                }
+                if (hasResolution)
                     return path;
-                if (hasResource)
-                    return cc.path.join(cc.path.join(cc.path.dirname(path), this._resolutionDependedPath), base);
                 throw {
-                    name:'es.ResolutionUtils Error',
+                    name:'es.manager Error',
                     message:'Can\'t calculate a path.',
                     toString:function() {return this.name + ": " + this.message}
                 };
@@ -103,14 +107,17 @@ es.manager = {
                 if (hasResource)
                     return path;
                 throw {
-                    name:'es.ResolutionUtils Error',
+                    name:'es.manager Error',
                     message:'Can\'t calculate a path.',
                     toString:function() {return this.name + ": " + this.message}
                 };
             }
         } else {
-            if (useResolutionPath)
-                return cc.path.join(cc.path.join(this._resPath, this._resolutionDependedPath), path);
+            if (useResolutionPath) {
+                if (useResPath)
+                    return cc.path.join(cc.path.join(this._resPath, this._resolutionDependedPath), path);
+                return cc.path.join(this._resolutionDependedPath, path);
+            }
             else
                 return cc.path.join(this._resPath, path);
         }
@@ -126,3 +133,7 @@ es.manager = {
         return sizeToFit;
     }
 };
+
+(function() {
+    es.manager._resPath = cc.loader.resPath;
+}());

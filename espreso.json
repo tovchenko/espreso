@@ -1,0 +1,15 @@
+[
+    "Sources/utils.js",
+    "Sources/platform.js",
+    "Sources/manager.js",
+    "Sources/animationCom.js",
+    "Sources/armatureCom.js",
+    "Sources/audioCom.js",
+    "Sources/dataCom.js",
+    "Sources/comActions.js",
+    "Sources/objectBuilder.js",
+    "Sources/placeHolder.js",
+    "Sources/loadingScene.js",
+    "Sources/popup.js",
+    "Sources/scrollView.js"
+]

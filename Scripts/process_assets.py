@@ -82,6 +82,7 @@ def run():
 	subprocess.call([xcopy, os.path.join(srcBundlePath, 'Data/*.*'), sys.argv[2]])
 	subprocess.call([xcopy, os.path.join(scriptDir, '../Sources'), sys.argv[2]])
 	subprocess.call([xcopy, os.path.join(appRoot, 'src/*.*'), os.path.join(sys.argv[2], 'Sources')])
+	subprocess.call([xcopy, os.path.join(appRoot, 'frameworks/espreso/espreso.json'), sys.argv[2]])
 	
 
 # -------------- main --------------

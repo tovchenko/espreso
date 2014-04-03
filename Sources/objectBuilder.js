@@ -27,7 +27,6 @@ es.ObjectBuilder = cc.Class.extend({
     _textures:null,
     _texturesCachedPaths:null,
     _armatures:null,
-    _armaturesCachedPaths:null,
     _data:null,
     _dataCachedPaths:null,
     _jsonData:null,
@@ -192,7 +191,7 @@ es.ObjectBuilder = cc.Class.extend({
         if (data) {
             var com = res.getComponent(es.DataCom.identifier);
             if (!com) {
-                res.addComponent(es.DataCom.create(cc.loader.getRes(es.manager.makeResourcePath(data))));
+                res.addComponent(es.DataCom.create(cc.loader.getRes(data)));
             }
         }
         return res;
@@ -235,7 +234,7 @@ es.ObjectBuilder = cc.Class.extend({
 
     _collectInfo:function(cb) {
         var that = this;
-        var animPlists = [];
+        this._animationsCachedPaths = [];
 
         for (var objectName in this._jsonData) {
             if (!this._jsonData.hasOwnProperty(objectName))
@@ -311,17 +310,16 @@ es.ObjectBuilder = cc.Class.extend({
             }
             // animations
             var animator = this._jsonData[objectName]['animator'];
-            if (animator && -1 === animPlists.indexOf(animator)) {
-                animPlists.push(animator);
+            if (animator && -1 === this._animationsCachedPaths.indexOf(animator)) {
+                this._animationsCachedPaths.push(animator);
             }
         }
 
-        this._animationsCachedPaths = this._getFullUrl(animPlists);
         cc.loader.load(this._animationsCachedPaths, function() {
-            for (var i = 0; i < animPlists.length; ++i) {
-                var animator = animPlists[i];
+            for (var i = 0; i < that._animationsCachedPaths.length; ++i) {
+                var animator = that._animationsCachedPaths[i];
 
-                var dict = cc.loader.getRes(that._animationsCachedPaths[i]);
+                var dict = cc.loader.getRes(animator);
                 if (!dict)
                     throw {
                         name:'es.ObjectBuilder Error',
@@ -349,7 +347,6 @@ es.ObjectBuilder = cc.Class.extend({
             // load other resources
             that._texturesCachedPaths = that._getFullUrl(that._textures, true);
             that._spriteFramesCachedPaths = that._getFullUrl(that._spriteFrames, true);
-            that._armaturesCachedPaths = that._getFullUrl(that._armatures);
 
             that._soundsCachedPaths = [];
             for (var key in that._sounds)
@@ -363,16 +360,15 @@ es.ObjectBuilder = cc.Class.extend({
                     that._musicCachedPaths.push(es.platform.soundFileName(that._music[key]['src']));
             that._musicCachedPaths = that._getFullUrl(that._musicCachedPaths);
 
-            var dataFiles = [];
+            that._dataCachedPaths = [];
             for (var key in that._data)
                 if (that._data.hasOwnProperty(key))
-                    dataFiles.push(that._data[key]);
-            that._dataCachedPaths = that._getFullUrl(dataFiles);
+                    that._dataCachedPaths.push(that._data[key]);
 
             var list = [].concat(
                 that._texturesCachedPaths,
                 that._spriteFramesCachedPaths,
-                that._armaturesCachedPaths,
+                that._armatures,
                 that._soundsCachedPaths,
                 that._musicCachedPaths,
                 that._dataCachedPaths);
@@ -465,15 +461,15 @@ es.ObjectBuilder = cc.Class.extend({
                 break;
 
             case  es.ResourceType.ARMATURE:
-                if (!this._armaturesCachedPaths.length) {
+                if (!this._armatures.length) {
                     isLast = isEmpty = true;
                     break;
                 }
 
-                var obj = this._armaturesCachedPaths[this._resIter];
+                var obj = this._armatures[this._resIter];
                 cc.log('Loading armature: ' + obj);
                 ccs.armatureDataManager.addArmatureFileInfo(obj);
-                isLast = ++this._resIter === this._armaturesCachedPaths.length;
+                isLast = ++this._resIter === this._armatures.length;
                 break;
         }
 
@@ -506,7 +502,7 @@ es.ObjectBuilder = cc.Class.extend({
             cc.loader.release(obj);
             cc.spriteFrameCache.removeSpriteFramesFromFile(obj);
         });
-        this._armaturesCachedPaths.forEach(function(obj) {
+        this._armatures.forEach(function(obj) {
             cc.log('Unloading armature: ' + obj);
             cc.loader.release(obj);
             ccs.armatureDataManager.removeArmatureFileInfo(obj);
