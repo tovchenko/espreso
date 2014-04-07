@@ -102,3 +102,40 @@ es.platform = {
         }
     };
 }());
+
+(function() {
+    var superFn = ccs.uiReader.widgetFromJsonFile;
+    ccs.uiReader.widgetFromJsonFile = function (fileName) {
+        if (cc.sys.isNative) {
+            return superFn.call(ccs.uiReader, fileName);
+        } else {
+            var jsonDict = cc.loader.getRes(fileName);
+            if(!jsonDict) throw "Please load the resource first : " + fileName;
+
+            var tempFilePath = cc.path.dirname(fileName);
+            this._filePath = tempFilePath === fileName ? "" : tempFilePath + "/";
+
+            var fileVersion = jsonDict["version"];
+            var pReader, widget;
+            var versionInteger = this.getVersionInteger(fileVersion);
+            if (fileVersion) {
+                if (versionInteger < 250) {
+                    pReader = new ccs.WidgetPropertiesReader0250();
+                    widget = pReader.createWidget(jsonDict, this._filePath, fileName);
+                } else {
+                    pReader = new ccs.WidgetPropertiesReader0300();
+                    widget = pReader.createWidget(jsonDict, this._filePath, fileName);
+                }
+            } else {
+                pReader = new ccs.WidgetPropertiesReader0250();
+                widget = pReader.createWidget(jsonDict, this._filePath, fileName);
+            }
+
+            if (!fileVersion || versionInteger < 250) {
+                this._olderVersion = true;
+            }
+            jsonDict = null;
+            return widget;
+        }
+    };
+}());
