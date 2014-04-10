@@ -191,7 +191,7 @@ es.ObjectBuilder = cc.Class.extend({
         if (data) {
             var com = res.getComponent(es.DataCom.identifier);
             if (!com) {
-                res.addComponent(es.DataCom.create(cc.loader.getRes(data)));
+                res.addComponent(es.DataCom.create(data));
             }
         }
         return res;

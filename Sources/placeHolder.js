@@ -20,12 +20,11 @@ es.PlaceHolder = cc.Class.extend({
     },
 
     makeTree:function(name) {
-        var size = this._jsonData['CanvasSize'];
         var info = this._getInfoByName(name);
         var root = this._buildNodeTree(info);
         if (!name) {
             root.setAnchorPoint(0.5, 0.5);
-            root.setContentSize(size['_width'], size['_height']);
+            root.setContentSize(this._jsonData['designWidth'], this._jsonData['designHeight']);
         }
         return root;
     },

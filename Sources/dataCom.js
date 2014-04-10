@@ -4,23 +4,29 @@
 
 es.DataCom = cc.Component.extend({
     _jsonData:null,
+    _fileName:null,
 
-    ctor:function(json) {
+    ctor:function(filename) {
         this._super();
         cc.associateWithNative(this, cc.Component);
         this.init();
         this.setName(es.DataCom.identifier);
 
-        this._jsonData = json;
+        this._fileName = filename;
+        this._jsonData = cc.loader.getRes(this._fileName);
     },
 
     getData:function() {
         return this._jsonData;
+    },
+
+    getFileName:function() {
+        return this._fileName;
     }
 });
 
-es.DataCom.create = function(json) {
-    return new es.DataCom(json);
+es.DataCom.create = function(filename) {
+    return new es.DataCom(filename);
 };
 
 es.DataCom.identifier = 'Data';
