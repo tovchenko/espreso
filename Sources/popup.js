@@ -28,7 +28,7 @@ es.Popup = cc.Layer.extend({
         this._fadeLayer = cc.LayerColor.create(cc.color(0, 0, 0, 0.7));
         this.addChild(this._fadeLayer, -1);
 
-        this._widget = ccs.uiReader.widgetFromJsonFile(es.manager.makeResourcePath(jsonFile));
+        this._widget = ccs.uiReader.widgetFromJsonFile(jsonFile);
         this._widget.setAnchorPoint(0.5, 0.5);
         this.addChild(this._widget);
 
