@@ -10,12 +10,8 @@ es.manager = {
     _resPath:'',
 
     getScreenSize:function() {
-        if (!this._screenSize) {
-            this._screenSize = cc.view.getFrameSize ? cc.view.getFrameSize() : cc.view.getWinSizeInPixels();
-        }
-        return function(w, h) {
-            return cc.size(w, h);
-        }(this._screenSize.width, this._screenSize.height);
+        return cc.size(cc.director.getContentScaleFactor() * cc.director.getVisibleSize().width,
+                       cc.director.getContentScaleFactor() * cc.director.getVisibleSize().height);
     },
 
     applyDefaults:function() {

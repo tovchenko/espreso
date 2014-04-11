@@ -24,7 +24,9 @@ es.PlaceHolder = cc.Class.extend({
         var root = this._buildNodeTree(info);
         if (!name) {
             root.setAnchorPoint(0.5, 0.5);
-            root.setContentSize(this._jsonData['designWidth'], this._jsonData['designHeight']);
+            var p = root.getPosition();
+            root.setPosition(p.x + 0.5 * this._jsonData['designWidth'],
+                             p.y + 0.5 * this._jsonData['designHeight']);
         }
         return root;
     },
@@ -43,10 +45,11 @@ es.PlaceHolder = cc.Class.extend({
     },
 
     _buildNodeTree:function(info) {
-        var node = this.makeObjectFromBuilder(info['name']);
-        this.setPropertyFromJsonDict(node, info);
+        var options = info['options'] || info;
+        var node = this.makeObjectFromBuilder(options['name']);
+        this.setPropertyFromJsonDict(node, options);
 
-        var children = info['gameobjects'] || [];
+        var children = info['children'] || [];
         for (var i = 0; i < children.length; ++i) {
             node.addChild(arguments.callee.call(this, children[i]));
         }
@@ -54,13 +57,15 @@ es.PlaceHolder = cc.Class.extend({
     },
 
     _getInfoByName:function(name, info) {
-        if (!name) return this._jsonData;
+        var widgets = this._jsonData['widgetTree'];
+        if (!name) return widgets;
 
-        info = info || this._jsonData;
-        if (info['name'] && info['name'] === name)
+        info = info || widgets;
+        var objectName = info['options']['name'];
+        if (objectName && objectName === name)
             return info;
 
-        var children = info['gameobjects'] || [];
+        var children = info['children'] || [];
         for (var i = 0; i < children.length; ++i) {
             var res = arguments.callee.call(this, name, children[i]);
             if (res) return res;
@@ -69,25 +74,25 @@ es.PlaceHolder = cc.Class.extend({
     },
 
     setPropertyFromJsonDict: function (node, dict) {
-        var x = dict['x'] || 0;
-        var y = dict['y'] || 0;
+        var x = (typeof dict["x"] === 'undefined')?0:dict["x"];
+        var y = (typeof dict["y"] === 'undefined')?0:dict["y"];
         node.setPosition(x, y);
 
-        var bVisible = Boolean(dict['visible']);
+        var bVisible = Boolean((typeof dict["visible"] === 'undefined')?1:dict["visible"]);
         node.setVisible(bVisible);
 
-        var nTag = dict['objecttag'] || -1;
+        var nTag = (typeof dict["objecttag"] === 'undefined')?-1:dict["objecttag"];
         node.setTag(nTag);
 
-        var nZorder = dict['zorder'] || 0;
+        var nZorder = (typeof dict["zorder"] === 'undefined')?0:dict["zorder"];
         node.setLocalZOrder(nZorder);
 
-        var fScaleX = dict['scalex'] || 1;
-        var fScaleY = dict['scaley'] || 1;
+        var fScaleX = (typeof dict["scalex"] === 'undefined')?1:dict["scalex"];
+        var fScaleY = (typeof dict["scaley"] === 'undefined')?1:dict["scaley"];
         node.setScaleX(fScaleX);
         node.setScaleY(fScaleY);
 
-        var fRotationZ = dict['rotation'] || 0;
+        var fRotationZ = (typeof dict["rotation"] === 'undefined')?0:dict["rotation"];
         node.setRotation(fRotationZ);
     }
 });

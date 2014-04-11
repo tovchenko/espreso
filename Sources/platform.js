@@ -45,6 +45,11 @@ es.platform = {
 // === Compatibility workarounds ===
 
 (function() {
+    if (cc.sys.isNative) {
+        cc.Component.extend = cc.Class.extend;
+        cc.Action.extend = cc.Class.extend;
+    }
+
     var superAddAnimationFn = cc.animationCache.addAnimationsWithDictionary;
     cc.animationCache.addAnimationsWithDictionary = function(dict) {
         if (cc.sys.isNative) {
@@ -53,23 +58,17 @@ es.platform = {
             cc.animationCache._addAnimationsWithDictionary(dict, '');
         }
     };
-}());
 
-(function() {
     var superAddSpriteFramesFn = cc.spriteFrameCache.addSpriteFrames;
     cc.spriteFrameCache.addSpriteFrames = function(filePath) {
         superAddSpriteFramesFn.call(cc.spriteFrameCache, es.manager.makeResourcePath(filePath, true));
     };
-}());
 
-(function() {
     var superRemoveSpriteFramesFn = cc.spriteFrameCache.removeSpriteFramesFromFile;
     cc.spriteFrameCache.removeSpriteFramesFromFile = function(filePath) {
         superRemoveSpriteFramesFn.call(cc.spriteFrameCache, es.manager.makeResourcePath(filePath, true));
     };
-}());
 
-(function() {
     var superSetTexParametersFn = cc.Texture2D.prototype.setTexParameters;
     cc.Texture2D.prototype.setTexParameters = function(params) {
         if (cc.sys.isNative) {
@@ -78,20 +77,14 @@ es.platform = {
             superSetTexParametersFn.call(this, params);
         }
     };
-}());
 
+    if (ccs.dataReaderHelper) {
+        var superRemoveConfigFileFn = ccs.dataReaderHelper.removeConfigFile;
+        ccs.dataReaderHelper.removeConfigFile = function (configFile) {
+            superRemoveConfigFileFn.call(this, es.manager.makeResourcePath(configFile));
+        };
+    }
 
-(function() {
-    if (!ccs.dataReaderHelper)
-        return;
-
-    var superRemoveConfigFileFn = ccs.dataReaderHelper.removeConfigFile;
-    ccs.dataReaderHelper.removeConfigFile = function(configFile) {
-        superRemoveConfigFileFn.call(this, es.manager.makeResourcePath(configFile));
-    };
-}());
-
-(function() {
     var superPlayFn = ccs.ArmatureAnimation.prototype.play;
     ccs.ArmatureAnimation.prototype.play = function(name, durationTo, loop) {
         if (cc.sys.isNative) {
@@ -101,9 +94,7 @@ es.platform = {
             this.setProcessScale(this._processScale);
         }
     };
-}());
 
-(function() {
     var superFn = ccs.uiReader.widgetFromJsonFile;
     ccs.uiReader.widgetFromJsonFile = function (fileName) {
         if (cc.sys.isNative) {
