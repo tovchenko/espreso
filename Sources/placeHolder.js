@@ -23,10 +23,10 @@ es.PlaceHolder = cc.Class.extend({
         var info = this._getInfoByName(name);
         var root = this._buildNodeTree(info);
         if (!name) {
+            var sz = cc.director.getVisibleSize();
+            var origin = cc.director.getVisibleOrigin();
             root.setAnchorPoint(0.5, 0.5);
-            var p = root.getPosition();
-            root.setPosition(p.x + 0.5 * this._jsonData['designWidth'],
-                             p.y + 0.5 * this._jsonData['designHeight']);
+            root.setPosition(0.5 * sz.width + origin.x, 0.5 * sz.height + origin.y);
         }
         return root;
     },
@@ -77,6 +77,13 @@ es.PlaceHolder = cc.Class.extend({
         var x = (typeof dict["x"] === 'undefined')?0:dict["x"];
         var y = (typeof dict["y"] === 'undefined')?0:dict["y"];
         node.setPosition(x, y);
+
+        var ignoreSize = Boolean((typeof dict["ignoreSize"] === 'undefined')?1:dict["ignoreSize"]);
+        if (!ignoreSize) {
+            var width = (typeof dict["width"] === 'undefined') ? 0 : dict["width"];
+            var height = (typeof dict["height"] === 'undefined') ? 0 : dict["height"];
+            node.setContentSize(width, height);
+        }
 
         var bVisible = Boolean((typeof dict["visible"] === 'undefined')?1:dict["visible"]);
         node.setVisible(bVisible);

@@ -7,11 +7,13 @@ var es = es || {};
 
 es.manager = {
     _resolutionDependedPath:null,
-    _resPath:'',
+    _initialSize:null,
 
     getScreenSize:function() {
-        return cc.size(cc.director.getContentScaleFactor() * cc.director.getVisibleSize().width,
-                       cc.director.getContentScaleFactor() * cc.director.getVisibleSize().height);
+        if (!this._initialSize) {
+            this._initialSize = cc.director.getWinSizeInPixels();
+        }
+        return cc.size(this._initialSize.width, this._initialSize.height);
     },
 
     applyDefaults:function() {
@@ -75,8 +77,8 @@ es.manager = {
 
         if (len > 1) {
             var hasResolution = (pathParts[len - 2] === this._resolutionDependedPath);
-            var hasResource = (hasResolution && len > 2 && pathParts[len - 3] === this._resPath) ||
-                              (!hasResolution && pathParts[len - 2] === this._resPath);
+            var hasResource = (hasResolution && len > 2 && pathParts[len - 3] === cc.loader.resPath) ||
+                              (!hasResolution && pathParts[len - 2] === cc.loader.resPath);
 
             if (useResolutionPath) {
                 if (hasResource && hasResolution) {
@@ -111,11 +113,11 @@ es.manager = {
         } else {
             if (useResolutionPath) {
                 if (useResPath)
-                    return cc.path.join(cc.path.join(this._resPath, this._resolutionDependedPath), path);
+                    return cc.path.join(cc.path.join(cc.loader.resPath, this._resolutionDependedPath), path);
                 return cc.path.join(this._resolutionDependedPath, path);
             }
             else
-                return cc.path.join(this._resPath, path);
+                return cc.path.join(cc.loader.resPath, path);
         }
     },
 
@@ -129,7 +131,3 @@ es.manager = {
         return sizeToFit;
     }
 };
-
-(function() {
-    es.manager._resPath = cc.loader.resPath;
-}());
