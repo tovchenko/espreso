@@ -1,4 +1,5 @@
 [
+    "Sources/genfun.js",
     "Sources/utils.js",
     "Sources/platform.js",
     "Sources/manager.js",
