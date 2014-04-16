@@ -19,7 +19,7 @@ es.PlaceHolder = cc.Class.extend({
         this._jsonData = jsonScene;
     },
 
-    makeTree:function(name) {
+    makeTree:function(name, frozen) {
         var info = this._getInfoByName(name);
         var root = this._buildNodeTree(info);
         if (!name) {
@@ -27,6 +27,11 @@ es.PlaceHolder = cc.Class.extend({
             var origin = cc.director.getVisibleOrigin();
             root.setAnchorPoint(0.5, 0.5);
             root.setPosition(0.5 * sz.width + origin.x, 0.5 * sz.height + origin.y);
+        } else if (!frozen) {
+            var sz = cc.director.getVisibleSize();
+            var pt = cc.p(0.5 * (sz.width - this._jsonData['designWidth']),
+                          0.5 * (sz.height - this._jsonData['designHeight']));
+            root.setPosition(cc.pAdd(cc.pAdd(root.getPosition(), pt), cc.director.getVisibleOrigin()));
         }
         return root;
     },
