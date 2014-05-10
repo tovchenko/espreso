@@ -102,7 +102,7 @@ def run():
 	scriptDir = os.path.dirname(os.path.realpath(__file__))
 	appRoot = sys.argv[1];
 	
-	textureFolder = os.path.join(appRoot, 'runtime/Intermediates/Textures')
+	textureFolder = os.path.join(appRoot, 'runtime/temp/Textures')
 	textureFolder = os.path.join(textureFolder, sys.argv[3])
 	if not os.path.exists(textureFolder): os.makedirs(textureFolder)
 		
@@ -113,7 +113,7 @@ def run():
 	texHDR = os.path.join(textureFolder, 'HDR')
 	if not os.path.exists(texHDR): os.makedirs(texHDR)
 	
-	srcDir = os.path.join(appRoot, 'Assets/Atlases')
+	srcDir = os.path.join(appRoot, 'assets/Atlases')
 	
 	assembleFolder(os.path.join(srcDir, 'rgba/Shared'), texSD, '0.25', '1024', True)
 	assembleFolder(os.path.join(srcDir, 'rgba/Shared'), texHD, '0.5', '2048', True)

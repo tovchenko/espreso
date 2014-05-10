@@ -26,7 +26,7 @@ def run():
 	scriptDir = os.path.dirname(os.path.realpath(__file__))
 	appRoot = sys.argv[1]
 	
-	textureFolder = os.path.join(appRoot, 'runtime/Intermediates/Textures')
+	textureFolder = os.path.join(appRoot, 'runtime/temp/Textures')
 	textureFolder = os.path.join(textureFolder, sys.argv[3])
 	if not os.path.exists(textureFolder): os.makedirs(textureFolder)
 		
@@ -38,7 +38,7 @@ def run():
 	if not os.path.exists(texHDR): os.makedirs(texHDR)
 	
 	textool = os.path.join(scriptDir, 'smart_png2pkm.py' if sys.argv[3] == 'pkm' else ('smart_png2pvrccz.py' if sys.argv[3] == 'pvr.ccz' else 'smart_png2png.py'))
-	srcTexsPath = os.path.join(appRoot, 'Assets/Textures')
+	srcTexsPath = os.path.join(appRoot, 'assets/Textures')
 	
 	# Scales and converts RGBA images from Shared to HDR, HD, SD folders
 	subprocess.call([textool, os.path.join(srcTexsPath, 'rgba/Shared'), texSD, 'yes', '0.25', '1024'])
@@ -78,7 +78,7 @@ def run():
 	processTMX(os.path.join(srcTexsPath, 'rgb/HD'), dstHD)
 	processTMX(os.path.join(srcTexsPath, 'rgb/HDR'), dstHDR)
 
-	srcBundlePath = os.path.join(appRoot, 'Assets')
+	srcBundlePath = os.path.join(appRoot, 'assets')
 	subprocess.call([xcopy, os.path.join(srcBundlePath, 'Data/*.*'), sys.argv[2]])
 	subprocess.call([xcopy, os.path.join(scriptDir, '../Sources'), sys.argv[2]])
 	subprocess.call([xcopy, os.path.join(appRoot, 'src/*.*'), os.path.join(sys.argv[2], 'Sources')])
@@ -87,5 +87,4 @@ def run():
 
 # -------------- main --------------
 if __name__ == '__main__':
-
     run()

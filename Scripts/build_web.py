@@ -1,7 +1,4 @@
 #!/usr/bin/python
-# build_web.py
-# Build Web
-
 
 import sys
 import os, os.path
