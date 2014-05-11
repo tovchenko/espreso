@@ -3,10 +3,10 @@
  */
 
 es.DataCom = cc.Component.extend({
-    _jsonData:null,
-    _fileName:null,
+    _jsonData : null,
+    _fileName : null,
 
-    ctor:function(filename) {
+    ctor : function(filename) {
         this._super();
         cc.associateWithNative(this, cc.Component);
         this.init();
@@ -16,11 +16,11 @@ es.DataCom = cc.Component.extend({
         this._jsonData = cc.loader.getRes(this._fileName);
     },
 
-    getData:function() {
+    getData : function() {
         return this._jsonData;
     },
 
-    getFileName:function() {
+    getFileName : function() {
         return this._fileName;
     }
 });

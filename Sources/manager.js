@@ -6,23 +6,22 @@ var es = es || {};
 
 
 es.manager = {
-    _resolutionDependedPath:null,
-    _initialSize:null,
+    _resolutionDependedPath : null,
+    _initialSize : null,
 
-    getScreenSize:function() {
+    getScreenSize : function() {
         if (!this._initialSize) {
             this._initialSize = cc.director.getWinSizeInPixels();
         }
         return cc.size(this._initialSize.width, this._initialSize.height);
     },
 
-    applyDefaults:function() {
-        var maxRes = cc.size(640, 420);
-        this.setDesignResolutionSize(cc.size(480, 320), maxRes);
-        this.setSearchPathsByScales(maxRes, [[4, 'HDR'], [2, 'HD'], [1, 'SD']]);
+    setup : function(attrs) {
+        this.setDesignResolutionSize(attrs.designResolutionSize, attrs.maxSize);
+        this.setSearchPathsByScales(attrs.maxSize, [[4, 'HDR'], [2, 'HD'], [1, 'SD']]);
     },
 
-    setDesignResolutionSize:function(minScreenSize, maxTextureSizeOrPolicy) {
+    setDesignResolutionSize : function(minScreenSize, maxTextureSizeOrPolicy) {
         if (typeof maxTextureSizeOrPolicy === 'number') {
             cc.view.setDesignResolutionSize(minScreenSize.width, minScreenSize.height, maxTextureSizeOrPolicy);
             return;
@@ -46,7 +45,7 @@ es.manager = {
         }
     },
 
-    setSearchPathsByScales:function(maxTextureSize, paths) {
+    setSearchPathsByScales : function(maxTextureSize, paths) {
         var fs =  this.getScreenSize();
 
         var maxSz = this._longSideToLongSide(maxTextureSize, fs);
@@ -70,7 +69,7 @@ es.manager = {
         cc.director.setContentScaleFactor(sf);
     },
 
-    makeResourcePath:function(path, useResolutionPath, useResPath) {
+    makeResourcePath : function(path, useResolutionPath, useResPath) {
         var pathParts = path.split('/');
         var len = pathParts.length;
         var base = cc.path.basename(path);
@@ -121,7 +120,7 @@ es.manager = {
         }
     },
 
-    _longSideToLongSide:function(sizeToFit, srcSize) {
+    _longSideToLongSide : function(sizeToFit, srcSize) {
         if (srcSize.width > sizeToFit.height) {
             if (sizeToFit.width < sizeToFit.height)
                 return cc.size(sizeToFit.height, sizeToFit.width);

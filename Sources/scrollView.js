@@ -6,11 +6,11 @@ var es = es || {};
 
 es.ScrollView = cc.ScrollView.extend({
 
-    ctor:function () {
+    ctor : function () {
         this._super();
     },
 
-    onTouchMoved:function (touch, event) {
+    onTouchMoved : function (touch, event) {
         if (!this.isVisible())
             return;
 

@@ -5,10 +5,10 @@
 var es = es || {};
 
 es.AudioCom = cc.Component.extend({
-    _sounds:null,
-    _music:null,
+    _sounds : null,
+    _music : null,
 
-    ctor:function() {
+    ctor : function() {
         this._super();
         cc.associateWithNative(this, cc.Component);
         this.init();
@@ -18,15 +18,15 @@ es.AudioCom = cc.Component.extend({
         this._music = {};
     },
 
-    addEffect:function(name, fileName, looped, volume) {
+    addEffect : function(name, fileName, looped, volume) {
         this._sounds[name] = [fileName, looped, volume];
     },
 
-    addMusic:function(name, fileName, looped, volume) {
+    addMusic : function(name, fileName, looped, volume) {
         this._music[name] = [fileName, looped, volume];
     },
 
-    playEffect:function(name) {
+    playEffect : function(name) {
         var val = this._sounds[name];
         if (!val)
             throw {
@@ -39,7 +39,7 @@ es.AudioCom = cc.Component.extend({
         cc.audioEngine.playEffect(val[0], val[1]);
     },
 
-    playMusic:function(name) {
+    playMusic : function(name) {
         var val = this._music[name];
         if (!val)
             throw {

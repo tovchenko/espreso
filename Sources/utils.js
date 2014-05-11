@@ -5,7 +5,7 @@
 var es = es || {};
 
 es.utils = {
-    readRectsFromCocoStudioGUI:function(jsonOfFileName) {
+    readRectsFromCocoStudioGUI : function(jsonOfFileName) {
         if (typeof jsonOfFileName === 'string')
             jsonOfFileName = cc.loader.getRes(es.manager.makeResourcePath(jsonOfFileName));
 
@@ -31,11 +31,11 @@ es.utils = {
         return rects;
     },
 
-    getProps:function(object) {
+    getProps : function(object) {
         return object.getComponent(es.DataCom.identifier).getData();
     },
 
-    getPropsFileName:function(object) {
+    getPropsFileName : function(object) {
         return object.getComponent(es.DataCom.identifier).getFileName();
     }
 };

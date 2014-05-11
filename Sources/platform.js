@@ -12,7 +12,7 @@ es.platform = {
     _iosSoundExt:'caf',
     _webSoundExt:['mp3', 'ogg'],
 
-    textureFileName:function(nameWithoutExtension) {
+    textureFileName : function(nameWithoutExtension) {
         if (cc.sys.isNative) {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 for (var i = 0; i < this._androidTextureExts.length; ++i) {
@@ -29,7 +29,7 @@ es.platform = {
         }
     },
 
-    soundFileName:function(nameWithoutExtension) {
+    soundFileName : function(nameWithoutExtension) {
         if (cc.sys.isNative) {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 return nameWithoutExtension + '.' + this._androidSoundExt;

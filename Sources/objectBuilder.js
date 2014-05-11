@@ -16,34 +16,34 @@ es.ResourceType = {
 };
 
 es.ObjectBuilder = cc.Class.extend({
-    _animations:null,
-    _animationsCachedPaths:null,
-    _sounds:null,
-    _soundsCachedPaths:null,
-    _music:null,
-    _musicCachedPaths:null,
-    _spriteFrames:null,
-    _spriteFramesCachedPaths:null,
-    _textures:null,
-    _texturesCachedPaths:null,
-    _armatures:null,
-    _data:null,
-    _dataCachedPaths:null,
-    _jsonData:null,
-    _updateFn:null,
+    _animations : null,
+    _animationsCachedPaths : null,
+    _sounds : null,
+    _soundsCachedPaths : null,
+    _music : null,
+    _musicCachedPaths : null,
+    _spriteFrames : null,
+    _spriteFramesCachedPaths : null,
+    _textures : null,
+    _texturesCachedPaths : null,
+    _armatures : null,
+    _data : null,
+    _dataCachedPaths : null,
+    _jsonData : null,
+    _updateFn : null,
 
-    _resIter:null,
-    _typeIter:null,
-    _totalResCount:null,
-    _loadedResCount:null,
+    _resIter : null,
+    _typeIter : null,
+    _totalResCount : null,
+    _loadedResCount : null,
 
-    _updateProgress:function() {
+    _updateProgress : function() {
         ++this._loadedResCount;
         if (this._updateFn)
             this._updateFn(100 * this._loadedResCount / this._totalResCount);
     },
 
-    ctor:function(jsonFileOrFiles, updateFn) {
+    ctor : function(jsonFileOrFiles, updateFn) {
         this._animations = {};
         this._sounds = {};
         this._music = {};
@@ -97,7 +97,7 @@ es.ObjectBuilder = cc.Class.extend({
         }
     },
 
-    make:function(objectName) {
+    make : function(objectName) {
         var object = this._jsonData[objectName];
         if (!object)
             throw {
@@ -197,7 +197,7 @@ es.ObjectBuilder = cc.Class.extend({
         return res;
     },
 
-    makeBatchNode:function(objectName) {
+    makeBatchNode : function(objectName) {
         var object = this._jsonData[objectName];
         if (!object)
             throw {
@@ -224,7 +224,7 @@ es.ObjectBuilder = cc.Class.extend({
         return cc.SpriteBatchNode.create(textureName);
     },
 
-    _getFullUrl:function(urlList, useResolution) {
+    _getFullUrl : function(urlList, useResolution) {
         var res = [];
         urlList.forEach(function(url) {
             res.push(es.manager.makeResourcePath(url, useResolution));
@@ -232,7 +232,7 @@ es.ObjectBuilder = cc.Class.extend({
         return res;
     },
 
-    _collectInfo:function(cb) {
+    _collectInfo : function(cb) {
         var that = this;
         this._animationsCachedPaths = [];
 
@@ -377,7 +377,7 @@ es.ObjectBuilder = cc.Class.extend({
         });
     },
 
-    _loadOneRes:function() {
+    _loadOneRes : function() {
         var isLast = false;
         var isEmpty = false;
 
@@ -491,7 +491,7 @@ es.ObjectBuilder = cc.Class.extend({
         return true;
     },
 
-    purge:function() {
+    purge : function() {
         this._texturesCachedPaths.forEach(function(tex) {
             cc.log('Unloading texture: ' + tex);
             cc.loader.release(tex);

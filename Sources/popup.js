@@ -12,12 +12,12 @@ es.POPUP = {
 };
 
 es.Popup = cc.Layer.extend({
-    _widget:null,
-    _isTouched:null,
-    _fadeLayer:null,
-    _enableCloseByClick:true,
+    _widget : null,
+    _isTouched : null,
+    _fadeLayer : null,
+    _enableCloseByClick : true,
 
-    ctor:function(jsonFile) {
+    ctor : function(jsonFile) {
         this._super();
         cc.associateWithNative(this, cc.Layer);
         this.init();
@@ -60,18 +60,18 @@ es.Popup = cc.Layer.extend({
         }, this);
     },
 
-    getRootWidget:function() {
+    getRootWidget : function() {
         return this._widget;
     },
 
-    show:function(parent) {
+    show : function(parent) {
         parent = parent || cc.director.getRunningScene();
         parent.addChild(this);
         this._layout();
         this._performTransition(true);
     },
 
-    dismiss:function() {
+    dismiss : function() {
         this._performTransition(false);
         this._fadeLayer.stopAllActions();
         var that = this;
@@ -82,17 +82,17 @@ es.Popup = cc.Layer.extend({
         })));
     },
 
-    onEnterTransitionDidFinish:function() {
+    onEnterTransitionDidFinish : function() {
         this._super();
         if (0 === this._fadeLayer.getOpacity())
             this._fadeLayer.runAction(cc.FadeTo.create(es.POPUP.ANIM_TIME1 + es.POPUP.ANIM_TIME2, 155));
     },
 
-    setEnableCloseByClick:function(val) {
+    setEnableCloseByClick : function(val) {
         this._enableCloseByClick = val;
     },
 
-    _performTransition:function(forShowing) {
+    _performTransition : function(forShowing) {
         if (!this._widget)
             return;
 
@@ -106,7 +106,7 @@ es.Popup = cc.Layer.extend({
         }
     },
 
-    _layout:function() {
+    _layout : function() {
         var visibleSz = cc.director.getVisibleSize();
         var origin = cc.director.getVisibleOrigin();
         this._widget.setPosition(0.5*visibleSz.width + origin.x, 0.5*visibleSz.height + origin.y);

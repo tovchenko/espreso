@@ -9,7 +9,7 @@ es.PlayAnimation = cc.Action.extend({
     _playReverse:null,
     _endCallback:null,
 
-    ctor:function(animationName, callback) {
+    ctor : function(animationName, callback) {
         this._super();
         cc.associateWithNative(this, cc.Action);
 
@@ -18,20 +18,20 @@ es.PlayAnimation = cc.Action.extend({
         this._endCallback = callback;
     },
 
-    setEndHandler:function(cb) {
+    setEndHandler : function(cb) {
         this._endCallback = cb;
     },
 
-    step:function(dt) {
+    step : function(dt) {
         var com = this.getTarget().getComponent(es.AnimationCom.identifier);
         com.playAnimation(this._animationName, this._playReverse, this._endCallback);
     },
 
-    clone:function() {
+    clone : function() {
         return es.PlayAnimation.create(this._animationName);
     },
 
-    reverse:function() {
+    reverse : function() {
         var res = this.clone();
         res._playReverse = !this._playReverse;
         return res;

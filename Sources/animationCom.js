@@ -5,10 +5,10 @@
 var es = es || {};
 
 es.AnimationCom = cc.Component.extend({
-    _prefix:null,
-    _info:null,
+    _prefix : null,
+    _info : null,
 
-    ctor:function(prefix, info) {
+    ctor : function(prefix, info) {
         this._super();
         cc.associateWithNative(this, cc.Component);
         this.init();
@@ -18,7 +18,7 @@ es.AnimationCom = cc.Component.extend({
         this._info = info;
     },
 
-    playAnimation:function(name, isReverse, endCallback) {
+    playAnimation : function(name, isReverse, endCallback) {
         var animName = this._prefix + name;
         var anim = cc.animationCache.getAnimation(animName);
         if (!anim)
