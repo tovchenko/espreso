@@ -5,10 +5,10 @@
 var es = es || {};
 
 es.POPUP = {
-    MIN_SCALE:0.7,
-    MAX_SCALE:1.15,
-    ANIM_TIME1:0.15,
-    ANIM_TIME2:0.2
+    MIN_SCALE : 0.7,
+    MAX_SCALE : 1.15,
+    ANIM_TIME1 : 0.15,
+    ANIM_TIME2 : 0.2
 };
 
 es.Popup = cc.Layer.extend({

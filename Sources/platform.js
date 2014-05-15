@@ -5,12 +5,12 @@
 var es = es || {};
 
 es.platform = {
-    _androidTextureExts:['pvr.ccz', 'pkm'],
-    _iosTextureExt:'pvr.ccz',
-    _webTextureExt:'png',
-    _androidSoundExt:'ogg',
-    _iosSoundExt:'caf',
-    _webSoundExt:['mp3', 'ogg'],
+    _androidTextureExts : ['pvr.ccz', 'pkm'],
+    _iosTextureExt : 'pvr.ccz',
+    _webTextureExt : 'png',
+    _androidSoundExt : 'ogg',
+    _iosSoundExt : 'caf',
+    _webSoundExt : ['mp3', 'ogg'],
 
     textureFileName : function(nameWithoutExtension) {
         if (cc.sys.isNative) {

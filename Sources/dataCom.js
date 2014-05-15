@@ -2,6 +2,8 @@
  * Created by mc309 on 3/28/14.
  */
 
+var es = es || {};
+
 es.DataCom = cc.Component.extend({
     _jsonData : null,
     _fileName : null,
