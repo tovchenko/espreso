@@ -29,6 +29,8 @@ es.ObjectBuilder = cc.Class.extend({
     _armatures : null,
     _data : null,
     _dataCachedPaths : null,
+    _fonts:null,
+    _fontsCachedPaths:null,
     _jsonData : null,
     _updateFn : null,
 
@@ -51,6 +53,7 @@ es.ObjectBuilder = cc.Class.extend({
         this._textures = [];
         this._armatures = [];
         this._data = {};
+        this._fonts = [];
         this._jsonData = null;
         this._updateFn = null;
         this._resIter = 0;
@@ -308,6 +311,11 @@ es.ObjectBuilder = cc.Class.extend({
             if (data) {
                 this._data[objectName] = data;
             }
+            // fonts
+            var font = this._jsonData[objectName]['font'];
+            if (font && -1 === this._fonts.indexOf(font)) {
+                this._fonts.push(font);
+            }
             // animations
             var animator = this._jsonData[objectName]['animator'];
             if (animator && -1 === this._animationsCachedPaths.indexOf(animator)) {
@@ -365,13 +373,19 @@ es.ObjectBuilder = cc.Class.extend({
                 if (that._data.hasOwnProperty(key))
                     that._dataCachedPaths.push(that._data[key]);
 
+            that._fontsCachedPaths = [];
+            for (var key in that._fonts)
+                if (that._fonts.hasOwnProperty(key))
+                    that._fontsCachedPaths.push(es.manager.makeResourcePath(that._fonts[key]));
+
             var list = [].concat(
                 that._texturesCachedPaths,
                 that._spriteFramesCachedPaths,
                 that._armatures,
                 that._soundsCachedPaths,
                 that._musicCachedPaths,
-                that._dataCachedPaths);
+                that._dataCachedPaths,
+                that._fontsCachedPaths);
 
             cc.loader.load(list, cb);
         });
@@ -520,6 +534,10 @@ es.ObjectBuilder = cc.Class.extend({
         });
         this._dataCachedPaths.forEach(function(obj) {
             cc.log('Unloading JSON: ' + obj);
+            cc.loader.release(obj);
+        });
+        this._fontsCachedPaths.forEach(function(obj) {
+            cc.log('Unloading FONT: ' + obj);
             cc.loader.release(obj);
         });
         this._animationsCachedPaths.forEach(function(obj) {
