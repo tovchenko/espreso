@@ -7,6 +7,7 @@ var es = es || {};
 es.AnimationCom = cc.Component.extend({
     _prefix : null,
     _info : null,
+    _actions : null,
 
     ctor : function(prefix, info) {
         this._super();
@@ -16,6 +17,7 @@ es.AnimationCom = cc.Component.extend({
 
         this._prefix = prefix;
         this._info = info;
+        this._actions = {};
     },
 
     playAnimation : function(name, isReverse, endCallback) {
@@ -34,7 +36,13 @@ es.AnimationCom = cc.Component.extend({
                     ? cc.Sequence.create(action, cc.CallFunc.create(endCallback))
                     : (looped ? cc.RepeatForever.create(action) : action);
 
+        this._actions[animName] = action;
         this.getOwner().runAction(action);
+    },
+
+    stopAnimation : function(name) {
+        var animName = this._prefix + name;
+        this.getOwner().stopAction(this._actions[animName]);
     }
 });
 

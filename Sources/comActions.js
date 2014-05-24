@@ -5,9 +5,9 @@
 var es = es || {};
 
 es.PlayAnimation = cc.Action.extend({
-    _animationName:null,
-    _playReverse:null,
-    _endCallback:null,
+    _animationName : null,
+    _playReverse : null,
+    _endCallback : null,
 
     ctor : function(animationName, callback) {
         this._super();
@@ -44,21 +44,50 @@ es.PlayAnimation.create = function(animationName, callback) {
 
 
 
-es.PlaySfx = cc.Action.extend({
-    _soundName:null,
+es.StopAnimation = cc.Action.extend({
+    _animationName : null,
 
-    ctor:function(soundName) {
+    ctor : function(animationName) {
+        this._super();
+        cc.associateWithNative(this, cc.Action);
+        this._animationName = animationName;
+    },
+
+    step : function(dt) {
+        var com = this.getTarget().getComponent(es.AnimationCom.identifier);
+        com.stopAnimation(this._animationName);
+    },
+
+    clone : function() {
+        return es.StopAnimation.create(this._animationName);
+    },
+
+    reverse : function() {
+        return this.clone();
+    }
+});
+
+es.StopAnimation.create = function(animationName) {
+    return new es.StopAnimation(animationName);
+};
+
+
+
+es.PlaySfx = cc.Action.extend({
+    _soundName : null,
+
+    ctor : function(soundName) {
         this._super();
         cc.associateWithNative(this, cc.Action);
         this._soundName = soundName;
     },
 
-    step:function(dt) {
+    step : function(dt) {
         var com = this.getTarget().getComponent(es.AudioCom.identifier);
         com.playEffect(this._soundName);
     },
 
-    clone:function() {
+    clone : function() {
         return es.PlaySfx.create(this._soundName);
     },
 
@@ -74,24 +103,24 @@ es.PlaySfx.create = function(soundName) {
 
 
 es.PlayMusic = cc.Action.extend({
-    _soundName:null,
+    _soundName : null,
 
-    ctor:function(soundName) {
+    ctor : function(soundName) {
         this._super();
         cc.associateWithNative(this, cc.Action);
         this._soundName = soundName;
     },
 
-    step:function(dt) {
+    step : function(dt) {
         var com = this.getTarget().getComponent(es.AudioCom.identifier);
         com.playMusic(this._soundName);
     },
 
-    clone:function() {
+    clone : function() {
         return es.PlayMusic.create(this._soundName);
     },
 
-    reverse:function() {
+    reverse : function() {
         return this.clone();
     }
 });
@@ -103,10 +132,10 @@ es.PlayMusic.create = function(soundName) {
 
 
 es.PlayArmature = cc.Action.extend({
-    _animationName:null,
-    _endCallback:null,
+    _animationName : null,
+    _endCallback : null,
 
-    ctor:function(animationName, callback) {
+    ctor : function(animationName, callback) {
         this._super();
         cc.associateWithNative(this, cc.Action);
 
@@ -114,20 +143,20 @@ es.PlayArmature = cc.Action.extend({
         this._endCallback = callback;
     },
 
-    setEndHandler:function(cb) {
+    setEndHandler : function(cb) {
         this._endCallback = cb;
     },
 
-    step:function(dt) {
+    step : function(dt) {
         var com = this.getTarget().getComponent(es.ArmatureCom.identifier);
         com.playAnimation(this._animationName, this._endCallback);
     },
 
-    clone:function() {
+    clone : function() {
         return es.PlayArmature.create(this._animationName);
     },
 
-    reverse:function() {
+    reverse : function() {
         var res = this.clone();
         return res;
     }
