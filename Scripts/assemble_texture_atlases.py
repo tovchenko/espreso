@@ -5,6 +5,7 @@ import os, os.path
 import subprocess
 import datetime
 import re
+#import tkMessageBox
 
 # app root - sys.argv[1]
 # dst path - sys.argv[2]
@@ -48,7 +49,9 @@ def assemble(srcFolder, outTexture, scale, maxSize, hasAlpha):
 		
 	if atlasValid(srcFolder, outTexture if isPkm or isPvrTc else tmpPath):
 		return
-		
+	
+#	tkMessageBox.showinfo("Info", tmpPath)
+	
 	subprocess.call([packer, srcFolder,
 		'--quiet',
 		'--sheet', tmpPath,
@@ -83,8 +86,6 @@ def assemble(srcFolder, outTexture, scale, maxSize, hasAlpha):
 		os.remove(squareTexPath)
 		subprocess.call([plist, tmpPlist, os.path.dirname(outPlist), 'pvr.ccz'])
 		os.remove(tmpPlist)
-		
-	os.utime(srcFolder, (-1, -1))
 	
 	
 def assembleFolder(srcDirPath, dstDirPath, scale, maxSize, hasAlpha):
