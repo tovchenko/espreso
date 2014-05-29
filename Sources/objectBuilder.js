@@ -133,7 +133,11 @@ es.ObjectBuilder = cc.Class.extend({
             } else {
                 var atlas = render['atlas'];
                 if (atlas) {
-                    res = cc.Sprite.create('#' + render['sprite']);
+                    if (render['sprite']) res = cc.Sprite.create('#' + render['sprite']);
+                    else {
+                        var atlasName = es.manager.makeResourcePath(es.platform.textureFileName(atlas), true);
+                        res = cc.Sprite.create(atlasName);
+                    }
                 } else {
                     var spriteName = es.manager.makeResourcePath(render['sprite'], true);
                     spriteName = es.platform.textureFileName(spriteName);
