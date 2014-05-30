@@ -136,7 +136,7 @@ es.ObjectBuilder = cc.Class.extend({
                     if (render['sprite']) res = cc.Sprite.create('#' + render['sprite']);
                     else {
                         var atlasName = es.manager.makeResourcePath(es.platform.textureFileName(atlas), true);
-                        res = cc.Sprite.create(atlasName);
+                        res = cc.Sprite.create(atlasName, cc.rect(0,0,0,0)); // this case use only for animations
                     }
                 } else {
                     var spriteName = es.manager.makeResourcePath(render['sprite'], true);
