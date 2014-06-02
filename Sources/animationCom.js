@@ -26,7 +26,7 @@ es.AnimationCom = cc.Component.extend({
         if (!anim)
             throw {
                 name:'es.AnimationCom Error',
-                message:'Animation ' + name + 'isn\'t exist.',
+                message:'Animation ' + name + ' isn\'t exist.',
                 toString:function() {return this.name + ": " + this.message}
             };
 
