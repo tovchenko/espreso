@@ -92,7 +92,7 @@ es.platform = {
         if (cc.sys.isNative) {
             superPlayFn.call(this, name, durationTo, loop);
         } else {
-            superPlayFn.call(this, name, durationTo, -1, loop, -1);
+            superPlayFn.call(this, name, durationTo, loop);
             this.setProcessScale(this._processScale);
         }
     };
