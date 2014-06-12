@@ -21,10 +21,11 @@ es.ArmatureCom = cc.Component.extend({
     playAnimation : function(name, callback) {
         this._checkType();
 
+        var that = this;
         this._armature.getAnimation().play(name, -1, this._info[name] && this._info[name]['loop'] ? 1 : 0);
         this._armature.getAnimation().setMovementEventCallFunc(function(arma, type) {
             if (callback && ccs.MovementEventType.complete === type)
-                callback();
+                callback(that.getOwner());
         }, this);
     },
 
