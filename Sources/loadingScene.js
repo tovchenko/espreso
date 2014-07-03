@@ -26,7 +26,7 @@ es.LoadingLayer = cc.LayerColor.extend({
             this.retain();
 
             if (this.getParent()) {
-                this.setZOrder(Math.floor(Number.MAX_VALUE));
+                this.setLocalZOrder(Math.floor(Number.MAX_VALUE));
                 this._hasParent = true;
             } else {
                 cc.director.runScene(this._getScene());
