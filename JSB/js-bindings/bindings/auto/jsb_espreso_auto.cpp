@@ -420,8 +420,7 @@ bool js_espreso_EspresoComponent_setEnabled(JSContext *cx, uint32_t argc, jsval 
 	es::EspresoComponent* cobj = (es::EspresoComponent *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_EspresoComponent_setEnabled : Invalid Native Object");
 	if (argc == 1) {
-		bool arg0;
-		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		bool arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
 		JSB_PRECONDITION2(ok, cx, false, "js_espreso_EspresoComponent_setEnabled : Error processing arguments");
 		cobj->setEnabled(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);

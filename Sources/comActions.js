@@ -91,7 +91,7 @@ es.PlaySfx = cc.Action.extend({
         return es.PlaySfx.create(this._soundName);
     },
 
-    reverse:function() {
+    reverse : function() {
         return this.clone();
     }
 });
@@ -157,8 +157,7 @@ es.PlayArmature = cc.Action.extend({
     },
 
     reverse : function() {
-        var res = this.clone();
-        return res;
+        return this.clone();
     }
 });
 
