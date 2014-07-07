@@ -6,13 +6,13 @@
 var es = es || {};
 
 es.ResourceType = {
-    TEXTURE:0,
-    SPRITE_FRAMES:1,
-    ANIMATION:2,
-    SOUND:3,
-    MUSIC:4,
-    ARMATURE:5,
-    END:6
+    TEXTURE : 0,
+    SPRITE_FRAMES : 1,
+    ANIMATION : 2,
+    SOUND : 3,
+    MUSIC : 4,
+    ARMATURE : 5,
+    END : 6
 };
 
 es.ObjectBuilder = cc.Class.extend({
@@ -87,7 +87,11 @@ es.ObjectBuilder = cc.Class.extend({
                     that._collectInfo(function() {
                         if (that._updateFn) {
                             that._updateFn(0);
-                            cc.director.getScheduler().scheduleCallbackForTarget(that, that._loadOneRes, 0, cc.REPEAT_FOREVER, 0, false);
+                            cc.director.getScheduler().scheduleCallbackForTarget(
+                                that, that._loadOneRes,
+                                0,
+                                that._totalResCount - 1,
+                                0, false);
                         } else {
                             var loadNext = true;
                             while (loadNext) {
@@ -496,17 +500,17 @@ es.ObjectBuilder = cc.Class.extend({
 
         if (isLast) {
             this._resIter = 0;
-            if (++this._typeIter === es.ResourceType.END) {
-                if (this._updateFn) {
-                    cc.director.getScheduler().unscheduleCallbackForTarget(this, arguments.callee);
-                    if (0 === this._loadedResCount)
-                        this._updateFn(100);
-                }
-
-                return false;
-            }
+            ++this._typeIter;
         }
-        return true;
+
+        if (this._typeIter !== es.ResourceType.END) {
+            return true;
+        }
+
+        if (this._updateFn && 0 === this._loadedResCount)
+            this._updateFn(100);
+
+        return false;
     },
 
     purge : function() {
