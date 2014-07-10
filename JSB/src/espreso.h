@@ -28,24 +28,6 @@ namespace es {
     };
     
     
-    class EspresoComponent : public cocos2d::Component {
-    public:
-        EspresoComponent() {}
-        static EspresoComponent* create();
-    
-        virtual bool init() { return cocos2d::Component::init(); }
-        virtual void onEnter() { return cocos2d::Component::onEnter(); }
-        virtual void onExit() { return cocos2d::Component::onExit(); }
-        virtual void update(float delta) { return cocos2d::Component::update(delta); }
-        virtual bool serialize(void* r) { return cocos2d::Component::serialize(r); }
-        virtual bool isEnabled() const { return cocos2d::Component::isEnabled(); }
-        virtual void setEnabled(bool b) { cocos2d::Component::setEnabled(b); }
-        const std::string& getName() const { return cocos2d::Component::getName(); }
-        void setName(const std::string& name) { cocos2d::Component::setName(name); }
-        void setOwner(cocos2d::Node *pOwner) { cocos2d::Component::setOwner(pOwner); }
-        cocos2d::Node* getOwner() const { return cocos2d::Component::getOwner(); }
-    };
-    
     class OrientationManager {
     public:
         enum class Orientation {

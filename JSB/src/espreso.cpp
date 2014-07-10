@@ -59,16 +59,6 @@ cocos2d::Action* EspresoAction::reverse() const {
 
 
 
-EspresoComponent* EspresoComponent::create() {
-	EspresoComponent* ret = new EspresoComponent();
-    if (ret && ret->init()) {
-        ret->autorelease();
-    } else {
-        CC_SAFE_DELETE(ret);
-    }
-	return ret;
-}
-
 auto OrientationManager::getInstance()->OrientationManager* {
     static OrientationManager* _sInstance = nullptr;
     if (!_sInstance) _sInstance = new OrientationManager;

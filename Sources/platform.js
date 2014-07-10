@@ -48,7 +48,6 @@ es.platform = {
     cc.Sprite.prototype.getSpriteFrame = cc.Sprite.prototype.getSpriteFrame || cc.Sprite.prototype.displayFrame;
 
     if (cc.sys.isNative) {
-        cc.Component.extend = cc.Class.extend;
         cc.Action.extend = cc.Class.extend;
     }
 
