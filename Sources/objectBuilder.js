@@ -87,11 +87,7 @@ es.ObjectBuilder = cc.Class.extend({
                     that._collectInfo(function() {
                         if (that._updateFn) {
                             that._updateFn(0);
-                            cc.director.getScheduler().scheduleCallbackForTarget(
-                                that, that._loadOneRes,
-                                0,
-                                that._totalResCount - 1,
-                                0, false);
+                            cc.director.getScheduler().scheduleCallbackForTarget(that, that._loadOneRes, 0, cc.REPEAT_FOREVER, 0, false);
                         } else {
                             var loadNext = true;
                             while (loadNext) {
@@ -500,17 +496,16 @@ es.ObjectBuilder = cc.Class.extend({
 
         if (isLast) {
             this._resIter = 0;
-            ++this._typeIter;
+            if (++this._typeIter === es.ResourceType.END) {
+                if (this._updateFn) {
+                    cc.director.getScheduler().unscheduleCallbackForTarget(this, arguments.callee);
+                    if (0 === this._loadedResCount)
+                        this._updateFn(100);
+                }
+                return false;
+            }
         }
-
-        if (this._typeIter !== es.ResourceType.END) {
-            return true;
-        }
-
-        if (this._updateFn && 0 === this._loadedResCount)
-            this._updateFn(100);
-
-        return false;
+        return true;
     },
 
     purge : function() {
