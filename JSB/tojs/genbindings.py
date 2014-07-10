@@ -92,15 +92,15 @@ def main():
 
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     src_root = os.path.abspath(os.path.join(project_root, 'src'))
-    cocos_root = os.path.abspath(os.path.join(project_root, '../../js-bindings/cocos2d-x'))
+    cocos_root = os.path.abspath(os.path.join(project_root, '..', '..', 'js-bindings/cocos2d-x'))
     cxx_generator_root = os.path.abspath(os.path.join(project_root, 'bindings-generator'))
 
     # save config to file
     config = ConfigParser.ConfigParser()
+    config.set('DEFAULT', 'srcdir', src_root)
     config.set('DEFAULT', 'androidndkdir', ndk_root)
     config.set('DEFAULT', 'clangllvmdir', llvm_path)
     config.set('DEFAULT', 'cocosdir', cocos_root)
-    config.set('DEFAULT', 'srcdir', src_root)
     config.set('DEFAULT', 'cxxgeneratordir', cxx_generator_root)
     config.set('DEFAULT', 'extra_flags', '')
 
@@ -133,6 +133,15 @@ def main():
         generator_py = '%s/generator.py' % cxx_generator_root
         for key in cmd_args.keys():
             args = cmd_args[key]
+            cfg = '%s/%s' % (tojs_root, key)
+            print 'Generating bindings for %s...' % (key[:-4])
+            command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])
+            _run_cmd(command)
+
+        output_dir = '%s/frameworks/custom/auto' % project_root
+        custom_cmd_args = {}
+        for key in custom_cmd_args.keys():
+            args = custom_cmd_args[key]
             cfg = '%s/%s' % (tojs_root, key)
             print 'Generating bindings for %s...' % (key[:-4])
             command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])

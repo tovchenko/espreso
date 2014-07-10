@@ -8,6 +8,7 @@ namespace es {
     
     class EspresoAction : public cocos2d::Action {
     public:
+        EspresoAction() {}
         static EspresoAction* create();
     
         virtual std::string description() const { return cocos2d::Action::description(); }
@@ -24,14 +25,12 @@ namespace es {
         void setOriginalTarget(cocos2d::Node *originalTarget) { cocos2d::Action::setOriginalTarget(originalTarget); }
         int getTag() const { return cocos2d::Action::getTag(); }
         void setTag(int tag) { cocos2d::Action::setTag(tag); }
-        
-    protected:
-        EspresoAction() {}
     };
     
     
     class EspresoComponent : public cocos2d::Component {
     public:
+        EspresoComponent() {}
         static EspresoComponent* create();
     
         virtual bool init() { return cocos2d::Component::init(); }
@@ -45,9 +44,6 @@ namespace es {
         void setName(const std::string& name) { cocos2d::Component::setName(name); }
         void setOwner(cocos2d::Node *pOwner) { cocos2d::Component::setOwner(pOwner); }
         cocos2d::Node* getOwner() const { return cocos2d::Component::getOwner(); }
-        
-    protected:
-        EspresoComponent() {}
     };
     
     class OrientationManager {

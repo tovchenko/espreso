@@ -19,6 +19,16 @@ node
 },
 
 /**
+ * @method reverse
+ * @return {cc.Action}
+ */
+reverse : function (
+)
+{
+    return cc.Action;
+},
+
+/**
  * @method setOriginalTarget
  * @param {cc.Node} arg0
  */
@@ -117,16 +127,6 @@ isDone : function (
 },
 
 /**
- * @method reverse
- * @return {cc.Action}
- */
-reverse : function (
-)
-{
-    return cc.Action;
-},
-
-/**
  * @method create
  * @return {es::EspresoAction}
  */
@@ -134,6 +134,15 @@ create : function (
 )
 {
     return es::EspresoAction;
+},
+
+/**
+ * @method EspresoAction
+ * @constructor
+ */
+EspresoAction : function (
+)
+{
 },
 
 };
@@ -243,6 +252,15 @@ create : function (
 )
 {
     return es::EspresoComponent;
+},
+
+/**
+ * @method EspresoComponent
+ * @constructor
+ */
+EspresoComponent : function (
+)
+{
 },
 
 };
