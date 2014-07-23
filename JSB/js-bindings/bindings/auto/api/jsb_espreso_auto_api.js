@@ -4,6 +4,40 @@
 var cc = cc || {};
 
 /**
+ * @class MenuItemScalable
+ */
+cc.MenuItemSprite = {
+
+/**
+ * @method create
+* @param {cc.Node|cc.Node} node
+* @param {cc.Node|cc.Node} node
+* @param {cc.Node|cc.Node} node
+* @param {function} func
+* @return {cc.MenuItemSprite|cc.MenuItemSprite}
+*/
+create : function(
+node,
+node,
+node,
+func 
+)
+{
+    return cc.MenuItemSprite;
+},
+
+/**
+ * @method MenuItemScalable
+ * @constructor
+ */
+MenuItemScalable : function (
+)
+{
+},
+
+};
+
+/**
  * @class EspresoAction
  */
 cc.Action = {

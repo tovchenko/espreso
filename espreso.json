@@ -13,5 +13,6 @@
     "Sources/placeHolder.js",
     "Sources/loadingScene.js",
     "Sources/popup.js",
-    "Sources/scrollView.js"
+    "Sources/scrollView.js",
+    "Sources/menuItem.js"
 ]

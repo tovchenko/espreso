@@ -3,6 +3,7 @@
 #define espreso_H
 
 #include "cocos2d.h"
+#include "MenuItemScalable.h"
 
 namespace es {
     
