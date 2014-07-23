@@ -1,10 +1,11 @@
-#include "espreso.h"
+#include "Action.h"
 #include "cocos2d_specifics.hpp"
 
 using namespace es;
 
-EspresoAction* EspresoAction::create() {
-	EspresoAction* ret = new EspresoAction();
+
+auto EspresoAction::create()->EspresoAction* {
+	auto ret = new EspresoAction();
     if (ret) {
         ret->autorelease();
     } else {
@@ -13,7 +14,7 @@ EspresoAction* EspresoAction::create() {
 	return ret;
 }
 
-void EspresoAction::step(float dt) {
+auto EspresoAction::step(float dt)->void {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
     js_proxy_t* p = jsb_get_native_proxy(this);
@@ -27,7 +28,7 @@ void EspresoAction::step(float dt) {
     ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "step", 1, &dataVal, &retval);
 }
 
-cocos2d::Action* EspresoAction::clone() const {
+auto EspresoAction::clone() const->Action* {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
     js_proxy_t* p = jsb_get_native_proxy(const_cast<EspresoAction*>(this));
@@ -42,7 +43,7 @@ cocos2d::Action* EspresoAction::clone() const {
     return static_cast<cocos2d::Action*>(JSVAL_TO_PRIVATE(retval));
 }
 
-cocos2d::Action* EspresoAction::reverse() const {
+auto EspresoAction::reverse() const->Action* {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
     js_proxy_t* p = jsb_get_native_proxy(const_cast<EspresoAction*>(this));
@@ -55,16 +56,4 @@ cocos2d::Action* EspresoAction::reverse() const {
     jsval dataVal = INT_TO_JSVAL(1);
     ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "reverse", 1, &dataVal, &retval);
     return static_cast<cocos2d::Action*>(JSVAL_TO_PRIVATE(retval));
-}
-
-
-
-auto OrientationManager::getInstance()->OrientationManager* {
-    static OrientationManager* _sInstance = nullptr;
-    if (!_sInstance) _sInstance = new OrientationManager;
-    return _sInstance;
-}
-
-auto OrientationManager::postOrientation(Orientation& orientation)->void {
-    _orientation = orientation;
 }

@@ -43,36 +43,6 @@ MenuItemScalable : function (
 cc.Action = {
 
 /**
- * @method startWithTarget
- * @param {cc.Node} arg0
- */
-startWithTarget : function (
-node 
-)
-{
-},
-
-/**
- * @method reverse
- * @return {cc.Action}
- */
-reverse : function (
-)
-{
-    return cc.Action;
-},
-
-/**
- * @method setOriginalTarget
- * @param {cc.Node} arg0
- */
-setOriginalTarget : function (
-node 
-)
-{
-},
-
-/**
  * @method clone
  * @return {cc.Action}
  */
@@ -83,81 +53,13 @@ clone : function (
 },
 
 /**
- * @method getOriginalTarget
- * @return {cc.Node}
+ * @method reverse
+ * @return {cc.Action}
  */
-getOriginalTarget : function (
+reverse : function (
 )
 {
-    return cc.Node;
-},
-
-/**
- * @method stop
- */
-stop : function (
-)
-{
-},
-
-/**
- * @method update
- * @param {float} arg0
- */
-update : function (
-float 
-)
-{
-},
-
-/**
- * @method getTarget
- * @return {cc.Node}
- */
-getTarget : function (
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method setTag
- * @param {int} arg0
- */
-setTag : function (
-int 
-)
-{
-},
-
-/**
- * @method getTag
- * @return {int}
- */
-getTag : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setTarget
- * @param {cc.Node} arg0
- */
-setTarget : function (
-node 
-)
-{
-},
-
-/**
- * @method isDone
- * @return {bool}
- */
-isDone : function (
-)
-{
-    return false;
+    return cc.Action;
 },
 
 /**

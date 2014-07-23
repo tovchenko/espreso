@@ -307,84 +307,6 @@ void js_register_espreso_MenuItemScalable(JSContext *cx, JSObject *global) {
 JSClass  *jsb_es_EspresoAction_class;
 JSObject *jsb_es_EspresoAction_prototype;
 
-bool js_espreso_EspresoAction_startWithTarget(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	es::EspresoAction* cobj = (es::EspresoAction *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_EspresoAction_startWithTarget : Invalid Native Object");
-	if (argc == 1) {
-		cocos2d::Node* arg0;
-		do {
-			if (!argv[0].isObject()) { ok = false; break; }
-			js_proxy_t *jsProxy;
-			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-			jsProxy = jsb_get_js_proxy(tmpObj);
-			arg0 = (cocos2d::Node*)(jsProxy ? jsProxy->ptr : NULL);
-			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-		} while (0);
-		JSB_PRECONDITION2(ok, cx, false, "js_espreso_EspresoAction_startWithTarget : Error processing arguments");
-		cobj->startWithTarget(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_espreso_EspresoAction_startWithTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
-	return false;
-}
-bool js_espreso_EspresoAction_reverse(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	es::EspresoAction* cobj = (es::EspresoAction *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_EspresoAction_reverse : Invalid Native Object");
-	if (argc == 0) {
-		cocos2d::Action* ret = cobj->reverse();
-		jsval jsret = JSVAL_NULL;
-		do {
-			if (ret) {
-				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Action>(cx, (cocos2d::Action*)ret);
-				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-			} else {
-				jsret = JSVAL_NULL;
-			}
-		} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_espreso_EspresoAction_reverse : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
-bool js_espreso_EspresoAction_setOriginalTarget(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	es::EspresoAction* cobj = (es::EspresoAction *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_EspresoAction_setOriginalTarget : Invalid Native Object");
-	if (argc == 1) {
-		cocos2d::Node* arg0;
-		do {
-			if (!argv[0].isObject()) { ok = false; break; }
-			js_proxy_t *jsProxy;
-			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-			jsProxy = jsb_get_js_proxy(tmpObj);
-			arg0 = (cocos2d::Node*)(jsProxy ? jsProxy->ptr : NULL);
-			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-		} while (0);
-		JSB_PRECONDITION2(ok, cx, false, "js_espreso_EspresoAction_setOriginalTarget : Error processing arguments");
-		cobj->setOriginalTarget(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_espreso_EspresoAction_setOriginalTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
-	return false;
-}
 bool js_espreso_EspresoAction_clone(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -409,18 +331,18 @@ bool js_espreso_EspresoAction_clone(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "js_espreso_EspresoAction_clone : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
-bool js_espreso_EspresoAction_getOriginalTarget(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_espreso_EspresoAction_reverse(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	es::EspresoAction* cobj = (es::EspresoAction *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_EspresoAction_getOriginalTarget : Invalid Native Object");
+	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_EspresoAction_reverse : Invalid Native Object");
 	if (argc == 0) {
-		cocos2d::Node* ret = cobj->getOriginalTarget();
+		cocos2d::Action* ret = cobj->reverse();
 		jsval jsret = JSVAL_NULL;
 		do {
 			if (ret) {
-				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
+				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Action>(cx, (cocos2d::Action*)ret);
 				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
 			} else {
 				jsret = JSVAL_NULL;
@@ -430,147 +352,7 @@ bool js_espreso_EspresoAction_getOriginalTarget(JSContext *cx, uint32_t argc, js
 		return true;
 	}
 
-	JS_ReportError(cx, "js_espreso_EspresoAction_getOriginalTarget : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
-bool js_espreso_EspresoAction_stop(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	es::EspresoAction* cobj = (es::EspresoAction *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_EspresoAction_stop : Invalid Native Object");
-	if (argc == 0) {
-		cobj->stop();
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_espreso_EspresoAction_stop : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
-bool js_espreso_EspresoAction_update(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	es::EspresoAction* cobj = (es::EspresoAction *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_EspresoAction_update : Invalid Native Object");
-	if (argc == 1) {
-		double arg0;
-		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
-		JSB_PRECONDITION2(ok, cx, false, "js_espreso_EspresoAction_update : Error processing arguments");
-		cobj->update(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_espreso_EspresoAction_update : wrong number of arguments: %d, was expecting %d", argc, 1);
-	return false;
-}
-bool js_espreso_EspresoAction_getTarget(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	es::EspresoAction* cobj = (es::EspresoAction *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_EspresoAction_getTarget : Invalid Native Object");
-	if (argc == 0) {
-		cocos2d::Node* ret = cobj->getTarget();
-		jsval jsret = JSVAL_NULL;
-		do {
-			if (ret) {
-				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
-				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-			} else {
-				jsret = JSVAL_NULL;
-			}
-		} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_espreso_EspresoAction_getTarget : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
-bool js_espreso_EspresoAction_setTag(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	es::EspresoAction* cobj = (es::EspresoAction *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_EspresoAction_setTag : Invalid Native Object");
-	if (argc == 1) {
-		int arg0;
-		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		JSB_PRECONDITION2(ok, cx, false, "js_espreso_EspresoAction_setTag : Error processing arguments");
-		cobj->setTag(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_espreso_EspresoAction_setTag : wrong number of arguments: %d, was expecting %d", argc, 1);
-	return false;
-}
-bool js_espreso_EspresoAction_getTag(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	es::EspresoAction* cobj = (es::EspresoAction *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_EspresoAction_getTag : Invalid Native Object");
-	if (argc == 0) {
-		int ret = cobj->getTag();
-		jsval jsret = JSVAL_NULL;
-		jsret = int32_to_jsval(cx, ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_espreso_EspresoAction_getTag : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
-bool js_espreso_EspresoAction_setTarget(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	es::EspresoAction* cobj = (es::EspresoAction *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_EspresoAction_setTarget : Invalid Native Object");
-	if (argc == 1) {
-		cocos2d::Node* arg0;
-		do {
-			if (!argv[0].isObject()) { ok = false; break; }
-			js_proxy_t *jsProxy;
-			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-			jsProxy = jsb_get_js_proxy(tmpObj);
-			arg0 = (cocos2d::Node*)(jsProxy ? jsProxy->ptr : NULL);
-			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-		} while (0);
-		JSB_PRECONDITION2(ok, cx, false, "js_espreso_EspresoAction_setTarget : Error processing arguments");
-		cobj->setTarget(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_espreso_EspresoAction_setTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
-	return false;
-}
-bool js_espreso_EspresoAction_isDone(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	es::EspresoAction* cobj = (es::EspresoAction *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_EspresoAction_isDone : Invalid Native Object");
-	if (argc == 0) {
-		bool ret = cobj->isDone();
-		jsval jsret = JSVAL_NULL;
-		jsret = BOOLEAN_TO_JSVAL(ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_espreso_EspresoAction_isDone : wrong number of arguments: %d, was expecting %d", argc, 0);
+	JS_ReportError(cx, "js_espreso_EspresoAction_reverse : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 bool js_espreso_EspresoAction_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -620,6 +402,7 @@ bool js_espreso_EspresoAction_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 
+extern JSObject *jsb_cocos2d_Action_prototype;
 
 void js_es_EspresoAction_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EspresoAction)", obj);
@@ -660,18 +443,8 @@ void js_register_espreso_EspresoAction(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
-		JS_FN("startWithTarget", js_espreso_EspresoAction_startWithTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("reverse", js_espreso_EspresoAction_reverse, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setOriginalTarget", js_espreso_EspresoAction_setOriginalTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("clone", js_espreso_EspresoAction_clone, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getOriginalTarget", js_espreso_EspresoAction_getOriginalTarget, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("stop", js_espreso_EspresoAction_stop, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("update", js_espreso_EspresoAction_update, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getTarget", js_espreso_EspresoAction_getTarget, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setTag", js_espreso_EspresoAction_setTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getTag", js_espreso_EspresoAction_getTag, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setTarget", js_espreso_EspresoAction_setTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("isDone", js_espreso_EspresoAction_isDone, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("reverse", js_espreso_EspresoAction_reverse, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_es_EspresoAction_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
@@ -683,7 +456,7 @@ void js_register_espreso_EspresoAction(JSContext *cx, JSObject *global) {
 
 	jsb_es_EspresoAction_prototype = JS_InitClass(
 		cx, global,
-		NULL, // parent proto
+		jsb_cocos2d_Action_prototype,
 		jsb_es_EspresoAction_class,
 		js_espreso_EspresoAction_constructor, 0, // constructor
 		properties,
@@ -704,7 +477,7 @@ void js_register_espreso_EspresoAction(JSContext *cx, JSObject *global) {
 		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
 		p->jsclass = jsb_es_EspresoAction_class;
 		p->proto = jsb_es_EspresoAction_prototype;
-		p->parentProto = NULL;
+		p->parentProto = jsb_cocos2d_Action_prototype;
 		_js_global_type_map.insert(std::make_pair(typeName, p));
 	}
 }

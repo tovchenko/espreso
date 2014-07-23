@@ -3,6 +3,7 @@
  */
 
 var es = es || {};
+es.MenuItem = es.MenuItem || {};
 
 es.makeMenuItemScalable = function(menuItem, scale) {
     var originalScale = menuItem.getScale();
@@ -31,4 +32,14 @@ es.makeMenuItemScalable = function(menuItem, scale) {
 
         this.runAction(scaleAction);
     };
+};
+
+es.MenuItem.createScalable = function(sprite, callback) {
+    var item = new cc.MenuItemSprite();
+    item.setNormalImage(sprite);
+    item.setAnchorPoint(0.5, 0.5);
+    item.setEnabled(true);
+    callback && item.setCallback(callback);
+    es.makeMenuItemScalable(item);
+    return item;
 };
