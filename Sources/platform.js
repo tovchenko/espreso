@@ -16,10 +16,11 @@ es.platform = {
         if (cc.sys.isNative) {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 for (var i = 0; i < this._androidTextureExts.length; ++i) {
-                    var basename = nameWithoutExtension + '.' + exts[i];
-                    if (cc.FileUtils.getInstance().isFileExist(cc.FileUtils.getInstance().fullPathForFilename(basename))) {
+                    var basename = nameWithoutExtension + '.' + this._androidTextureExts[i];
+// Todo: temporary doesnt work
+//                    if (cc.FileUtils.getInstance().isFileExist(cc.FileUtils.getInstance().fullPathForFilename(basename))) {
                         return basename;
-                    }
+//                    }
                 }
             } else if (cc.sys.os === cc.sys.OS_IOS) {
                 return nameWithoutExtension + '.' + this._iosTextureExt;
