@@ -5,7 +5,7 @@ import os, os.path
 import subprocess
 import datetime
 import re
-#import tkMessageBox
+import tkMessageBox
 
 # app root - sys.argv[1]
 # dst path - sys.argv[2]
@@ -28,6 +28,7 @@ def atlasValid(srcFolder, outTexture):
 def assemble(srcFolder, outTexture, scale, maxSize, hasAlpha):
 	scriptDir = os.path.dirname(os.path.realpath(__file__))
 	packer = os.path.join(scriptDir, '../Tools/TexturePacker.app/Contents/MacOS/TexturePacker')
+	texSize = os.path.join(scriptDir, '../Tools/getTextureSize')
 	plist = os.path.join(scriptDir, 'process_atlas_plist.py')
 	
 	texName = os.path.basename(outTexture)
@@ -50,8 +51,6 @@ def assemble(srcFolder, outTexture, scale, maxSize, hasAlpha):
 	if atlasValid(srcFolder, outTexture if isPkm or isPvrTc else tmpPath):
 		return
 	
-#	tkMessageBox.showinfo("Info", tmpPath)
-	
 	subprocess.call([packer, srcFolder,
 		'--quiet',
 		'--sheet', tmpPath,
@@ -59,6 +58,30 @@ def assemble(srcFolder, outTexture, scale, maxSize, hasAlpha):
 		'--opt', 'RGBA8888' if hasAlpha else 'RGB888',
 		'--scale', scale,
 		'--max-size', maxSize])
+		
+# 	tkMessageBox.showinfo("Info", tmpPath)		
+
+	if isPvrTc:
+		proc = subprocess.Popen([texSize, tmpPath], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		proc.wait()
+		out = proc.stdout.read()
+		if int(out) > 2048:
+			isPvrTc = False
+			subprocess.call([packer, tmpPath,
+				'--quiet',
+				'--sheet', outTexture,
+				'--algorithm', 'Basic',
+				'--allow-free-size',
+				'--border-padding', '0',
+				'--shape-padding', '0',
+				'--inner-padding', '0',
+				'--no-trim',
+				'--opt', 'RGB888',
+				'--max-size', maxSize,
+				'--dither-fs'])
+			os.remove(tmpPath)
+			subprocess.call([plist, tmpPlist, os.path.dirname(outPlist), 'pvr.ccz'])
+			os.remove(tmpPlist)
 		
 	if isPkm:
 		compressor = os.path.join(scriptDir, '../Tools/etc1tool')

@@ -18,7 +18,7 @@ es.manager = {
 
     setup : function(attrs) {
         this.setDesignResolutionSize(attrs.designResolutionSize, attrs.maxSize);
-        this.setSearchPathsByScales(attrs.maxSize, [[4, 'HDR'], [2, 'HD'], [1, 'SD']]);
+        this.setSearchPathsByScales(attrs.maxSize, [[2, 'HDR'], [1, 'HD'], [0.5, 'SD']]);
     },
 
     setDesignResolutionSize : function(minScreenSize, maxTextureSizeOrPolicy) {
@@ -47,17 +47,17 @@ es.manager = {
 
     setSearchPathsByScales : function(maxTextureSize, paths) {
         var fs =  this.getScreenSize();
+        paths.sort(function(a, b) { return b[0] - a[0]; });
 
         var maxSz = this._longSideToLongSide(maxTextureSize, fs);
-        var scale = 1;
-        var power = 0;
-        while (fs.width > maxSz.width || fs.height > maxSz.height) {
-            scale = Math.pow(2, ++power);
+        var scale = paths[paths.length - 1][0];
+        while (fs.width >= maxSz.width || fs.height >= maxSz.height) {
+            scale += scale;
             fs.width *= 0.5;
             fs.height *= 0.5;
         }
 
-        var sf = 1;
+        var sf = scale;
         for (var i = 0; i < paths.length; ++i) {
             var path = paths[i];
             if (scale >= path[0]) {
