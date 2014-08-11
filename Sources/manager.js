@@ -7,14 +7,6 @@ var es = es || {};
 
 es.manager = {
     _resolutionDependedPath : null,
-    _initialSize : null,
-
-    getScreenSize : function() {
-        if (!this._initialSize) {
-            this._initialSize = cc.director.getWinSizeInPixels();
-        }
-        return cc.size(this._initialSize.width, this._initialSize.height);
-    },
 
     setup : function(attrs) {
         this.setDesignResolutionSize(attrs.designResolutionSize, attrs.maxSize);
@@ -27,7 +19,7 @@ es.manager = {
             return;
         }
 
-        var fs =  this.getScreenSize();
+        var fs = cc.view.getFrameSize();
         var minSz = this._longSideToLongSide(minScreenSize, fs);
         var maxSz = this._longSideToLongSide(maxTextureSizeOrPolicy, fs);
 
@@ -46,7 +38,7 @@ es.manager = {
     },
 
     setSearchPathsByScales : function(maxTextureSize, paths) {
-        var fs =  this.getScreenSize();
+        var fs = cc.view.getFrameSize();
         paths.sort(function(a, b) { return b[0] - a[0]; });
 
         var maxSz = this._longSideToLongSide(maxTextureSize, fs);
