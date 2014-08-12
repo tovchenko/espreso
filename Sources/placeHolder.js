@@ -79,9 +79,11 @@ es.PlaceHolder = cc.Class.extend({
     },
 
     setPropertyFromJsonDict : function (node, dict) {
-        var x = (typeof dict["x"] === 'undefined')?0:dict["x"];
-        var y = (typeof dict["y"] === 'undefined')?0:dict["y"];
-        node.setPosition(x, y);
+        var x = (typeof dict['x'] === 'undefined')?0:dict['x'];
+        var y = (typeof dict['y'] === 'undefined')?0:dict['y'];
+        var xp = (typeof dict['positionPercentX'] === 'undefined')?1:dict['positionPercentX'];
+        var yp = (typeof dict['positionPercentY'] === 'undefined')?1:dict['positionPercentY'];
+        node.setPosition(x * xp, y * yp);
 
         var ignoreSize = Boolean((typeof dict["ignoreSize"] === 'undefined')?1:dict["ignoreSize"]);
         if (!ignoreSize) {
@@ -96,7 +98,7 @@ es.PlaceHolder = cc.Class.extend({
         var nTag = (typeof dict["objecttag"] === 'undefined')?-1:dict["objecttag"];
         node.setTag(nTag);
 
-        var nZorder = (typeof dict["zorder"] === 'undefined')?0:dict["zorder"];
+        var nZorder = (typeof dict["ZOrder"] === 'undefined')?0:dict["ZOrder"];
         node.setLocalZOrder(nZorder);
 
         var fScaleX = (typeof dict["scalex"] === 'undefined')?1:dict["scalex"];
