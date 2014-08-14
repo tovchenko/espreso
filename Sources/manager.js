@@ -8,9 +8,14 @@ var es = es || {};
 es.manager = {
     _resolutionDependedPath : null,
 
-    setup : function(attrs) {
-        this.setDesignResolutionSize(attrs.designResolutionSize, attrs.maxSize);
-        this.setSearchPathsByScales(attrs.maxSize, [[2, 'HDR'], [1, 'HD'], [0.5, 'SD']]);
+    defaultLODs : [
+        { scale:2, path:'HDR', size:cc.size(1920, 1280) },
+        { scale:1, path:'HD', size:cc.size(960, 640) },
+        { scale:0.5, path:'SD', size:cc.size(0, 0) }],
+
+    setup : function(LODs) {
+        this.setDesignResolutionSize(cc.view.getFrameSize(), cc.ResolutionPolicy.SHOW_ALL);
+        this.setSearchPathsByScales(LODs);
     },
 
     setDesignResolutionSize : function(minScreenSize, maxTextureSizeOrPolicy) {
@@ -37,28 +42,21 @@ es.manager = {
         }
     },
 
-    setSearchPathsByScales : function(maxTextureSize, paths) {
+    setSearchPathsByScales : function(paths) {
         var fs = cc.view.getFrameSize();
-        paths.sort(function(a, b) { return b[0] - a[0]; });
+        cc.log('Frame Size = ' + fs.width + 'x' + fs.height);
 
-        var maxSz = this._longSideToLongSide(maxTextureSize, fs);
-        var scale = paths[paths.length - 1][0];
-        while (fs.width >= maxSz.width || fs.height >= maxSz.height) {
-            scale += scale;
-            fs.width *= 0.5;
-            fs.height *= 0.5;
-        }
-
-        var sf = scale;
+        var current = cc.size(0, 0);
         for (var i = 0; i < paths.length; ++i) {
-            var path = paths[i];
-            if (scale >= path[0]) {
-                this._resolutionDependedPath = path[1];
-                sf = (sf < path[0]) ? path[0] : sf;
-                break;
+            var sz = this._longSideToLongSide(paths[i].size, fs);
+            if ((sz.width >= current.width && sz.width < fs.width)
+               || (sz.height >= current.height && sz.height < fs.height))
+            {
+                current = sz;
+                this._resolutionDependedPath = paths[i].path;
+                cc.director.setContentScaleFactor(paths[i].scale);
             }
         }
-        cc.director.setContentScaleFactor(sf);
     },
 
     makeResourcePath : function(path, useResolutionPath, useResPath) {

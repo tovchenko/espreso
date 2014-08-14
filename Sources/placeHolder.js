@@ -19,19 +19,14 @@ es.PlaceHolder = cc.Class.extend({
         this._jsonData = jsonScene;
     },
 
-    makeTree : function(name, frozen) {
+    makeTree : function(name) {
         var info = this._getInfoByName(name);
-        var root = this._buildNodeTree(info);
-        if (!name) {
-            var sz = cc.director.getVisibleSize();
-            var origin = cc.director.getVisibleOrigin();
-            root.setAnchorPoint(0.5, 0.5);
-            root.setPosition(0.5 * sz.width + origin.x, 0.5 * sz.height + origin.y);
-        } else if (!frozen) {
-            var sz = cc.director.getVisibleSize();
-            var pt = cc.p(0.5 * (sz.width - this._jsonData['designWidth']),
-                          0.5 * (sz.height - this._jsonData['designHeight']));
-            root.setPosition(cc.pAdd(cc.pAdd(root.getPosition(), pt), cc.director.getVisibleOrigin()));
+        var root = null;
+        if (!name) { // it is 'widgetTree'
+            var size = cc.view.getFrameSize();
+            root = this._buildNodeTree(info, size, size);
+        } else {
+            root = this._buildNodeTree(info, cc.size(0, 0));
         }
         return root;
     },
@@ -49,14 +44,23 @@ es.PlaceHolder = cc.Class.extend({
         return node;
     },
 
-    _buildNodeTree : function(info) {
+    _buildNodeTree : function(info, parentSize, rootSize) {
         var options = info['options'] || info;
-        var node = this.makeObjectFromBuilder(options['name']);
-        this.setPropertyFromJsonDict(node, options);
+        var name = options['name'];
+        var idx;
+        name && (-1 !== (idx = name.indexOf('@'))) && (name = name.substring(0, idx));
+
+        var node = this.makeObjectFromBuilder(name);
+        this.setPropertyFromJsonDict(node, options, parentSize);
+        if (rootSize) { // it is 'widgetTree'
+            node.setContentSize(rootSize);
+            node.setAnchorPoint(0.5, 0.5);
+            node.setPosition(0.5 * rootSize.width, 0.5 * rootSize.height);
+        }
 
         var children = info['children'] || [];
         for (var i = 0; i < children.length; ++i) {
-            node.addChild(arguments.callee.call(this, children[i]));
+            node.addChild(arguments.callee.call(this, children[i], node.getContentSize()));
         }
         return node;
     },
@@ -78,35 +82,58 @@ es.PlaceHolder = cc.Class.extend({
         return null;
     },
 
-    setPropertyFromJsonDict : function (node, dict) {
-        var x = (typeof dict['x'] === 'undefined')?0:dict['x'];
-        var y = (typeof dict['y'] === 'undefined')?0:dict['y'];
-        var xp = (typeof dict['positionPercentX'] === 'undefined')?1:dict['positionPercentX'];
-        var yp = (typeof dict['positionPercentY'] === 'undefined')?1:dict['positionPercentY'];
-        node.setPosition(x * xp, y * yp);
+    setPropertyFromJsonDict : function (node, dict, parentSize) {
+        (typeof parentSize === 'undefined') && (parentSize = cc.size(0, 0));
+        (typeof parentSize.width === 'undefined') && (parentSize.width = 0);
+        (typeof parentSize.height === 'undefined') && (parentSize.height = 0);
 
-        var ignoreSize = Boolean((typeof dict["ignoreSize"] === 'undefined')?1:dict["ignoreSize"]);
-        if (!ignoreSize) {
-            var width = (typeof dict["width"] === 'undefined') ? 0 : dict["width"];
-            var height = (typeof dict["height"] === 'undefined') ? 0 : dict["height"];
-            node.setContentSize(width, height);
+        var usePercentPosition = Boolean((typeof  dict['positionType'] === 'undefined') ? 0 : dict['positionType']);
+        if (usePercentPosition) {
+            var xp = (typeof dict['positionPercentX'] === 'undefined') ? 0 : dict['positionPercentX'];
+            var yp = (typeof dict['positionPercentY'] === 'undefined') ? 0 : dict['positionPercentY'];
+            node.setPosition(parentSize.width * xp, parentSize.height * yp);
+        } else {
+            var x = (typeof dict['x'] === 'undefined') ? 0 : dict['x'];
+            var y = (typeof dict['y'] === 'undefined') ? 0 : dict['y'];
+            node.setPosition(x, y);
         }
 
-        var bVisible = Boolean((typeof dict["visible"] === 'undefined')?1:dict["visible"]);
+        var ignoreSize = Boolean((typeof dict['ignoreSize'] === 'undefined') ? 1 : dict['ignoreSize']);
+        if (!ignoreSize) {
+            var usePercentSize = Boolean((typeof  dict['sizeType'] === 'undefined') ? 0 : dict['sizeType']);
+            if (usePercentSize) {
+                var wp = (typeof dict['sizePercentX'] === 'undefined') ? 0 : dict['sizePercentX'];
+                var hp = (typeof dict['sizePercentY'] === 'undefined') ? 0 : dict['sizePercentY'];
+                node.setContentSize(parentSize.width * wp, parentSize.height * hp);
+            } else {
+                var width = (typeof dict['width'] === 'undefined') ? 0 : dict['width'];
+                var height = (typeof dict['height'] === 'undefined') ? 0 : dict['height'];
+                node.setContentSize(width, height);
+            }
+        }
+
+        var bVisible = Boolean((typeof dict['visible'] === 'undefined') ? 1 : dict['visible']);
         node.setVisible(bVisible);
 
-        var nTag = (typeof dict["objecttag"] === 'undefined')?-1:dict["objecttag"];
+        var nTag = (typeof dict['tag'] === 'undefined') ? -1 : dict['tag'];
         node.setTag(nTag);
 
-        var nZorder = (typeof dict["ZOrder"] === 'undefined')?0:dict["ZOrder"];
+        var name = (typeof dict['name'] === 'undefined') ? 'undefined' : dict['name'];
+        node.setName(name);
+
+        var nZorder = (typeof dict['ZOrder'] === 'undefined') ? 0 : dict['ZOrder'];
         node.setLocalZOrder(nZorder);
 
-        var fScaleX = (typeof dict["scalex"] === 'undefined')?1:dict["scalex"];
-        var fScaleY = (typeof dict["scaley"] === 'undefined')?1:dict["scaley"];
+        var fScaleX = (typeof dict['scaleX'] === 'undefined') ? 1 : dict['scaleX'];
+        var fScaleY = (typeof dict['scaleY'] === 'undefined') ? 1 : dict['scaleY'];
         node.setScaleX(fScaleX);
         node.setScaleY(fScaleY);
 
-        var fRotationZ = (typeof dict["rotation"] === 'undefined')?0:dict["rotation"];
+        var fAnchorX = (typeof dict['anchorPointX'] === 'undefined') ? 0.5 : dict['anchorPointX'];
+        var fAnchorY = (typeof dict['anchorPointY'] === 'undefined') ? 0.5 : dict['anchorPointY'];
+        node.setAnchorPoint(fAnchorX, fAnchorY);
+
+        var fRotationZ = (typeof dict['rotation'] === 'undefined') ? 0 : dict['rotation'];
         node.setRotation(fRotationZ);
     }
 });
@@ -115,13 +142,26 @@ es.PlaceHolder.create = function(jsonScene, builders) {
     return new es.PlaceHolder(jsonScene, builders);
 };
 
-es.PlaceHolder.getNodeByTag = function(root, tag) {
-    var res = root.getChildByTag(tag);
+
+es.HolderCache = function(tree) {
+    this.tree = tree;
+    this.cache = {};
+};
+
+es.HolderCache.prototype.find = function(name, root) {
+    var res = this.cache[name];
+    if (res) return res;
+
+    !root && (root = this.tree);
+    res = root.getChildByName(name);
     if (!res) {
         var children = root.getChildren();
-        for (var i = 0; i < children.length; ++i) {
-            res = arguments.callee.call(null, children[i], tag);
-            if (res) return res;
+        for (var i = 0, len = children.length; i < len; ++i) {
+            res = arguments.callee.call(this, name, children[i]);
+            if (res) {
+                this.cache[name] = res;
+                return res;
+            }
         }
     }
     return res;
