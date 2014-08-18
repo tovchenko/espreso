@@ -1,6 +1,7 @@
 [
     "Sources/genfun.js",
     "Sources/rsvp.js",
+    "Sources/underscore.js",
     "Sources/utils.js",
     "Sources/platform.js",
     "Sources/manager.js",
