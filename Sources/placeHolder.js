@@ -23,7 +23,7 @@ es.PlaceHolder = cc.Class.extend({
         var info = this._getInfoByName(name);
         var root = null;
         if (!name) { // it is 'widgetTree'
-            var size = cc.view.getFrameSize();
+            var size = cc.director.getWinSize();
             root = this._buildNodeTree(info, size, size);
         } else {
             root = this._buildNodeTree(info, cc.size(0, 0));

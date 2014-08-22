@@ -18,15 +18,19 @@ es.manager = {
         this.setSearchPathsByScales(LODs);
     },
 
-    setDesignResolutionSize : function(minScreenSize, maxTextureSizeOrPolicy) {
+    setDesignResolutionSize : function(minScreenSize, maxTextureSizeOrPolicy, longSideToLongSide) {
         if (typeof maxTextureSizeOrPolicy === 'number') {
             cc.view.setDesignResolutionSize(minScreenSize.width, minScreenSize.height, maxTextureSizeOrPolicy);
             return;
         }
 
         var fs = cc.view.getFrameSize();
-        var minSz = this._longSideToLongSide(minScreenSize, fs);
-        var maxSz = this._longSideToLongSide(maxTextureSizeOrPolicy, fs);
+        var minSz = minScreenSize;
+        var maxSz = maxTextureSizeOrPolicy;
+        if (longSideToLongSide || typeof longSideToLongSide == 'undefined') {
+            minSz = this._longSideToLongSide(minScreenSize, fs);
+            maxSz = this._longSideToLongSide(maxTextureSizeOrPolicy, fs);
+        }
 
         while (fs.width > maxSz.width || fs.height > maxSz.height) {
             fs.width *= 0.5;
