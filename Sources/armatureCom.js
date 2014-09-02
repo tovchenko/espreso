@@ -5,10 +5,10 @@
 var es = es || {};
 
 es.ArmatureCom = cc.Component.extend({
-    _armature : null,
-    _info : null,
+    _armature: null,
+    _info: null,
 
-    ctor : function(armature, info) {
+    ctor: function(armature, info) {
         this._super();
         cc.associateWithNative(this, cc.Component);
         this.init();
@@ -18,7 +18,7 @@ es.ArmatureCom = cc.Component.extend({
         this._info = info;
     },
 
-    playAnimation : function(name, callback) {
+    playAnimation: function(name, callback) {
         this._checkType();
 
         var that = this;
@@ -29,17 +29,17 @@ es.ArmatureCom = cc.Component.extend({
         }, this);
     },
 
-    stopAnimation : function() {
+    stopAnimation: function() {
         this._checkType();
         this._armature.getAnimation().stop();
     },
 
-    _checkType : function() {
+    _checkType: function() {
         if (!this._armature instanceof ccs.Armature)
             throw {
-                name:'es.ArmatureCom Error',
-                message:'Object has no the Armature Component',
-                toString:function() {return this.name + ": " + this.message}
+                name: 'es.ArmatureCom Error',
+                message: 'Object has no the Armature Component',
+                toString: function() {return this.name + ": " + this.message}
             };
     }
 });

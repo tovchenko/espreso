@@ -17,7 +17,7 @@ es.makeMenuItemScalable = function(menuItem, scale) {
         superSelected.call(this);
 
         this.stopActionByTag(scaleActionTag);
-        var scaleAction = cc.EaseElasticOut.create(cc.ScaleTo.create(0.4, selectedScale));
+        var scaleAction =  cc.scaleTo(0.4, selectedScale).easing(cc.easeElasticOut());
         scaleAction.tag = scaleActionTag;
 
         this.runAction(scaleAction);
@@ -27,7 +27,7 @@ es.makeMenuItemScalable = function(menuItem, scale) {
         superUnselected.call(this);
 
         this.stopActionByTag(scaleActionTag);
-        var scaleAction = cc.EaseElasticOut.create(cc.ScaleTo.create(0.4, originalScale));
+        var scaleAction = cc.scaleTo(0.4, originalScale).easing(cc.easeElasticOut());
         scaleAction.tag = scaleActionTag;
 
         this.runAction(scaleAction);

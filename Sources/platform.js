@@ -5,22 +5,21 @@
 var es = es || {};
 
 es.platform = {
-    _androidTextureExts : ['pvr.ccz', 'pkm'],
-    _iosTextureExt : 'pvr.ccz',
-    _webTextureExt : 'png',
-    _androidSoundExt : 'ogg',
-    _iosSoundExt : 'caf',
-    _webSoundExt : ['mp3', 'ogg'],
+    _androidTextureExts: ['pvr.ccz', 'pkm'],
+    _iosTextureExt: 'pvr.ccz',
+    _webTextureExt: 'png',
+    _androidSoundExt: 'ogg',
+    _iosSoundExt: 'caf',
+    _webSoundExt: ['mp3', 'ogg'],
 
-    textureFileName : function(nameWithoutExtension) {
+    textureFileName: function(nameWithoutExtension) {
         if (cc.sys.isNative) {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 for (var i = 0; i < this._androidTextureExts.length; ++i) {
                     var basename = nameWithoutExtension + '.' + this._androidTextureExts[i];
-// Todo: temporary doesnt work
-//                    if (cc.FileUtils.getInstance().isFileExist(cc.FileUtils.getInstance().fullPathForFilename(basename))) {
+                    if (jsb.fileUtils.isFileExist(jsb.fileUtils.fullPathForFilename(basename))) {
                         return basename;
-//                    }
+                    }
                 }
             } else if (cc.sys.os === cc.sys.OS_IOS) {
                 return nameWithoutExtension + '.' + this._iosTextureExt;
@@ -30,7 +29,7 @@ es.platform = {
         }
     },
 
-    soundFileName : function(nameWithoutExtension) {
+    soundFileName: function(nameWithoutExtension) {
         if (cc.sys.isNative) {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 return nameWithoutExtension + '.' + this._androidSoundExt;

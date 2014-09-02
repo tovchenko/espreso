@@ -5,10 +5,10 @@
 var es = es || {};
 
 es.PlaceHolder = cc.Class.extend({
-    _builders : null,
-    _jsonData : null,
+    _builders: null,
+    _jsonData: null,
 
-    ctor : function(jsonScene, builders) {
+    ctor: function(jsonScene, builders) {
         this._builders = [];
 
         if (Object.prototype.toString.call(builders) === '[object Array]')
@@ -19,7 +19,7 @@ es.PlaceHolder = cc.Class.extend({
         this._jsonData = jsonScene;
     },
 
-    makeTree : function(name) {
+    makeTree: function(name) {
         var info = this._getInfoByName(name);
         var root = null;
         if (!name) { // it is 'widgetTree'
@@ -31,7 +31,7 @@ es.PlaceHolder = cc.Class.extend({
         return root;
     },
 
-    makeObjectFromBuilder : function(name) {
+    makeObjectFromBuilder: function(name) {
         var node = null;
         for (var i = 0; i < this._builders.length && !node; ++i) {
             try {
@@ -44,7 +44,7 @@ es.PlaceHolder = cc.Class.extend({
         return node;
     },
 
-    _buildNodeTree : function(info, parentSize, rootSize) {
+    _buildNodeTree: function(info, parentSize, rootSize) {
         var options = info['options'] || info;
         var name = options['name'];
         var idx;
@@ -65,7 +65,7 @@ es.PlaceHolder = cc.Class.extend({
         return node;
     },
 
-    _getInfoByName : function(name, info) {
+    _getInfoByName: function(name, info) {
         var widgets = this._jsonData['widgetTree'];
         if (!name) return widgets;
 
@@ -82,7 +82,7 @@ es.PlaceHolder = cc.Class.extend({
         return null;
     },
 
-    setPropertyFromJsonDict : function (node, dict, parentSize) {
+    setPropertyFromJsonDict: function (node, dict, parentSize) {
         (typeof parentSize === 'undefined') && (parentSize = cc.size(0, 0));
         (typeof parentSize.width === 'undefined') && (parentSize.width = 0);
         (typeof parentSize.height === 'undefined') && (parentSize.height = 0);

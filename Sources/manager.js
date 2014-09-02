@@ -6,19 +6,19 @@ var es = es || {};
 
 
 es.manager = {
-    _resolutionDependedPath : null,
+    _resolutionDependedPath: null,
 
-    defaultLODs : [
-        { scale:2, path:'HDR', size:cc.size(1920, 1280) },
-        { scale:1, path:'HD', size:cc.size(960, 640) },
-        { scale:0.5, path:'SD', size:cc.size(0, 0) }],
+    defaultLODs: [
+        { scale: 2, path: 'HDR', size: cc.size(1400, 960) },
+        { scale: 1, path: 'HD', size: cc.size(700, 480) },
+        { scale: 0.5, path: 'SD', size: cc.size(0, 0) }],
 
-    setup : function(LODs) {
+    setup: function(LODs) {
         this.setDesignResolutionSize(cc.view.getFrameSize(), cc.ResolutionPolicy.SHOW_ALL);
         this.setSearchPathsByScales(LODs);
     },
 
-    setDesignResolutionSize : function(minScreenSize, maxTextureSizeOrPolicy, longSideToLongSide) {
+    setDesignResolutionSize: function(minScreenSize, maxTextureSizeOrPolicy, longSideToLongSide) {
         if (typeof maxTextureSizeOrPolicy === 'number') {
             cc.view.setDesignResolutionSize(minScreenSize.width, minScreenSize.height, maxTextureSizeOrPolicy);
             return;
@@ -46,7 +46,7 @@ es.manager = {
         }
     },
 
-    setSearchPathsByScales : function(paths) {
+    setSearchPathsByScales: function(paths) {
         var fs = cc.view.getFrameSize();
         cc.log('Frame Size = ' + fs.width + 'x' + fs.height);
 
@@ -63,7 +63,7 @@ es.manager = {
         }
     },
 
-    makeResourcePath : function(path, useResolutionPath, useResPath) {
+    makeResourcePath: function(path, useResolutionPath, useResPath) {
         var pathParts = path.split('/');
         var len = pathParts.length;
         var base = cc.path.basename(path);
@@ -114,7 +114,7 @@ es.manager = {
         }
     },
 
-    _longSideToLongSide : function(sizeToFit, srcSize) {
+    _longSideToLongSide: function(sizeToFit, srcSize) {
         if (srcSize.width > sizeToFit.height) {
             if (sizeToFit.width < sizeToFit.height)
                 return cc.size(sizeToFit.height, sizeToFit.width);

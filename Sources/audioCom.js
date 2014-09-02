@@ -5,10 +5,10 @@
 var es = es || {};
 
 es.AudioCom = cc.Component.extend({
-    _sounds : null,
-    _music : null,
+    _sounds: null,
+    _music: null,
 
-    ctor : function() {
+    ctor: function() {
         this._super();
         cc.associateWithNative(this, cc.Component);
         this.init();
@@ -18,34 +18,34 @@ es.AudioCom = cc.Component.extend({
         this._music = {};
     },
 
-    addEffect : function(name, fileName, looped, volume) {
+    addEffect: function(name, fileName, looped, volume) {
         this._sounds[name] = [fileName, looped, volume];
     },
 
-    addMusic : function(name, fileName, looped, volume) {
+    addMusic: function(name, fileName, looped, volume) {
         this._music[name] = [fileName, looped, volume];
     },
 
-    playEffect : function(name) {
+    playEffect: function(name) {
         var val = this._sounds[name];
         if (!val)
             throw {
-                name:'es.AudioCom Error',
-                message:'The sound effect: ' + name + ' isn\'t found in the component.',
-                toString:function() {return this.name + ": " + this.message}
+                name: 'es.AudioCom Error',
+                message: 'The sound effect: ' + name + ' isn\'t found in the component.',
+                toString: function() {return this.name + ": " + this.message}
             };
 
 //        cc.AudioEngine.getInstance().setEffectsVolume(val[2] || 1);
         cc.audioEngine.playEffect(val[0], val[1]);
     },
 
-    playMusic : function(name) {
+    playMusic: function(name) {
         var val = this._music[name];
         if (!val)
             throw {
-                name:'es.AudioCom Error',
-                message:'The background music: ' + name + ' isn\'t found in the component.',
-                toString:function() {return this.name + ": " + this.message}
+                name: 'es.AudioCom Error',
+                message: 'The background music: ' + name + ' isn\'t found in the component.',
+                toString: function() {return this.name + ": " + this.message}
             };
 
 //        cc.AudioEngine.getInstance().setMusicVolume(val[2] || 1);
@@ -56,6 +56,6 @@ es.AudioCom = cc.Component.extend({
 
 es.AudioCom.create = function() {
     return new es.AudioCom();
-}
+};
 
 es.AudioCom.identifier = 'Audio';
