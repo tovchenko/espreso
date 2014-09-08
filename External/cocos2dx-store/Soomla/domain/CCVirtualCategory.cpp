@@ -21,6 +21,22 @@
 USING_NS_CC;
 
 namespace soomla {
+    // tovchenko: added
+    CCVirtualCategory::CCVirtualCategory(cocos2d::ValueMap& params)
+    : mName(nullptr),
+      mGoodItemIds(nullptr)
+    {
+        auto name = cocos2d::__String::create(params["name"].asString());
+        auto itemIds = params["goodItemIds"].asValueVector();
+        
+        auto goodItemIds = cocos2d::__Array::create();
+        for (auto val : itemIds) {
+            goodItemIds->addObject(cocos2d::__String::create(val.asString()));
+        }
+        
+        init(name, goodItemIds);
+    }
+    
     CCVirtualCategory *CCVirtualCategory::create(__String *name, __Array *goodItemIds) {
         CCVirtualCategory *ret = new CCVirtualCategory();
         if (ret->init(name, goodItemIds)) {

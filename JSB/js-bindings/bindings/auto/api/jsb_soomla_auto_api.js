@@ -837,8 +837,10 @@ ccmarketitem
 /**
  * @method CCPurchaseWithMarket
  * @constructor
- */
-CCPurchaseWithMarket : function (
+* @param {map_object} map
+*/
+CCPurchaseWithMarket : function(
+map 
 )
 {
 },
@@ -921,8 +923,10 @@ __integer
 /**
  * @method CCPurchaseWithVirtualItem
  * @constructor
- */
-CCPurchaseWithVirtualItem : function (
+* @param {map_object} map
+*/
+CCPurchaseWithVirtualItem : function(
+map 
 )
 {
 },
@@ -1096,6 +1100,19 @@ __dictionary
 )
 {
     return soomla::CCSingleUseVG;
+},
+
+/**
+ * @method CCSingleUseVG
+ * @constructor
+* @param {map_object} map
+* @param {soomla::CCPurchaseType} ccpurchasetype
+*/
+CCSingleUseVG : function(
+map,
+ccpurchasetype 
+)
+{
 },
 
 };
@@ -1489,8 +1506,10 @@ __dictionary
 /**
  * @method CCVirtualCategory
  * @constructor
- */
-CCVirtualCategory : function (
+* @param {map_object} map
+*/
+CCVirtualCategory : function(
+map 
 )
 {
 },
@@ -1930,8 +1949,10 @@ __dictionary
 /**
  * @method CCVirtualCurrency
  * @constructor
- */
-CCVirtualCurrency : function (
+* @param {map_object} map
+*/
+CCVirtualCurrency : function(
+map 
 )
 {
 },
@@ -2064,8 +2085,12 @@ __dictionary
 /**
  * @method CCVirtualCurrencyPack
  * @constructor
- */
-CCVirtualCurrencyPack : function (
+* @param {map_object} map
+* @param {soomla::CCPurchaseType} ccpurchasetype
+*/
+CCVirtualCurrencyPack : function(
+map,
+ccpurchasetype 
 )
 {
 },
@@ -2563,72 +2588,70 @@ getInstance : function (
 soomla.StoreAssets = {
 
 /**
- * @method getNonConsumableItems
- * @return {cc.__Array}
+ * @method addGood
+ * @param {cc.Ref} arg0
  */
-getNonConsumableItems : function (
+addGood : function (
+ref 
 )
 {
-    return cc.__Array;
 },
 
 /**
- * @method getCurrencyPacks
- * @return {cc.__Array}
+ * @method addNonConsumableItem
+ * @param {cc.Ref} arg0
  */
-getCurrencyPacks : function (
+addNonConsumableItem : function (
+ref 
 )
 {
-    return cc.__Array;
 },
 
 /**
- * @method getCategories
- * @return {cc.__Array}
+ * @method addCurrency
+ * @param {cc.Ref} arg0
  */
-getCategories : function (
+addCurrency : function (
+ref 
 )
 {
-    return cc.__Array;
 },
 
 /**
- * @method getCurrencies
- * @return {cc.__Array}
+ * @method addCurrencyPack
+ * @param {cc.Ref} arg0
  */
-getCurrencies : function (
+addCurrencyPack : function (
+ref 
 )
 {
-    return cc.__Array;
 },
 
 /**
- * @method getVersion
- * @return {int}
+ * @method addCategory
+ * @param {cc.Ref} arg0
  */
-getVersion : function (
+addCategory : function (
+ref 
 )
 {
-    return 0;
 },
 
 /**
- * @method getGoods
- * @return {cc.__Array}
+ * @method setVersion
+ * @param {int} arg0
  */
-getGoods : function (
+setVersion : function (
+int 
 )
 {
-    return cc.__Array;
 },
 
 /**
  * @method JSBStoreAssets
  * @constructor
- * @param {map_object} arg0
  */
 JSBStoreAssets : function (
-map 
 )
 {
 },

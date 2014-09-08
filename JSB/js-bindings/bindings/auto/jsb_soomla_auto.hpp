@@ -201,6 +201,7 @@ void js_register_soomla_CCSingleUseVG(JSContext *cx, JSObject *global);
 void register_all_soomla(JSContext* cx, JSObject* obj);
 bool js_soomla_CCSingleUseVG_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_soomla_CCSingleUseVG_createWithDictionary(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_soomla_CCSingleUseVG_CCSingleUseVG(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_soomla_CCError_class;
 extern JSObject *jsb_soomla_CCError_prototype;
@@ -435,12 +436,12 @@ bool js_soomla_JSBStoreAssets_constructor(JSContext *cx, uint32_t argc, jsval *v
 void js_soomla_JSBStoreAssets_finalize(JSContext *cx, JSObject *obj);
 void js_register_soomla_JSBStoreAssets(JSContext *cx, JSObject *global);
 void register_all_soomla(JSContext* cx, JSObject* obj);
-bool js_soomla_JSBStoreAssets_getNonConsumableItems(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_soomla_JSBStoreAssets_getCurrencyPacks(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_soomla_JSBStoreAssets_getCategories(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_soomla_JSBStoreAssets_getCurrencies(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_soomla_JSBStoreAssets_getVersion(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_soomla_JSBStoreAssets_getGoods(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_soomla_JSBStoreAssets_addGood(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_soomla_JSBStoreAssets_addNonConsumableItem(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_soomla_JSBStoreAssets_addCurrency(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_soomla_JSBStoreAssets_addCurrencyPack(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_soomla_JSBStoreAssets_addCategory(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_soomla_JSBStoreAssets_setVersion(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_soomla_JSBStoreAssets_JSBStoreAssets(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 

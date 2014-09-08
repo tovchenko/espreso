@@ -42,6 +42,8 @@ namespace soomla {
     class CCVirtualCurrency : public CCVirtualItem {
     public:
         CCVirtualCurrency(): CCVirtualItem() {}
+        // tovchenko: added
+        CCVirtualCurrency(cocos2d::ValueMap& params);
 
 		/**
          Creates a `CCVirtualCurrency`.

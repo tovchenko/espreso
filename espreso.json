@@ -2,6 +2,7 @@
     "Sources/genfun.js",
     "Sources/rsvp.js",
     "Sources/underscore.js",
+    "Sources/soomla.js",
     "Sources/utils.js",
     "Sources/platform.js",
     "Sources/manager.js",

@@ -19,6 +19,17 @@
 #include "CCPurchaseWithVirtualItem.h"
 
 namespace soomla {
+    // tovchenko: added
+    CCPurchaseWithVirtualItem::CCPurchaseWithVirtualItem(cocos2d::ValueMap& params)
+    : mItemId(nullptr),
+      mAmount(nullptr)
+    {
+        auto itemId = cocos2d::__String::create(params["itemId"].asString());
+        auto amount = cocos2d::__Integer::create(params["amount"].asInt());
+        
+        init(itemId, amount);
+    }
+    
     CCPurchaseWithVirtualItem *CCPurchaseWithVirtualItem::create(cocos2d::__String *itemId, cocos2d::__Integer *amount) {
         CCPurchaseWithVirtualItem *ret = new CCPurchaseWithVirtualItem();
         if (ret->init(itemId, amount)) {

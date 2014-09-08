@@ -19,6 +19,14 @@
 #include "CCVirtualCurrency.h"
 
 namespace soomla {
+    // tovchenko: added
+    CCVirtualCurrency::CCVirtualCurrency(cocos2d::ValueMap& params) {
+        auto name = cocos2d::__String::create(params["name"].asString());
+        auto description = cocos2d::__String::create(params["description"].asString());
+        auto itemId = cocos2d::__String::create(params["itemId"].asString());
+        
+        init(name, description, itemId);
+    }
     
     CCVirtualCurrency* CCVirtualCurrency::create(cocos2d::__String* name, cocos2d::__String* description, cocos2d::__String* itemId) {
         CCVirtualCurrency*ret = new CCVirtualCurrency();

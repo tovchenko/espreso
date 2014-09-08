@@ -39,6 +39,8 @@ namespace soomla {
         SL_SYNTHESIZE_RETAIN_WITH_DICT(cocos2d::__Array*, mGoodItemIds, GoodItemIds, CCStoreConsts::JSON_CATEGORY_GOODS_ITEM_IDS);
     public:
 	CCVirtualCategory(): mName(NULL), mGoodItemIds(NULL) {};
+    // tovchenko: added
+    CCVirtualCategory(cocos2d::ValueMap& params);
 
 		/**
          Creates a virtual category.

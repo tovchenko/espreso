@@ -39,6 +39,8 @@ namespace soomla {
         CC_SYNTHESIZE_RETAIN(cocos2d::__Integer *, mAmount, Amount);
     public:
         CCPurchaseWithVirtualItem(): mItemId(NULL), mAmount(NULL) {}
+        // tovchenko: added
+        CCPurchaseWithVirtualItem(cocos2d::ValueMap& params);
 
 		/** 
          Creates a `CCPurchaseWithVirtualItem`.

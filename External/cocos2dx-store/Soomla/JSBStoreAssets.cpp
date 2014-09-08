@@ -4,37 +4,45 @@
 using namespace soomla;
 
 
-JSBStoreAssets::JSBStoreAssets(cocos2d::ValueMap& storeParams) {
-}
-
 JSBStoreAssets::~JSBStoreAssets() {
-    CC_SAFE_RELEASE(mCurrencies);
-    CC_SAFE_RELEASE(mGoods);
-    CC_SAFE_RELEASE(mCurrencyPacks);
-    CC_SAFE_RELEASE(mCategories);
-    CC_SAFE_RELEASE(mNonConsumableItems);
+    CC_SAFE_RELEASE(_currencies);
+    CC_SAFE_RELEASE(_goods);
+    CC_SAFE_RELEASE(_currencyPacks);
+    CC_SAFE_RELEASE(_categories);
+    CC_SAFE_RELEASE(_nonConsumableItems);
 }
 
-int JSBStoreAssets::getVersion() {
-    return mVersion;
+auto JSBStoreAssets::addCategory(cocos2d::Ref* category)->void {
+    if (!_categories) {
+        _categories = soomla::Array::createWithObject(category);
+        _categories->retain();
+    } else _categories->addObject(category);
 }
 
-cocos2d::__Array *JSBStoreAssets::getCurrencies() {
-    return mCurrencies;
+auto JSBStoreAssets::addCurrency(cocos2d::Ref* currency)->void {
+    if (!_currencies) {
+        _currencies = soomla::Array::createWithObject(currency);
+        _currencies->retain();
+    } else _currencies->addObject(currency);
 }
 
-cocos2d::__Array *JSBStoreAssets::getGoods() {
-    return mGoods;
+auto JSBStoreAssets::addCurrencyPack(cocos2d::Ref* pack)->void {
+    if (!_currencyPacks) {
+        _currencyPacks = soomla::Array::createWithObject(pack);
+        _currencyPacks->retain();
+    } else _currencyPacks->addObject(pack);
 }
 
-cocos2d::__Array *JSBStoreAssets::getCurrencyPacks() {
-    return mCurrencyPacks;
+auto JSBStoreAssets::addGood(cocos2d::Ref* good)->void {
+    if (!_goods) {
+        _goods = soomla::Array::createWithObject(good);
+        _goods->retain();
+    } else _goods->addObject(good);
 }
 
-cocos2d::__Array *JSBStoreAssets::getCategories() {
-    return mCategories;
-}
-
-cocos2d::__Array *JSBStoreAssets::getNonConsumableItems() {
-    return mNonConsumableItems;
+auto JSBStoreAssets::addNonConsumableItem(cocos2d::Ref* item)->void {
+    if (!_nonConsumableItems) {
+        _nonConsumableItems = soomla::Array::createWithObject(item);
+        _nonConsumableItems->retain();
+    } else _nonConsumableItems->addObject(item);
 }

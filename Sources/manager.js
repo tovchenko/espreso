@@ -86,9 +86,9 @@ es.manager = {
                 if (hasResolution)
                     return path;
                 throw {
-                    name:'es.manager Error',
-                    message:'Can\'t calculate a path.',
-                    toString:function() {return this.name + ": " + this.message}
+                    name: 'es.manager Error',
+                    message: 'Can\'t calculate a path.',
+                    toString: function() {return this.name + ": " + this.message}
                 };
             } else {
                 if (hasResource && hasResolution) {

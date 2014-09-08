@@ -21,6 +21,21 @@
 USING_NS_CC;
 
 namespace soomla {
+    // tovchenko: added
+    CCVirtualCurrencyPack::CCVirtualCurrencyPack(cocos2d::ValueMap& params, CCPurchaseType* purchaseType)
+    : CCPurchasableVirtualItem(),
+      mCurrencyAmount(nullptr),
+      mCurrencyItemId(nullptr)
+    {
+        auto name = cocos2d::__String::create(params["name"].asString());
+        auto description = cocos2d::__String::create(params["description"].asString());
+        auto itemId = cocos2d::__String::create(params["itemId"].asString());
+        auto currencyAmount = cocos2d::__Integer::create(params["currencyAmount"].asInt());
+        auto currencyItemId = cocos2d::__String::create(params["currencyItemId"].asString());
+        
+        init(name, description, itemId, currencyAmount, currencyItemId, purchaseType);
+    }
+    
     CCVirtualCurrencyPack *CCVirtualCurrencyPack::create(__String *name, __String *description, __String *itemId, __Integer *currencyAmount, __String *currencyItemId, CCPurchaseType *purchaseType) {
         CCVirtualCurrencyPack *ret = new CCVirtualCurrencyPack();
         if (ret->init(name, description, itemId, currencyAmount, currencyItemId, purchaseType)) {

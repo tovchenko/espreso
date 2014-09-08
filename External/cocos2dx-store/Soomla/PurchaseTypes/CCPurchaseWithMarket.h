@@ -35,6 +35,8 @@ namespace soomla {
         CC_SYNTHESIZE_RETAIN(CCMarketItem *, mMarketItem, MarketItem);
     public:
         CCPurchaseWithMarket(): mMarketItem(NULL) {};
+        // tovchenko: added
+        CCPurchaseWithMarket(cocos2d::ValueMap& params);
 
 		/**
          Creates a `CCPurchaseWithMarket`.

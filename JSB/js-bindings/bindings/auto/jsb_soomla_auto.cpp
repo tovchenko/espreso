@@ -2814,26 +2814,58 @@ bool js_soomla_CCPurchaseWithMarket_constructor(JSContext *cx, uint32_t argc, js
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    soomla::CCPurchaseWithMarket* cobj = new soomla::CCPurchaseWithMarket();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<soomla::CCPurchaseWithMarket> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCPurchaseWithMarket");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
-    return true;
+
+	JSObject *obj = NULL;
+	soomla::CCPurchaseWithMarket* cobj = NULL;
+	do {
+		if (argc == 1) {
+			cocos2d::ValueMap arg0;
+			ok &= jsval_to_ccvaluemap(cx, argv[0], &arg0);
+			if (!ok) { ok = true; break; }
+			cobj = new soomla::CCPurchaseWithMarket(arg0);
+			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+			if (_ccobj) {
+				_ccobj->autorelease();
+			}
+			TypeTest<soomla::CCPurchaseWithMarket> t;
+			js_type_class_t *typeClass = nullptr;
+			std::string typeName = t.s_name();
+			auto typeMapIter = _js_global_type_map.find(typeName);
+			CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+			typeClass = typeMapIter->second;
+			CCASSERT(typeClass, "The value is null.");
+			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCPurchaseWithMarket");
+		}
+	} while(0);
+
+	do {
+		if (argc == 0) {
+			cobj = new soomla::CCPurchaseWithMarket();
+			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+			if (_ccobj) {
+				_ccobj->autorelease();
+			}
+			TypeTest<soomla::CCPurchaseWithMarket> t;
+			js_type_class_t *typeClass = nullptr;
+			std::string typeName = t.s_name();
+			auto typeMapIter = _js_global_type_map.find(typeName);
+			CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+			typeClass = typeMapIter->second;
+			CCASSERT(typeClass, "The value is null.");
+			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCPurchaseWithMarket");
+		}
+	} while(0);
+
+	if (cobj) {
+		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+		return true;
+	}
+	JS_ReportError(cx, "js_soomla_CCPurchaseWithMarket_constructor : wrong number of arguments");
+	return false;
 }
 
 
@@ -3090,26 +3122,58 @@ bool js_soomla_CCPurchaseWithVirtualItem_constructor(JSContext *cx, uint32_t arg
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    soomla::CCPurchaseWithVirtualItem* cobj = new soomla::CCPurchaseWithVirtualItem();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<soomla::CCPurchaseWithVirtualItem> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCPurchaseWithVirtualItem");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
-    return true;
+
+	JSObject *obj = NULL;
+	soomla::CCPurchaseWithVirtualItem* cobj = NULL;
+	do {
+		if (argc == 1) {
+			cocos2d::ValueMap arg0;
+			ok &= jsval_to_ccvaluemap(cx, argv[0], &arg0);
+			if (!ok) { ok = true; break; }
+			cobj = new soomla::CCPurchaseWithVirtualItem(arg0);
+			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+			if (_ccobj) {
+				_ccobj->autorelease();
+			}
+			TypeTest<soomla::CCPurchaseWithVirtualItem> t;
+			js_type_class_t *typeClass = nullptr;
+			std::string typeName = t.s_name();
+			auto typeMapIter = _js_global_type_map.find(typeName);
+			CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+			typeClass = typeMapIter->second;
+			CCASSERT(typeClass, "The value is null.");
+			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCPurchaseWithVirtualItem");
+		}
+	} while(0);
+
+	do {
+		if (argc == 0) {
+			cobj = new soomla::CCPurchaseWithVirtualItem();
+			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+			if (_ccobj) {
+				_ccobj->autorelease();
+			}
+			TypeTest<soomla::CCPurchaseWithVirtualItem> t;
+			js_type_class_t *typeClass = nullptr;
+			std::string typeName = t.s_name();
+			auto typeMapIter = _js_global_type_map.find(typeName);
+			CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+			typeClass = typeMapIter->second;
+			CCASSERT(typeClass, "The value is null.");
+			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCPurchaseWithVirtualItem");
+		}
+	} while(0);
+
+	if (cobj) {
+		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+		return true;
+	}
+	JS_ReportError(cx, "js_soomla_CCPurchaseWithVirtualItem_constructor : wrong number of arguments");
+	return false;
 }
 
 
@@ -3710,6 +3774,74 @@ bool js_soomla_CCSingleUseVG_createWithDictionary(JSContext *cx, uint32_t argc, 
 	return false;
 }
 
+bool js_soomla_CCSingleUseVG_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+
+	JSObject *obj = NULL;
+	soomla::CCSingleUseVG* cobj = NULL;
+	do {
+		if (argc == 2) {
+			cocos2d::ValueMap arg0;
+			ok &= jsval_to_ccvaluemap(cx, argv[0], &arg0);
+			if (!ok) { ok = true; break; }
+			soomla::CCPurchaseType* arg1;
+			do {
+				if (!argv[1].isObject()) { ok = false; break; }
+				js_proxy_t *jsProxy;
+				JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
+				jsProxy = jsb_get_js_proxy(tmpObj);
+				arg1 = (soomla::CCPurchaseType*)(jsProxy ? jsProxy->ptr : NULL);
+				JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+			} while (0);
+			if (!ok) { ok = true; break; }
+			cobj = new soomla::CCSingleUseVG(arg0, arg1);
+			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+			if (_ccobj) {
+				_ccobj->autorelease();
+			}
+			TypeTest<soomla::CCSingleUseVG> t;
+			js_type_class_t *typeClass = nullptr;
+			std::string typeName = t.s_name();
+			auto typeMapIter = _js_global_type_map.find(typeName);
+			CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+			typeClass = typeMapIter->second;
+			CCASSERT(typeClass, "The value is null.");
+			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCSingleUseVG");
+		}
+	} while(0);
+
+	do {
+		if (argc == 0) {
+			cobj = new soomla::CCSingleUseVG();
+			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+			if (_ccobj) {
+				_ccobj->autorelease();
+			}
+			TypeTest<soomla::CCSingleUseVG> t;
+			js_type_class_t *typeClass = nullptr;
+			std::string typeName = t.s_name();
+			auto typeMapIter = _js_global_type_map.find(typeName);
+			CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+			typeClass = typeMapIter->second;
+			CCASSERT(typeClass, "The value is null.");
+			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCSingleUseVG");
+		}
+	} while(0);
+
+	if (cobj) {
+		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+		return true;
+	}
+	JS_ReportError(cx, "js_soomla_CCSingleUseVG_constructor : wrong number of arguments");
+	return false;
+}
+
 
 extern JSObject *jsb_soomla_CCVirtualGood_prototype;
 
@@ -3749,7 +3881,7 @@ void js_register_soomla_CCSingleUseVG(JSContext *cx, JSObject *global) {
 		cx, global,
 		jsb_soomla_CCVirtualGood_prototype,
 		jsb_soomla_CCSingleUseVG_class,
-		dummy_constructor<soomla::CCSingleUseVG>, 0, // no constructor
+		js_soomla_CCSingleUseVG_constructor, 0, // constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -4920,26 +5052,58 @@ bool js_soomla_CCVirtualCategory_constructor(JSContext *cx, uint32_t argc, jsval
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    soomla::CCVirtualCategory* cobj = new soomla::CCVirtualCategory();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<soomla::CCVirtualCategory> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCVirtualCategory");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
-    return true;
+
+	JSObject *obj = NULL;
+	soomla::CCVirtualCategory* cobj = NULL;
+	do {
+		if (argc == 1) {
+			cocos2d::ValueMap arg0;
+			ok &= jsval_to_ccvaluemap(cx, argv[0], &arg0);
+			if (!ok) { ok = true; break; }
+			cobj = new soomla::CCVirtualCategory(arg0);
+			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+			if (_ccobj) {
+				_ccobj->autorelease();
+			}
+			TypeTest<soomla::CCVirtualCategory> t;
+			js_type_class_t *typeClass = nullptr;
+			std::string typeName = t.s_name();
+			auto typeMapIter = _js_global_type_map.find(typeName);
+			CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+			typeClass = typeMapIter->second;
+			CCASSERT(typeClass, "The value is null.");
+			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCVirtualCategory");
+		}
+	} while(0);
+
+	do {
+		if (argc == 0) {
+			cobj = new soomla::CCVirtualCategory();
+			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+			if (_ccobj) {
+				_ccobj->autorelease();
+			}
+			TypeTest<soomla::CCVirtualCategory> t;
+			js_type_class_t *typeClass = nullptr;
+			std::string typeName = t.s_name();
+			auto typeMapIter = _js_global_type_map.find(typeName);
+			CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+			typeClass = typeMapIter->second;
+			CCASSERT(typeClass, "The value is null.");
+			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCVirtualCategory");
+		}
+	} while(0);
+
+	if (cobj) {
+		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+		return true;
+	}
+	JS_ReportError(cx, "js_soomla_CCVirtualCategory_constructor : wrong number of arguments");
+	return false;
 }
 
 
@@ -6208,26 +6372,58 @@ bool js_soomla_CCVirtualCurrency_constructor(JSContext *cx, uint32_t argc, jsval
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    soomla::CCVirtualCurrency* cobj = new soomla::CCVirtualCurrency();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<soomla::CCVirtualCurrency> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCVirtualCurrency");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
-    return true;
+
+	JSObject *obj = NULL;
+	soomla::CCVirtualCurrency* cobj = NULL;
+	do {
+		if (argc == 1) {
+			cocos2d::ValueMap arg0;
+			ok &= jsval_to_ccvaluemap(cx, argv[0], &arg0);
+			if (!ok) { ok = true; break; }
+			cobj = new soomla::CCVirtualCurrency(arg0);
+			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+			if (_ccobj) {
+				_ccobj->autorelease();
+			}
+			TypeTest<soomla::CCVirtualCurrency> t;
+			js_type_class_t *typeClass = nullptr;
+			std::string typeName = t.s_name();
+			auto typeMapIter = _js_global_type_map.find(typeName);
+			CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+			typeClass = typeMapIter->second;
+			CCASSERT(typeClass, "The value is null.");
+			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCVirtualCurrency");
+		}
+	} while(0);
+
+	do {
+		if (argc == 0) {
+			cobj = new soomla::CCVirtualCurrency();
+			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+			if (_ccobj) {
+				_ccobj->autorelease();
+			}
+			TypeTest<soomla::CCVirtualCurrency> t;
+			js_type_class_t *typeClass = nullptr;
+			std::string typeName = t.s_name();
+			auto typeMapIter = _js_global_type_map.find(typeName);
+			CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+			typeClass = typeMapIter->second;
+			CCASSERT(typeClass, "The value is null.");
+			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCVirtualCurrency");
+		}
+	} while(0);
+
+	if (cobj) {
+		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+		return true;
+	}
+	JS_ReportError(cx, "js_soomla_CCVirtualCurrency_constructor : wrong number of arguments");
+	return false;
 }
 
 
@@ -6638,26 +6834,68 @@ bool js_soomla_CCVirtualCurrencyPack_constructor(JSContext *cx, uint32_t argc, j
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    soomla::CCVirtualCurrencyPack* cobj = new soomla::CCVirtualCurrencyPack();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<soomla::CCVirtualCurrencyPack> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCVirtualCurrencyPack");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
-    return true;
+
+	JSObject *obj = NULL;
+	soomla::CCVirtualCurrencyPack* cobj = NULL;
+	do {
+		if (argc == 2) {
+			cocos2d::ValueMap arg0;
+			ok &= jsval_to_ccvaluemap(cx, argv[0], &arg0);
+			if (!ok) { ok = true; break; }
+			soomla::CCPurchaseType* arg1;
+			do {
+				if (!argv[1].isObject()) { ok = false; break; }
+				js_proxy_t *jsProxy;
+				JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
+				jsProxy = jsb_get_js_proxy(tmpObj);
+				arg1 = (soomla::CCPurchaseType*)(jsProxy ? jsProxy->ptr : NULL);
+				JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+			} while (0);
+			if (!ok) { ok = true; break; }
+			cobj = new soomla::CCVirtualCurrencyPack(arg0, arg1);
+			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+			if (_ccobj) {
+				_ccobj->autorelease();
+			}
+			TypeTest<soomla::CCVirtualCurrencyPack> t;
+			js_type_class_t *typeClass = nullptr;
+			std::string typeName = t.s_name();
+			auto typeMapIter = _js_global_type_map.find(typeName);
+			CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+			typeClass = typeMapIter->second;
+			CCASSERT(typeClass, "The value is null.");
+			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCVirtualCurrencyPack");
+		}
+	} while(0);
+
+	do {
+		if (argc == 0) {
+			cobj = new soomla::CCVirtualCurrencyPack();
+			cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+			if (_ccobj) {
+				_ccobj->autorelease();
+			}
+			TypeTest<soomla::CCVirtualCurrencyPack> t;
+			js_type_class_t *typeClass = nullptr;
+			std::string typeName = t.s_name();
+			auto typeMapIter = _js_global_type_map.find(typeName);
+			CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+			typeClass = typeMapIter->second;
+			CCASSERT(typeClass, "The value is null.");
+			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+			js_proxy_t* p = jsb_new_proxy(cobj, obj);
+			JS_AddNamedObjectRoot(cx, &p->obj, "soomla::CCVirtualCurrencyPack");
+		}
+	} while(0);
+
+	if (cobj) {
+		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+		return true;
+	}
+	JS_ReportError(cx, "js_soomla_CCVirtualCurrencyPack_constructor : wrong number of arguments");
+	return false;
 }
 
 
@@ -8465,151 +8703,166 @@ void js_register_soomla_JSBEventHandler(JSContext *cx, JSObject *global) {
 JSClass  *jsb_soomla_JSBStoreAssets_class;
 JSObject *jsb_soomla_JSBStoreAssets_prototype;
 
-bool js_soomla_JSBStoreAssets_getNonConsumableItems(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_soomla_JSBStoreAssets_addGood(JSContext *cx, uint32_t argc, jsval *vp)
 {
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	soomla::JSBStoreAssets* cobj = (soomla::JSBStoreAssets *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_soomla_JSBStoreAssets_getNonConsumableItems : Invalid Native Object");
-	if (argc == 0) {
-		cocos2d::__Array* ret = cobj->getNonConsumableItems();
-		jsval jsret = JSVAL_NULL;
+	JSB_PRECONDITION2( cobj, cx, false, "js_soomla_JSBStoreAssets_addGood : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::Ref* arg0;
 		do {
-			if (ret) {
-				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::__Array>(cx, (cocos2d::__Array*)ret);
-				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-			} else {
-				jsret = JSVAL_NULL;
-			}
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::Ref*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
+		JSB_PRECONDITION2(ok, cx, false, "js_soomla_JSBStoreAssets_addGood : Error processing arguments");
+		cobj->addGood(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_soomla_JSBStoreAssets_getNonConsumableItems : wrong number of arguments: %d, was expecting %d", argc, 0);
+	JS_ReportError(cx, "js_soomla_JSBStoreAssets_addGood : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
-bool js_soomla_JSBStoreAssets_getCurrencyPacks(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_soomla_JSBStoreAssets_addNonConsumableItem(JSContext *cx, uint32_t argc, jsval *vp)
 {
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	soomla::JSBStoreAssets* cobj = (soomla::JSBStoreAssets *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_soomla_JSBStoreAssets_getCurrencyPacks : Invalid Native Object");
-	if (argc == 0) {
-		cocos2d::__Array* ret = cobj->getCurrencyPacks();
-		jsval jsret = JSVAL_NULL;
+	JSB_PRECONDITION2( cobj, cx, false, "js_soomla_JSBStoreAssets_addNonConsumableItem : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::Ref* arg0;
 		do {
-			if (ret) {
-				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::__Array>(cx, (cocos2d::__Array*)ret);
-				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-			} else {
-				jsret = JSVAL_NULL;
-			}
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::Ref*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
+		JSB_PRECONDITION2(ok, cx, false, "js_soomla_JSBStoreAssets_addNonConsumableItem : Error processing arguments");
+		cobj->addNonConsumableItem(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_soomla_JSBStoreAssets_getCurrencyPacks : wrong number of arguments: %d, was expecting %d", argc, 0);
+	JS_ReportError(cx, "js_soomla_JSBStoreAssets_addNonConsumableItem : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
-bool js_soomla_JSBStoreAssets_getCategories(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_soomla_JSBStoreAssets_addCurrency(JSContext *cx, uint32_t argc, jsval *vp)
 {
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	soomla::JSBStoreAssets* cobj = (soomla::JSBStoreAssets *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_soomla_JSBStoreAssets_getCategories : Invalid Native Object");
-	if (argc == 0) {
-		cocos2d::__Array* ret = cobj->getCategories();
-		jsval jsret = JSVAL_NULL;
+	JSB_PRECONDITION2( cobj, cx, false, "js_soomla_JSBStoreAssets_addCurrency : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::Ref* arg0;
 		do {
-			if (ret) {
-				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::__Array>(cx, (cocos2d::__Array*)ret);
-				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-			} else {
-				jsret = JSVAL_NULL;
-			}
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::Ref*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
+		JSB_PRECONDITION2(ok, cx, false, "js_soomla_JSBStoreAssets_addCurrency : Error processing arguments");
+		cobj->addCurrency(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_soomla_JSBStoreAssets_getCategories : wrong number of arguments: %d, was expecting %d", argc, 0);
+	JS_ReportError(cx, "js_soomla_JSBStoreAssets_addCurrency : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
-bool js_soomla_JSBStoreAssets_getCurrencies(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_soomla_JSBStoreAssets_addCurrencyPack(JSContext *cx, uint32_t argc, jsval *vp)
 {
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	soomla::JSBStoreAssets* cobj = (soomla::JSBStoreAssets *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_soomla_JSBStoreAssets_getCurrencies : Invalid Native Object");
-	if (argc == 0) {
-		cocos2d::__Array* ret = cobj->getCurrencies();
-		jsval jsret = JSVAL_NULL;
+	JSB_PRECONDITION2( cobj, cx, false, "js_soomla_JSBStoreAssets_addCurrencyPack : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::Ref* arg0;
 		do {
-			if (ret) {
-				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::__Array>(cx, (cocos2d::__Array*)ret);
-				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-			} else {
-				jsret = JSVAL_NULL;
-			}
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::Ref*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 		} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
+		JSB_PRECONDITION2(ok, cx, false, "js_soomla_JSBStoreAssets_addCurrencyPack : Error processing arguments");
+		cobj->addCurrencyPack(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_soomla_JSBStoreAssets_getCurrencies : wrong number of arguments: %d, was expecting %d", argc, 0);
+	JS_ReportError(cx, "js_soomla_JSBStoreAssets_addCurrencyPack : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
-bool js_soomla_JSBStoreAssets_getVersion(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_soomla_JSBStoreAssets_addCategory(JSContext *cx, uint32_t argc, jsval *vp)
 {
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	soomla::JSBStoreAssets* cobj = (soomla::JSBStoreAssets *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_soomla_JSBStoreAssets_getVersion : Invalid Native Object");
-	if (argc == 0) {
-		int ret = cobj->getVersion();
-		jsval jsret = JSVAL_NULL;
-		jsret = int32_to_jsval(cx, ret);
-		JS_SET_RVAL(cx, vp, jsret);
+	JSB_PRECONDITION2( cobj, cx, false, "js_soomla_JSBStoreAssets_addCategory : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::Ref* arg0;
+		do {
+			if (!argv[0].isObject()) { ok = false; break; }
+			js_proxy_t *jsProxy;
+			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+			jsProxy = jsb_get_js_proxy(tmpObj);
+			arg0 = (cocos2d::Ref*)(jsProxy ? jsProxy->ptr : NULL);
+			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+		} while (0);
+		JSB_PRECONDITION2(ok, cx, false, "js_soomla_JSBStoreAssets_addCategory : Error processing arguments");
+		cobj->addCategory(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_soomla_JSBStoreAssets_getVersion : wrong number of arguments: %d, was expecting %d", argc, 0);
+	JS_ReportError(cx, "js_soomla_JSBStoreAssets_addCategory : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
-bool js_soomla_JSBStoreAssets_getGoods(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_soomla_JSBStoreAssets_setVersion(JSContext *cx, uint32_t argc, jsval *vp)
 {
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	soomla::JSBStoreAssets* cobj = (soomla::JSBStoreAssets *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_soomla_JSBStoreAssets_getGoods : Invalid Native Object");
-	if (argc == 0) {
-		cocos2d::__Array* ret = cobj->getGoods();
-		jsval jsret = JSVAL_NULL;
-		do {
-			if (ret) {
-				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::__Array>(cx, (cocos2d::__Array*)ret);
-				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-			} else {
-				jsret = JSVAL_NULL;
-			}
-		} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
+	JSB_PRECONDITION2( cobj, cx, false, "js_soomla_JSBStoreAssets_setVersion : Invalid Native Object");
+	if (argc == 1) {
+		int arg0;
+		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_soomla_JSBStoreAssets_setVersion : Error processing arguments");
+		cobj->setVersion(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_soomla_JSBStoreAssets_getGoods : wrong number of arguments: %d, was expecting %d", argc, 0);
+	JS_ReportError(cx, "js_soomla_JSBStoreAssets_setVersion : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
 bool js_soomla_JSBStoreAssets_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
-    cocos2d::ValueMap arg0;
-    ok &= jsval_to_ccvaluemap(cx, argv[0], &arg0);
-    JSB_PRECONDITION2(ok, cx, false, "js_soomla_JSBStoreAssets_constructor : Error processing arguments");
-    soomla::JSBStoreAssets* cobj = new soomla::JSBStoreAssets(arg0);
+    soomla::JSBStoreAssets* cobj = new soomla::JSBStoreAssets();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
@@ -8656,12 +8909,12 @@ void js_register_soomla_JSBStoreAssets(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getNonConsumableItems", js_soomla_JSBStoreAssets_getNonConsumableItems, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getCurrencyPacks", js_soomla_JSBStoreAssets_getCurrencyPacks, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getCategories", js_soomla_JSBStoreAssets_getCategories, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getCurrencies", js_soomla_JSBStoreAssets_getCurrencies, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getVersion", js_soomla_JSBStoreAssets_getVersion, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getGoods", js_soomla_JSBStoreAssets_getGoods, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("addGood", js_soomla_JSBStoreAssets_addGood, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("addNonConsumableItem", js_soomla_JSBStoreAssets_addNonConsumableItem, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("addCurrency", js_soomla_JSBStoreAssets_addCurrency, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("addCurrencyPack", js_soomla_JSBStoreAssets_addCurrencyPack, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("addCategory", js_soomla_JSBStoreAssets_addCategory, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setVersion", js_soomla_JSBStoreAssets_setVersion, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 

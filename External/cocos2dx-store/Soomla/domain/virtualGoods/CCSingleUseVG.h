@@ -44,6 +44,9 @@ namespace soomla {
     class CCSingleUseVG : public CCVirtualGood {
     
     public:
+        // tovchenko: added
+        CCSingleUseVG() {}
+        CCSingleUseVG(cocos2d::ValueMap& params, CCPurchaseType* purchaseType);
 		/**
          Creates a `CCSingleUseVG`.
          @param name The virtual good's name.

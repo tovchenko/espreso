@@ -19,6 +19,16 @@
 #include "CCSingleUseVG.h"
 
 namespace soomla {
+    // tovchenko: added
+    CCSingleUseVG::CCSingleUseVG(cocos2d::ValueMap& params, CCPurchaseType* purchaseType) {
+        auto name = cocos2d::__String::create(params["name"].asString());
+        auto description = cocos2d::__String::create(params["description"].asString());
+        auto itemId = cocos2d::__String::create(params["itemId"].asString());
+        
+        init(name, description, itemId, purchaseType);
+    }
+    
+    
     USING_NS_CC;
     CCSingleUseVG *CCSingleUseVG::create(__String *name, __String *description, __String *itemId, CCPurchaseType *purchaseType) {
         CCSingleUseVG *ret = new CCSingleUseVG();

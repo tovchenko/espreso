@@ -45,6 +45,8 @@ namespace soomla {
         SL_SYNTHESIZE_RETAIN_WITH_DICT(cocos2d::__String *, mCurrencyItemId, CurrencyItemId, CCStoreConsts::JSON_CURRENCY_PACK_CURRENCY_ITEM_ID);
     public:
 	CCVirtualCurrencyPack(): CCPurchasableVirtualItem(), mCurrencyAmount(NULL), mCurrencyItemId(NULL) {};
+    // tovchenko: added
+    CCVirtualCurrencyPack(cocos2d::ValueMap& params, CCPurchaseType* purchaseType);
 
 		/**
          Creates a `CCVirtualCurrencyPack`.

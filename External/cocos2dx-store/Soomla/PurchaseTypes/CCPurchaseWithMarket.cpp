@@ -19,6 +19,16 @@
 #include "CCPurchaseWithMarket.h"
 
 namespace soomla {
+    // tovchenko: added
+    CCPurchaseWithMarket::CCPurchaseWithMarket(cocos2d::ValueMap& params)
+    : mMarketItem(nullptr)
+    {
+        auto productId = cocos2d::__String::create(params["productId"].asString());
+        auto price = cocos2d::__Double::create(params["price"].asDouble());
+        
+        initWithMarketItem(CCMarketItem::create(productId, cocos2d::CCInteger::create(CCMarketItem::CONSUMABLE), price));
+    }
+    
     CCPurchaseWithMarket *CCPurchaseWithMarket::create(cocos2d::__String *productId, cocos2d::__Double *price) {
         return createWithMarketItem(CCMarketItem::create(
                 productId, cocos2d::CCInteger::create(CCMarketItem::CONSUMABLE), price));
