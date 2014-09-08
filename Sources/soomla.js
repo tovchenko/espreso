@@ -5,6 +5,10 @@
 var es = es || {};
 
 if (cc.sys.isNative) {
+    soomla.serviceManager = soomla.ServiceManager.getInstance();
+    soomla.eventHandler = soomla.EventHandler.getInstance();
+    soomla.initShared = soomla.StoreService.initShared;
+
     soomla.StoreAssets.create = function(params) {
         var res = new soomla.StoreAssets();
 
