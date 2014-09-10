@@ -66,6 +66,7 @@ es.manager = {
     makeResourcePath: function(path, useResolutionPath, useResPath) {
         var pathParts = path.split('/');
         var len = pathParts.length;
+        if (len > 1 && pathParts[0] === '') --len;
         var base = cc.path.basename(path);
 
         if (len > 1) {
@@ -98,9 +99,9 @@ es.manager = {
                 if (hasResource)
                     return path;
                 throw {
-                    name:'es.manager Error',
-                    message:'Can\'t calculate a path.',
-                    toString:function() {return this.name + ": " + this.message}
+                    name: 'es.manager Error',
+                    message: 'Can\'t calculate a path.',
+                    toString: function() {return this.name + ": " + this.message}
                 };
             }
         } else {

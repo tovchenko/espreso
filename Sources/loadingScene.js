@@ -75,14 +75,14 @@ es.LoadingLayer.create = function() {
 
 
 es.LoadingScene = cc.Class.extend({
-    initWith : function(fileName, loadingLayer, endFn) {
+    initWith: function(fileName, loadingLayer, endFn) {
         var builder = es.ObjectBuilder.create(fileName, loadingLayer.step.bind(loadingLayer));
         loadingLayer.setFinishHandler(function() {
             if (!endFn)
                 throw {
-                    name:'es.LoadingScene Error',
-                    message:'You must provide callback function.',
-                    toString:function() {return this.name + ": " + this.message}
+                    name: 'es.LoadingScene Error',
+                    message: 'You must provide callback function.',
+                    toString: function() {return this.name + ": " + this.message}
                 };
 
             endFn(builder);
