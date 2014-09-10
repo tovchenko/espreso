@@ -119,9 +119,9 @@ es.ObjectBuilder = cc.Class.extend({
                 var fileName = armature['file'];
                 if (!fileName)
                     throw {
-                        name:'es.ObjectBuilder Error',
-                        message:'Armature must have \'file\' member.',
-                        toString:function() {return this.name + ": " + this.message}
+                        name: 'es.ObjectBuilder Error',
+                        message: 'Armature must have \'file\' member.',
+                        toString: function() {return this.name + ": " + this.message}
                     };
                 var name = fileName.substr(0, fileName.lastIndexOf('.'));
                 res = cc.Node.create();
@@ -216,9 +216,9 @@ es.ObjectBuilder = cc.Class.extend({
         var render = object['render'];
         if (!render)
             throw {
-                name:'es.ObjectBuilder Error',
-                message:'Attempt to create SpriteBatchNode from the object with no render part.',
-                toString:function() {return this.name + ": " + this.message}
+                name: 'es.ObjectBuilder Error',
+                message: 'Attempt to create SpriteBatchNode from the object with no render part.',
+                toString: function() {return this.name + ": " + this.message}
             };
 
         if (render['armature']) {
@@ -274,9 +274,9 @@ es.ObjectBuilder = cc.Class.extend({
                         }
                     } else if (!armature) {
                         throw {
-                            name:'es.ObjectBuilder Error',
-                            message:'Object doesn\'t have sprite property.',
-                            toString:function() {return this.name + ": " + this.message}
+                            name: 'es.ObjectBuilder Error',
+                            message: 'Object doesn\'t have sprite property.',
+                            toString: function() {return this.name + ": " + this.message}
                         };
                     }
                 }
@@ -334,9 +334,9 @@ es.ObjectBuilder = cc.Class.extend({
                 var dict = cc.loader.getRes(animator);
                 if (!dict)
                     throw {
-                        name:'es.ObjectBuilder Error',
-                        message:'Animation json file doesn\'t exist or is empty.',
-                        toString:function() {return this.name + ": " + this.message}
+                        name: 'es.ObjectBuilder Error',
+                        message: 'Animation json file doesn\'t exist or is empty.',
+                        toString: function() {return this.name + ": " + this.message}
                     };
 
                 var sheets = dict['properties'] && dict['properties']['spritesheets'];

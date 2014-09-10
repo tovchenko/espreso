@@ -17,9 +17,9 @@ es.platform = {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 for (var i = 0; i < this._androidTextureExts.length; ++i) {
                     var basename = nameWithoutExtension + '.' + this._androidTextureExts[i];
-                    if (jsb.fileUtils.isFileExist(jsb.fileUtils.fullPathForFilename(basename))) {
+                    //if (jsb.fileUtils.isFileExist(jsb.fileUtils.fullPathForFilename(basename))) {
                         return basename;
-                    }
+                    //}
                 }
             } else if (cc.sys.os === cc.sys.OS_IOS) {
                 return nameWithoutExtension + '.' + this._iosTextureExt;
@@ -81,7 +81,7 @@ es.platform = {
 
     if (ccs.dataReaderHelper) {
         var superRemoveConfigFileFn = ccs.dataReaderHelper.removeConfigFile;
-        ccs.dataReaderHelper.removeConfigFile = function (configFile) {
+        ccs.dataReaderHelper.removeConfigFile = function(configFile) {
             superRemoveConfigFileFn.call(this, es.manager.makeResourcePath(configFile));
         };
     }
@@ -97,7 +97,7 @@ es.platform = {
     };
 
     var superFn = ccs.uiReader.widgetFromJsonFile;
-    ccs.uiReader.widgetFromJsonFile = function (fileName) {
+    ccs.uiReader.widgetFromJsonFile = function(fileName) {
         if (cc.sys.isNative) {
             return superFn.call(ccs.uiReader, fileName);
         } else {

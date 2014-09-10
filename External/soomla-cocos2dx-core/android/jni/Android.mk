@@ -5,27 +5,23 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := cocos2dx_soomla_common_static
 LOCAL_MODULE_FILENAME := libcocos2dxsoomlacommon
-LOCAL_SRC_FILES := ../../Soomla/CCCommonConsts.cpp \
-	../../Soomla/CCCoreEventDispatcher.cpp \
-	../../Soomla/CCCoreService.cpp \
-	../../Soomla/CCDomainFactory.cpp \
-	../../Soomla/CCDomainHelper.cpp \
-	../../Soomla/CCError.cpp \
-	../../Soomla/CCJsonHelper.cpp \
-	../../Soomla/CCNdkBridge.cpp \
-	../../Soomla/CCServiceManager.cpp \
-	../../Soomla/CCSoomlaEventDispatcher.cpp \
-	../../Soomla/domain/CCDomain.cpp \
-	../../Soomla/domain/CCSoomlaEntity.cpp \
-	../../Soomla/rewards/CCAggregateReward.cpp \
-	../../Soomla/rewards/CCBadgeReward.cpp \
-	../../Soomla/rewards/CCRandomReward.cpp \
-	../../Soomla/rewards/CCReward.cpp \
-	../../Soomla/rewards/CCSequenceReward.cpp
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Soomla
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../Soomla/domain
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../Soomla/rewards
+
+
+srcrootpath := $(LOCAL_PATH)/../../Soomla
+
+dirs := $(shell find $(srcrootpath) -type d)
+
+cppfilestemp1 := $(shell find $(dirs) -name *.cpp)
+cppfilestemp2 := $(sort $(cppfilestemp1))
+cppfiles := $(subst $(LOCAL_PATH)/,,$(cppfilestemp2))
+
+LOCAL_SRC_FILES := \
+		   $(cppfiles)
+
+LOCAL_C_INCLUDES := $(dirs)
+
+
 
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += jansson_static
@@ -38,4 +34,4 @@ LOCAL_EXPORT_C_INCLUDES += $(LOCAL_PATH)/../../Soomla/rewards
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,external/jansson)
+$(call import-module, ../espreso/External/jansson)

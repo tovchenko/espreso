@@ -80,5 +80,3 @@ if (cc.sys.isNative) {
         return new soomla.VirtualCategory(params);
     };
 }
-
-
