@@ -58,6 +58,7 @@ es.manager = {
             {
                 current = sz;
                 this._resolutionDependedPath = paths[i].path;
+                cc.sys.isNative && jsb.fileUtils.setSearchResolutionsOrder([this._resolutionDependedPath]);
                 cc.director.setContentScaleFactor(paths[i].scale);
             }
         }
