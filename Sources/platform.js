@@ -17,9 +17,9 @@ es.platform = {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 for (var i = 0; i < this._androidTextureExts.length; ++i) {
                     var basename = nameWithoutExtension + '.' + this._androidTextureExts[i];
-                    //if (jsb.fileUtils.isFileExist(jsb.fileUtils.fullPathForFilename(basename))) {
+                    if (jsb.fileUtils.isFileExist(jsb.fileUtils.fullPathForFilename(basename))) {
                         return basename;
-                    //}
+                    }
                 }
             } else if (cc.sys.os === cc.sys.OS_IOS) {
                 return nameWithoutExtension + '.' + this._iosTextureExt;
