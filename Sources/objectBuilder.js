@@ -100,8 +100,19 @@ es.ObjectBuilder = cc.Class.extend({
         }
     },
 
-    make: function(objectName) {
-        var object = this._jsonData[objectName];
+    getObjectData: function(objectName) {
+        return this._jsonData[objectName];
+    },
+
+    // if you use clazz, don't forget to call super
+    // var MyClass = cc.Sprite.extend({
+    //     _age: 27,
+    //     ctor: function() {
+    //         cc.Sprite.prototype.ctor.apply(this, arguments);
+    //     }
+    // });
+    make: function(objectName, clazz) {
+        var object = this.getObjectData(objectName);
         if (!object)
             throw {
                 name: 'es.ObjectBuilder Error',
@@ -112,7 +123,7 @@ es.ObjectBuilder = cc.Class.extend({
         var res = null;
         // render
         var render = object['render'];
-        if (!render) res = cc.Node.create();
+        if (!render) res = clazz ? new clazz : new cc.Node();
         else {
             var armature = render['armature'];
             if (armature) {
@@ -124,7 +135,7 @@ es.ObjectBuilder = cc.Class.extend({
                         toString: function() {return this.name + ": " + this.message}
                     };
                 var name = fileName.substr(0, fileName.lastIndexOf('.'));
-                res = cc.Node.create();
+                res = clazz ? new clazz : new cc.Node();
                 res.setAnchorPoint(0.5, 0.5);
                 var obj = ccs.Armature.create(name);
                 obj.setAnchorPoint(0.5, 0.5);
@@ -133,15 +144,17 @@ es.ObjectBuilder = cc.Class.extend({
             } else {
                 var atlas = render['atlas'];
                 if (atlas) {
-                    if (render['sprite']) res = cc.Sprite.create('#' + render['sprite']);
+                    var arg0 = '#' + render['sprite'];
+                    if (render['sprite']) res = clazz ? new clazz(arg0) : new cc.Sprite(arg0);
                     else {
                         var atlasName = es.manager.makeResourcePath(es.platform.textureFileName(atlas), true);
-                        res = cc.Sprite.create(atlasName, cc.rect(0,0,0,0)); // this case use only for animations
+                        var arg1 = cc.rect(0,0,0,0);
+                        res = clazz ? new clazz(atlasName, arg1) : new cc.Sprite(atlasName, arg1); // this case use only for animations
                     }
                 } else {
                     var spriteName = es.manager.makeResourcePath(render['sprite'], true);
                     spriteName = es.platform.textureFileName(spriteName);
-                    res = cc.Sprite.create(spriteName);
+                    res = clazz ? new clazz(spriteName) : new cc.Sprite(spriteName);
                 }
             }
         }
