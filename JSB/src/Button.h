@@ -8,10 +8,11 @@ using namespace cocos2d;
 
 namespace es {
 
-    class EspresoButton : public ui::Button {
+    class Button : public ui::Button {
     DECLARE_CLASS_GUI_INFO
     public:
-        static auto create()->EspresoButton*;
+        static auto create()->Button*;
+        auto getNormalTextureScaleInSize() const->Size;
         
     protected:
         virtual auto onPressStateChangedToNormal()->void override;

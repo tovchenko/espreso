@@ -4,18 +4,28 @@
 var ccui = ccui || {};
 
 /**
- * @class EspresoButton
+ * @class Button
  */
 ccui.Button = {
 
 /**
+ * @method getNormalTextureScaleInSize
+ * @return {size_object}
+ */
+getNormalTextureScaleInSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
  * @method create
- * @return {es::EspresoButton}
+ * @return {es::Button}
  */
 create : function (
 )
 {
-    return es::EspresoButton;
+    return es::Button;
 },
 
 /**

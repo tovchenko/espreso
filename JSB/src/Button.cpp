@@ -3,10 +3,10 @@
 
 using namespace es;
 
-IMPLEMENT_CLASS_GUI_INFO(EspresoButton)
+IMPLEMENT_CLASS_GUI_INFO(es::Button)
 
-auto EspresoButton::create()->EspresoButton* {
-    auto widget = new EspresoButton();
+auto Button::create()->Button* {
+    auto widget = new Button();
     if (widget && widget->init()) {
         widget->autorelease();
         return widget;
@@ -15,7 +15,11 @@ auto EspresoButton::create()->EspresoButton* {
     return nullptr;
 }
 
-auto EspresoButton::onPressStateChangedToNormal()->void {
+auto Button::getNormalTextureScaleInSize() const->Size {
+    return Size(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
+}
+
+auto Button::onPressStateChangedToNormal()->void {
     ui::Button::onPressStateChangedToNormal();
     const auto coef = getPressedCoef();
     
@@ -25,7 +29,7 @@ auto EspresoButton::onPressStateChangedToNormal()->void {
     }
 }
 
-auto EspresoButton::onPressStateChangedToPressed()->void {
+auto Button::onPressStateChangedToPressed()->void {
     ui::Button::onPressStateChangedToPressed();
     const auto coef = getPressedCoef();
     
@@ -35,10 +39,10 @@ auto EspresoButton::onPressStateChangedToPressed()->void {
     }
 }
 
-auto EspresoButton::getPressedCoef() const->double {
+auto Button::getPressedCoef() const->double {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    js_proxy_t* p = jsb_get_native_proxy(const_cast<EspresoButton*>(this));
+    js_proxy_t* p = jsb_get_native_proxy(const_cast<Button*>(this));
     if (!p) {
         return -1;
     }
@@ -50,10 +54,10 @@ auto EspresoButton::getPressedCoef() const->double {
     return JSVAL_TO_DOUBLE(retval);
 }
 
-auto EspresoButton::getPressAction(double sx, double sy) const->Action* {
+auto Button::getPressAction(double sx, double sy) const->Action* {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    js_proxy_t* p = jsb_get_native_proxy(const_cast<EspresoButton*>(this));
+    js_proxy_t* p = jsb_get_native_proxy(const_cast<Button*>(this));
     if (!p) {
         CCLOG("JSB: Wrong native object = %p", this);
         return nullptr;
