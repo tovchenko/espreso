@@ -16,5 +16,6 @@
     "Sources/loadingScene.js",
     "Sources/popup.js",
     "Sources/scrollView.js",
-    "Sources/menuItem.js"
+    "Sources/menuItem.js",
+    "Sources/guiButton.js"
 ]

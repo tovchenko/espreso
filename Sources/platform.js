@@ -45,6 +45,7 @@ es.platform = {
 // === Compatibility workarounds ===
 
 (function() {
+    // adds getSpriteFrame instead deprecated displayFrame
     cc.Sprite.prototype.getSpriteFrame = cc.Sprite.prototype.getSpriteFrame || cc.Sprite.prototype.displayFrame;
 
     if (cc.sys.isNative) {

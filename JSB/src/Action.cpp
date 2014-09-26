@@ -40,7 +40,8 @@ auto EspresoAction::clone() const->Action* {
     jsval retval;
     jsval dataVal = INT_TO_JSVAL(1);
     ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "clone", 1, &dataVal, &retval);
-    return static_cast<cocos2d::Action*>(JSVAL_TO_PRIVATE(retval));
+    auto retProxy = jsb_get_js_proxy(JSVAL_TO_OBJECT(retval));
+    return static_cast<Action*>(retProxy->ptr);
 }
 
 auto EspresoAction::reverse() const->Action* {
@@ -55,5 +56,6 @@ auto EspresoAction::reverse() const->Action* {
     jsval retval;
     jsval dataVal = INT_TO_JSVAL(1);
     ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "reverse", 1, &dataVal, &retval);
-    return static_cast<cocos2d::Action*>(JSVAL_TO_PRIVATE(retval));
+    auto retProxy = jsb_get_js_proxy(JSVAL_TO_OBJECT(retval));
+    return static_cast<Action*>(retProxy->ptr);
 }
