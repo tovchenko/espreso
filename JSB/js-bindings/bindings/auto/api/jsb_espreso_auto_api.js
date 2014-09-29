@@ -38,7 +38,7 @@ MenuItemScalable : function (
 };
 
 /**
- * @class EspresoAction
+ * @class Action
  */
 cc.Action = {
 
@@ -64,21 +64,12 @@ reverse : function (
 
 /**
  * @method create
- * @return {es::EspresoAction}
+ * @return {es::Action}
  */
 create : function (
 )
 {
-    return es::EspresoAction;
-},
-
-/**
- * @method EspresoAction
- * @constructor
- */
-EspresoAction : function (
-)
-{
+    return es::Action;
 },
 
 };

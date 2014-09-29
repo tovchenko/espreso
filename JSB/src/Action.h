@@ -3,17 +3,15 @@
 #define EspresoAction_H
 
 #include "cocos2d.h"
-using namespace cocos2d;
 
 namespace es {
     
-    class EspresoAction : public Action {
+    class Action : public cocos2d::Action {
     public:
-        EspresoAction() {}
-        static auto create()->EspresoAction*;
+        static auto create()->Action*;
         
-        virtual auto clone() const->Action*;
-        virtual auto reverse() const->Action*;
+        virtual auto clone() const->cocos2d::Action*;
+        virtual auto reverse() const->cocos2d::Action*;
         virtual auto step(float dt)->void;
     };
 }

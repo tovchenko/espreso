@@ -304,15 +304,15 @@ void js_register_espreso_MenuItemScalable(JSContext *cx, JSObject *global) {
 	}
 }
 
-JSClass  *jsb_es_EspresoAction_class;
-JSObject *jsb_es_EspresoAction_prototype;
+JSClass  *jsb_es_Action_class;
+JSObject *jsb_es_Action_prototype;
 
-bool js_espreso_EspresoAction_clone(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_espreso_Action_clone(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	es::EspresoAction* cobj = (es::EspresoAction *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_EspresoAction_clone : Invalid Native Object");
+	es::Action* cobj = (es::Action *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_Action_clone : Invalid Native Object");
 	if (argc == 0) {
 		cocos2d::Action* ret = cobj->clone();
 		jsval jsret = JSVAL_NULL;
@@ -328,15 +328,15 @@ bool js_espreso_EspresoAction_clone(JSContext *cx, uint32_t argc, jsval *vp)
 		return true;
 	}
 
-	JS_ReportError(cx, "js_espreso_EspresoAction_clone : wrong number of arguments: %d, was expecting %d", argc, 0);
+	JS_ReportError(cx, "js_espreso_Action_clone : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
-bool js_espreso_EspresoAction_reverse(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_espreso_Action_reverse(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	es::EspresoAction* cobj = (es::EspresoAction *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_EspresoAction_reverse : Invalid Native Object");
+	es::Action* cobj = (es::Action *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_espreso_Action_reverse : Invalid Native Object");
 	if (argc == 0) {
 		cocos2d::Action* ret = cobj->reverse();
 		jsval jsret = JSVAL_NULL;
@@ -352,17 +352,17 @@ bool js_espreso_EspresoAction_reverse(JSContext *cx, uint32_t argc, jsval *vp)
 		return true;
 	}
 
-	JS_ReportError(cx, "js_espreso_EspresoAction_reverse : wrong number of arguments: %d, was expecting %d", argc, 0);
+	JS_ReportError(cx, "js_espreso_Action_reverse : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
-bool js_espreso_EspresoAction_create(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_espreso_Action_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	if (argc == 0) {
-		es::EspresoAction* ret = es::EspresoAction::create();
+		es::Action* ret = es::Action::create();
 		jsval jsret = JSVAL_NULL;
 		do {
 		if (ret) {
-			js_proxy_t *jsProxy = js_get_or_create_proxy<es::EspresoAction>(cx, (es::EspresoAction*)ret);
+			js_proxy_t *jsProxy = js_get_or_create_proxy<es::Action>(cx, (es::Action*)ret);
 			jsret = OBJECT_TO_JSVAL(jsProxy->obj);
 		} else {
 			jsret = JSVAL_NULL;
@@ -371,71 +371,45 @@ bool js_espreso_EspresoAction_create(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
 	}
-	JS_ReportError(cx, "js_espreso_EspresoAction_create : wrong number of arguments");
+	JS_ReportError(cx, "js_espreso_Action_create : wrong number of arguments");
 	return false;
-}
-
-bool js_espreso_EspresoAction_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-    es::EspresoAction* cobj = new es::EspresoAction();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<es::EspresoAction> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS_AddNamedObjectRoot(cx, &p->obj, "es::EspresoAction");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok))
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
-    return true;
 }
 
 
 extern JSObject *jsb_cocos2d_Action_prototype;
 
-void js_es_EspresoAction_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (EspresoAction)", obj);
+void js_es_Action_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (Action)", obj);
 }
 
-static bool js_es_EspresoAction_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_es_Action_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    es::EspresoAction *nobj = new es::EspresoAction();
+    es::Action *nobj = new es::Action();
     if (nobj) {
         nobj->autorelease();
     }
     js_proxy_t* p = jsb_new_proxy(nobj, obj);
-    JS_AddNamedObjectRoot(cx, &p->obj, "es::EspresoAction");
+    JS_AddNamedObjectRoot(cx, &p->obj, "es::Action");
     bool isFound = false;
     if (JS_HasProperty(cx, obj, "_ctor", &isFound))
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", argc, argv);
     JS_SET_RVAL(cx, vp, JSVAL_VOID);
     return true;
 }
-void js_register_espreso_EspresoAction(JSContext *cx, JSObject *global) {
-	jsb_es_EspresoAction_class = (JSClass *)calloc(1, sizeof(JSClass));
-	jsb_es_EspresoAction_class->name = "Action";
-	jsb_es_EspresoAction_class->addProperty = JS_PropertyStub;
-	jsb_es_EspresoAction_class->delProperty = JS_DeletePropertyStub;
-	jsb_es_EspresoAction_class->getProperty = JS_PropertyStub;
-	jsb_es_EspresoAction_class->setProperty = JS_StrictPropertyStub;
-	jsb_es_EspresoAction_class->enumerate = JS_EnumerateStub;
-	jsb_es_EspresoAction_class->resolve = JS_ResolveStub;
-	jsb_es_EspresoAction_class->convert = JS_ConvertStub;
-	jsb_es_EspresoAction_class->finalize = js_es_EspresoAction_finalize;
-	jsb_es_EspresoAction_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+void js_register_espreso_Action(JSContext *cx, JSObject *global) {
+	jsb_es_Action_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_es_Action_class->name = "Action";
+	jsb_es_Action_class->addProperty = JS_PropertyStub;
+	jsb_es_Action_class->delProperty = JS_DeletePropertyStub;
+	jsb_es_Action_class->getProperty = JS_PropertyStub;
+	jsb_es_Action_class->setProperty = JS_StrictPropertyStub;
+	jsb_es_Action_class->enumerate = JS_EnumerateStub;
+	jsb_es_Action_class->resolve = JS_ResolveStub;
+	jsb_es_Action_class->convert = JS_ConvertStub;
+	jsb_es_Action_class->finalize = js_es_Action_finalize;
+	jsb_es_Action_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
 	static JSPropertySpec properties[] = {
 		{"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
@@ -443,22 +417,22 @@ void js_register_espreso_EspresoAction(JSContext *cx, JSObject *global) {
 	};
 
 	static JSFunctionSpec funcs[] = {
-		JS_FN("clone", js_espreso_EspresoAction_clone, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("reverse", js_espreso_EspresoAction_reverse, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("ctor", js_es_EspresoAction_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("clone", js_espreso_Action_clone, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("reverse", js_espreso_Action_reverse, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_es_Action_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("create", js_espreso_EspresoAction_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("create", js_espreso_Action_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
-	jsb_es_EspresoAction_prototype = JS_InitClass(
+	jsb_es_Action_prototype = JS_InitClass(
 		cx, global,
 		jsb_cocos2d_Action_prototype,
-		jsb_es_EspresoAction_class,
-		js_espreso_EspresoAction_constructor, 0, // constructor
+		jsb_es_Action_class,
+		dummy_constructor<es::Action>, 0, // no constructor
 		properties,
 		funcs,
 		NULL, // no static properties
@@ -469,14 +443,14 @@ void js_register_espreso_EspresoAction(JSContext *cx, JSObject *global) {
 //	JS_SetPropertyAttributes(cx, global, "Action", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
 	// add the proto and JSClass to the type->js info hash table
-	TypeTest<es::EspresoAction> t;
+	TypeTest<es::Action> t;
 	js_type_class_t *p;
 	std::string typeName = t.s_name();
 	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
 	{
 		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-		p->jsclass = jsb_es_EspresoAction_class;
-		p->proto = jsb_es_EspresoAction_prototype;
+		p->jsclass = jsb_es_Action_class;
+		p->proto = jsb_es_Action_prototype;
 		p->parentProto = jsb_cocos2d_Action_prototype;
 		_js_global_type_map.insert(std::make_pair(typeName, p));
 	}
@@ -600,6 +574,6 @@ void register_all_espreso(JSContext* cx, JSObject* obj) {
 
 	js_register_espreso_MenuItemScalable(cx, obj);
 	js_register_espreso_OrientationManager(cx, obj);
-	js_register_espreso_EspresoAction(cx, obj);
+	js_register_espreso_Action(cx, obj);
 }
 

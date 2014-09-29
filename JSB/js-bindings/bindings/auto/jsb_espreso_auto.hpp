@@ -15,17 +15,16 @@ void register_all_espreso(JSContext* cx, JSObject* obj);
 bool js_espreso_MenuItemScalable_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_espreso_MenuItemScalable_MenuItemScalable(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_es_EspresoAction_class;
-extern JSObject *jsb_es_EspresoAction_prototype;
+extern JSClass  *jsb_es_Action_class;
+extern JSObject *jsb_es_Action_prototype;
 
-bool js_espreso_EspresoAction_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_espreso_EspresoAction_finalize(JSContext *cx, JSObject *obj);
-void js_register_espreso_EspresoAction(JSContext *cx, JSObject *global);
+bool js_espreso_Action_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_espreso_Action_finalize(JSContext *cx, JSObject *obj);
+void js_register_espreso_Action(JSContext *cx, JSObject *global);
 void register_all_espreso(JSContext* cx, JSObject* obj);
-bool js_espreso_EspresoAction_clone(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_espreso_EspresoAction_reverse(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_espreso_EspresoAction_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_espreso_EspresoAction_EspresoAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_espreso_Action_clone(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_espreso_Action_reverse(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_espreso_Action_create(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_es_OrientationManager_class;
 extern JSObject *jsb_es_OrientationManager_prototype;

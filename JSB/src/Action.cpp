@@ -4,8 +4,8 @@
 using namespace es;
 
 
-auto EspresoAction::create()->EspresoAction* {
-	auto ret = new EspresoAction();
+auto Action::create()->Action* {
+	auto ret = new Action();
     if (ret) {
         ret->autorelease();
     } else {
@@ -14,7 +14,7 @@ auto EspresoAction::create()->EspresoAction* {
 	return ret;
 }
 
-auto EspresoAction::step(float dt)->void {
+auto Action::step(float dt)->void {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
     js_proxy_t* p = jsb_get_native_proxy(this);
@@ -28,10 +28,10 @@ auto EspresoAction::step(float dt)->void {
     ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "step", 1, &dataVal, &retval);
 }
 
-auto EspresoAction::clone() const->Action* {
+auto Action::clone() const->cocos2d::Action* {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    js_proxy_t* p = jsb_get_native_proxy(const_cast<EspresoAction*>(this));
+    js_proxy_t* p = jsb_get_native_proxy(const_cast<Action*>(this));
     if (!p) {
         CCLOG("JSB: Wrong native object = %p", this);
         return nullptr;
@@ -41,13 +41,13 @@ auto EspresoAction::clone() const->Action* {
     jsval dataVal = INT_TO_JSVAL(1);
     ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "clone", 1, &dataVal, &retval);
     auto retProxy = jsb_get_js_proxy(JSVAL_TO_OBJECT(retval));
-    return static_cast<Action*>(retProxy->ptr);
+    return static_cast<cocos2d::Action*>(retProxy->ptr);
 }
 
-auto EspresoAction::reverse() const->Action* {
+auto Action::reverse() const->cocos2d::Action* {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    js_proxy_t* p = jsb_get_native_proxy(const_cast<EspresoAction*>(this));
+    js_proxy_t* p = jsb_get_native_proxy(const_cast<Action*>(this));
     if (!p) {
         CCLOG("JSB: Wrong native object = %p", this);
         return nullptr;
@@ -57,5 +57,5 @@ auto EspresoAction::reverse() const->Action* {
     jsval dataVal = INT_TO_JSVAL(1);
     ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "reverse", 1, &dataVal, &retval);
     auto retProxy = jsb_get_js_proxy(JSVAL_TO_OBJECT(retval));
-    return static_cast<Action*>(retProxy->ptr);
+    return static_cast<cocos2d::Action*>(retProxy->ptr);
 }
