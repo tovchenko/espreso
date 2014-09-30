@@ -11,7 +11,6 @@ es.AnimationCom = cc.Component.extend({
 
     ctor: function(prefix, info) {
         this._super();
-        cc.associateWithNative(this, cc.Component);
         this.init();
         this.setName(es.AnimationCom.identifier);
 
@@ -24,11 +23,7 @@ es.AnimationCom = cc.Component.extend({
         var animName = this._prefix + name;
         var anim = cc.animationCache.getAnimation(animName);
         if (!anim)
-            throw {
-                name: 'es.AnimationCom Error',
-                message: 'Animation ' + name + ' isn\'t exist.',
-                toString: function() {return this.name + ": " + this.message}
-            };
+            throw new Error('Animation ' + name + ' isn\'t exist.');
 
         var looped = this._info[name];
         var action = isReverse ? cc.animate(anim).reverse() : cc.animate(anim);

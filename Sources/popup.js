@@ -19,7 +19,6 @@ es.Popup = cc.Layer.extend({
 
     ctor: function(jsonFile) {
         this._super();
-        cc.associateWithNative(this, cc.Layer);
         this.init();
 
         this._isTouched = false;

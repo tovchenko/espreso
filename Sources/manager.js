@@ -87,11 +87,8 @@ es.manager = {
                 }
                 if (hasResolution)
                     return path;
-                throw {
-                    name: 'es.manager Error',
-                    message: 'Can\'t calculate a path.',
-                    toString: function() {return this.name + ": " + this.message}
-                };
+
+                throw new Error('Can\'t calculate a path.');
             } else {
                 if (hasResource && hasResolution) {
                     pathParts.splice(len - 1, 1);
@@ -99,11 +96,7 @@ es.manager = {
                 }
                 if (hasResource)
                     return path;
-                throw {
-                    name: 'es.manager Error',
-                    message: 'Can\'t calculate a path.',
-                    toString: function() {return this.name + ": " + this.message}
-                };
+                throw new Error('Can\'t calculate a path.');
             }
         } else {
             if (useResolutionPath) {

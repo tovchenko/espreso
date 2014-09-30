@@ -117,11 +117,7 @@ es.ObjectBuilder = cc.Class.extend({
     make: function(objectName, clazz) {
         var object = this.getObjectData(objectName);
         if (!object)
-            throw {
-                name: 'es.ObjectBuilder Error',
-                message: 'Object \'' + objectName + '\' doesn\'t exist in the JSON scene file.',
-                toString: function() {return this.name + ": " + this.message}
-            };
+            throw new Error('Object \'' + objectName + '\' doesn\'t exist in the JSON scene file.');
 
         var res = null;
         // render
@@ -132,11 +128,7 @@ es.ObjectBuilder = cc.Class.extend({
             if (armature) {
                 var fileName = armature['file'];
                 if (!fileName)
-                    throw {
-                        name: 'es.ObjectBuilder Error',
-                        message: 'Armature must have \'file\' member.',
-                        toString: function() {return this.name + ": " + this.message}
-                    };
+                    throw new Error('Armature must have \'file\' member.');
                 var name = fileName.substr(0, fileName.lastIndexOf('.'));
                 res = clazz ? new clazz : new cc.Node();
                 res.setAnchorPoint(0.5, 0.5);
@@ -223,19 +215,11 @@ es.ObjectBuilder = cc.Class.extend({
     makeBatchNode: function(objectName) {
         var object = this._jsonData[objectName];
         if (!object)
-            throw {
-                name: 'es.ObjectBuilder Error',
-                message: 'Object \'' + objectName + '\' doesn\'t exist in the JSON scene file.',
-                toString: function() {return this.name + ": " + this.message}
-            };
+            throw new Error('Object \'' + objectName + '\' doesn\'t exist in the JSON scene file.');
 
         var render = object['render'];
         if (!render)
-            throw {
-                name: 'es.ObjectBuilder Error',
-                message: 'Attempt to create SpriteBatchNode from the object with no render part.',
-                toString: function() {return this.name + ": " + this.message}
-            };
+            throw new Error('Attempt to create SpriteBatchNode from the object with no render part.');
 
         if (render['armature']) {
             return ccs.BatchNode.create();
@@ -288,11 +272,7 @@ es.ObjectBuilder = cc.Class.extend({
                             ++this._totalResCount;
                         }
                     } else if (!armature) {
-                        throw {
-                            name: 'es.ObjectBuilder Error',
-                            message: 'Object doesn\'t have sprite property.',
-                            toString: function() {return this.name + ": " + this.message}
-                        };
+                        throw new Error('Object doesn\'t have sprite property.');
                     }
                 }
             }
@@ -350,11 +330,7 @@ es.ObjectBuilder = cc.Class.extend({
                 paths.forEach(function(animator) {
                     var dict = cc.loader.getRes(animator);
                     if (!dict)
-                        throw {
-                            name: 'es.ObjectBuilder Error',
-                            message: 'Animation json file doesn\'t exist or is empty.',
-                            toString: function() {return this.name + ": " + this.message}
-                        };
+                        throw new Error('Animation json file doesn\'t exist or is empty.');
 
                     var sheets = dict['properties'] && dict['properties']['spritesheets'];
                     if (sheets) {

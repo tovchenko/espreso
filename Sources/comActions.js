@@ -11,7 +11,6 @@ es.PlayAnimation = cc.Action.extend({
 
     ctor: function(animationName, callback) {
         this._super();
-        cc.associateWithNative(this, cc.Action);
 
         this._animationName = animationName;
         this._playReverse = false;

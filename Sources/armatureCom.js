@@ -10,7 +10,6 @@ es.ArmatureCom = cc.Component.extend({
 
     ctor: function(armature, info) {
         this._super();
-        cc.associateWithNative(this, cc.Component);
         this.init();
         this.setName(es.ArmatureCom.identifier);
 
@@ -36,11 +35,7 @@ es.ArmatureCom = cc.Component.extend({
 
     _checkType: function() {
         if (!this._armature instanceof ccs.Armature)
-            throw {
-                name: 'es.ArmatureCom Error',
-                message: 'Object has no the Armature Component',
-                toString: function() {return this.name + ": " + this.message}
-            };
+            throw new Error('Object has no the Armature Component');
     }
 });
 

@@ -12,21 +12,18 @@ es.utils = {
         var widgetTree = jsonOfFileName['widgetTree'];
         var rectNodes = widgetTree && widgetTree['children'];
         if (!rectNodes)
-            throw {
-                name: 'es.utils.readRectsFromCocoStudioGUI Error',
-                message: 'File should have been created in CocoStudio GUI editor.',
-                toString: function() {return this.name + ": " + this.message}
-            };
+            throw new Error('File should have been created in CocoStudio GUI editor.');
+
         var rects = [];
         for (var i = 0; i < rectNodes.length; ++i) {
             var node = rectNodes[i]['options'];
             if (!node)
-                throw {
-                    name: 'es.utils.readRectsFromCocoStudioGUI Error',
-                    message: 'Incorrect node structure in CocoStudio GUI editor.',
-                    toString: function() {return this.name + ": " + this.message}
-                };
-            rects.push({name:node['name'], rect:cc.rect(node['x'], node['y'], node['width'], node['height']), z:node['ZOrder']});
+                throw new Error('Incorrect node structure in CocoStudio GUI editor.');
+
+            rects.push({
+                name: node['name'],
+                rect: cc.rect(node['x'], node['y'], node['width'], node['height']),
+                z: node['ZOrder']});
         }
         return rects;
     },

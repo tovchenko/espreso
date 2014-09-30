@@ -10,7 +10,6 @@ es.DataCom = cc.Component.extend({
 
     ctor: function(filename) {
         this._super();
-        cc.associateWithNative(this, cc.Component);
         this.init();
         this.setName(es.DataCom.identifier);
 

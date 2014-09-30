@@ -10,7 +10,6 @@ es.AudioCom = cc.Component.extend({
 
     ctor: function() {
         this._super();
-        cc.associateWithNative(this, cc.Component);
         this.init();
         this.setName(es.AudioCom.identifier);
 
@@ -29,11 +28,7 @@ es.AudioCom = cc.Component.extend({
     playEffect: function(name) {
         var val = this._sounds[name];
         if (!val)
-            throw {
-                name: 'es.AudioCom Error',
-                message: 'The sound effect: ' + name + ' isn\'t found in the component.',
-                toString: function() {return this.name + ": " + this.message}
-            };
+            throw new Error('The sound effect: ' + name + ' isn\'t found in the component.');
 
 //        cc.AudioEngine.getInstance().setEffectsVolume(val[2] || 1);
         cc.audioEngine.playEffect(val[0], val[1]);
@@ -42,11 +37,7 @@ es.AudioCom = cc.Component.extend({
     playMusic: function(name) {
         var val = this._music[name];
         if (!val)
-            throw {
-                name: 'es.AudioCom Error',
-                message: 'The background music: ' + name + ' isn\'t found in the component.',
-                toString: function() {return this.name + ": " + this.message}
-            };
+            throw new Error('The background music: ' + name + ' isn\'t found in the component.');
 
 //        cc.AudioEngine.getInstance().setMusicVolume(val[2] || 1);
         cc.audioEngine.playMusic(val[0], val[1]);
