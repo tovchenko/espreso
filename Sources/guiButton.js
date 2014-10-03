@@ -5,7 +5,7 @@
 var es = es || {};
 
 (function() {
-    const kForce = 0.05;
+    var kForce = 0.05;
 
     // registers in HTML5 new button type - EspresoButton
     var factoryCreate = ccs.objectFactory;
@@ -17,7 +17,7 @@ var es = es || {};
         _superOnPressStateChangedToNormal.apply(this, arguments);
 
         if (!this._pressedTextureLoaded && !this._scale9Enabled) {
-            const coef = this.getPressedCoef();
+            var coef = this.getPressedCoef();
             this._buttonNormalRenderer.setScale(this._normalTextureScaleXInSize * coef, this._normalTextureScaleYInSize * coef);
             this._buttonNormalRenderer.runAction(this.getPressAction(this._normalTextureScaleXInSize, this._normalTextureScaleYInSize));
         }
@@ -28,7 +28,7 @@ var es = es || {};
         _superOnPressStateChangedToPressed.apply(this, arguments);
 
         if (!this._pressedTextureLoaded && !this._scale9Enabled) {
-            const coef = this.getPressedCoef();
+            var coef = this.getPressedCoef();
             this._buttonNormalRenderer.setScale(this._normalTextureScaleXInSize, this._normalTextureScaleYInSize);
             this._buttonNormalRenderer.runAction(this.getPressAction(this._normalTextureScaleXInSize * coef, this._normalTextureScaleYInSize * coef));
         }
@@ -49,15 +49,15 @@ var es = es || {};
     };
 
     var _superUpdate = ccui.Button.prototype.update;
-    ccui.Button.prototype.update = function (dt) {
+    ccui.Button.prototype.update = function(dt) {
         _superUpdate.apply(this, arguments);
 
         if (!this._isJellyAnimationEnabled)
             return;
 
         this._counter += 0.5 * dt;
-        const newBouncingX = 0.5 * (Math.cos(this._counter * 10) + 1) * kForce * this.getNormalScaleInSize().width;
-        const newBouncingY = 0.5 * (Math.sin(this._counter * 10) + 1) * kForce * this.getNormalScaleInSize().height;
+        var newBouncingX = 0.5 * (Math.cos(this._counter * 10) + 1) * kForce * this.getNormalScaleInSize().width;
+        var newBouncingY = 0.5 * (Math.sin(this._counter * 10) + 1) * kForce * this.getNormalScaleInSize().height;
 
         this.setScaleX(this.getScaleX() + newBouncingX - this._scaleBouncingX);
         this.setScaleY(this.getScaleY() + newBouncingY - this._scaleBouncingY);
