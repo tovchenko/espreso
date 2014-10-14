@@ -548,3 +548,5 @@ es.ObjectBuilder.create = function(jsonFileOrFiles) {
     var builder = new es.ObjectBuilder(jsonFileOrFiles);
     return builder.getLoadingPromise();
 };
+
+es.builder = es.ObjectBuilder.create;
