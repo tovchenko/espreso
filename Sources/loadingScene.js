@@ -6,28 +6,37 @@ var es = es || {};
 
 es.LoadingLayer = cc.LayerColor.extend({
     _label: null,
+    _builder: null,
 
-    ctor: function(builderPromise, nextScene) {
+    ctor: function(builderPromise, nextScene, loaderBuilderPromise) {
         this._super();
         nextScene && nextScene.retain();
 
         var sz = cc.director.getVisibleSize();
         this.init(cc.color(), sz.width, sz.height);
-        this._implementContent();
 
         var that = this;
-        builderPromise.then(function() {
-            if (nextScene) {
-                cc.director.popToRootScene();
-                cc.director.pushScene(nextScene);
+        var showLoading = function(builder) {
+            that._builder = builder;
+            that._implementContent();
+
+            builderPromise.then(function() {
+                if (nextScene) {
+                    cc.director.popToRootScene();
+                    cc.director.pushScene(nextScene);
+                    nextScene.release();
+                }
+            }, function() {
                 nextScene.release();
-            }
-        }, function() {
-            nextScene.release();
-            throw new Error('Scene loading error!');
-        }, function(percent) {
-            that._setContentValue(percent);
-        });
+                throw new Error('Scene loading error!');
+            }, function(percent) {
+                that._setContentValue(percent);
+            });
+        };
+
+        loaderBuilderPromise
+            ? loaderBuilderPromise.then(showLoading)
+            : showLoading();
     },
 
     _implementContent: function() {
@@ -44,10 +53,10 @@ es.LoadingLayer = cc.LayerColor.extend({
 
 
 es.LoadingScene = cc.Scene.extend({
-    ctor: function(builderPromise, nextScene) {
+    ctor: function(builderPromise, nextScene, loaderBuilderPromise) {
         this._super();
         this.init();
-        var layer = new es.LoadingLayer(builderPromise, nextScene);
+        var layer = new es.LoadingLayer(builderPromise, nextScene, loaderBuilderPromise);
         this.addChild(layer);
     }
 });

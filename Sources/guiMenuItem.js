@@ -23,7 +23,7 @@ es.makeMenuItemScalable = function(menuItem, scale) {
         this.runAction(scaleAction);
     };
 
-    menuItem.unselected = function () {
+    menuItem.unselected = function() {
         superUnselected.call(this);
 
         this.stopActionByTag(scaleActionTag);
