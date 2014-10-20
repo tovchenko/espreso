@@ -1,7 +1,8 @@
 [
     "Sources/genfun.js",
     "Sources/q.js",
-    "Sources/underscore.js",
+    "Sources/lodash.js",
+
     "Sources/soomla.js",
     "Sources/utils.js",
     "Sources/platform.js",
