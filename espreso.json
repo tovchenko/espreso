@@ -18,5 +18,6 @@
     "Sources/popup.js",
     "Sources/scrollView.js",
     "Sources/guiMenuItem.js",
-    "Sources/guiButton.js"
+    "Sources/guiButton.js",
+    "Sources/popupManager.js"
 ]
