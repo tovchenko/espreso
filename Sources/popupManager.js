@@ -15,16 +15,19 @@ es.PopupManager = cc.Class.extend({
 
     // options: {
     //   modal: bool
-    //   transition: (NO, DIMOUT)
+    //   transition: (NO, DIMOUT, SCALE, DIMOUT_SCALE)
     //   closeTap: bool
-    //   hideOthers: bool
     //   position: x, y
     // }
     present: function(popup, options) {
         if (!popup)
             throw new Error('Trying to show an undefined popup!');
 
-        this._makeLayerForPopup(popup, options);
+        options = options || {
+            transition: es.PopupManager.Transition.DIMOUT_SCALE,
+            closeTap: true
+        };
+        return this._makeLayerForPopup(popup, options);
     },
 
     dismiss: function(popup) {
@@ -37,6 +40,7 @@ es.PopupManager = cc.Class.extend({
         if (!popup)
             throw new Error('Trying to dismiss an undefined popup!');
 
+        var deferred = Q.defer();
         var that = this;
         this._performTransition(popup, false, function(opt, show) {
             that._handleTouches(popup, opt, show);
@@ -46,7 +50,10 @@ es.PopupManager = cc.Class.extend({
             });
 
             that._isAnimating = false;
+            deferred.resolve();
         });
+
+        return deferred.promise;
     },
 
     _makeLayerForPopup: function(popup, options) {
@@ -69,11 +76,15 @@ es.PopupManager = cc.Class.extend({
 
         this._activatePopup(layer);
 
+        var deferred = Q.defer();
         var that = this;
         this._handleTouches(popup, options, true);
         this._performTransition(popup, true, function() {
             that._isAnimating = false;
+            deferred.resolve();
         });
+
+        return deferred.promise;
     },
 
     _activatePopup: function(layer) {
@@ -170,7 +181,7 @@ es.PopupManager = cc.Class.extend({
                     }
                 }
 
-                layer.runAction(cc.sequence(seq0 ? (seq1 ? cc.spawn(seq0, seq1) : seq0) : seq1 , backFn));
+                layer.runAction(cc.sequence(seq0 ? (seq1 ? cc.spawn(seq0, seq1) : seq0) : seq1, backFn));
                 break;
             }
 
