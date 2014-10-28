@@ -32,14 +32,14 @@ es.PopupManager = cc.Class.extend({
 
     dismiss: function(popup) {
         if (this._isAnimating)
-            return;
+            return null;
 
-        this._isAnimating = true;
         var p;
         popup = popup || ((p = _.last(this._activePopups)) && p.popup);
         if (!popup)
             throw new Error('Trying to dismiss an undefined popup!');
 
+        this._isAnimating = true;
         var deferred = Q.defer();
         var that = this;
         this._performTransition(popup, false, function(opt, show) {
@@ -58,7 +58,7 @@ es.PopupManager = cc.Class.extend({
 
     _makeLayerForPopup: function(popup, options) {
         if (this._isAnimating)
-            return;
+            return null;
 
         var currentScene = cc.director.getRunningScene();
         if (!currentScene)
