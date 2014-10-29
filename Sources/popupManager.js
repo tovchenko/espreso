@@ -185,6 +185,18 @@ es.PopupManager = cc.Class.extend({
                 break;
             }
 
+            case es.PopupManager.Transition.TOOLTIP: {
+                backFn = cc.callFunc(_.partial(callback, options, show));
+                layer = popup.getParent();
+                if (show) {
+                    layer.setScale(es.PopupManager._ToolScale.MIN_SCALE);
+                    layer.runAction(cc.sequence(cc.scaleTo(es.PopupManager._ToolScale.TIME, 1).easing(cc.easeElasticOut()), backFn));
+                } else {
+                    callback && callback(options, show);
+                }
+                break;
+            }
+
             default:
                 break;
         }
@@ -198,11 +210,17 @@ es.PopupManager._Dimout = {
     ANIM_TIME_OUT: 0.15
 };
 
+es.PopupManager._ToolScale = {
+    MIN_SCALE: 0.2,
+    TIME: 0.2
+};
+
 es.PopupManager.Transition = {
     NO: 0,
     DIMOUT: 1,
     SCALE: 2,
-    DIMOUT_SCALE: 3
+    DIMOUT_SCALE: 3,
+    TOOLTIP: 4
 };
 
 es.PopupManager.getInstance = function() {
