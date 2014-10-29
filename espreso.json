@@ -15,7 +15,7 @@
     "Sources/objectBuilder.js",
     "Sources/placeHolder.js",
     "Sources/loadingScene.js",
-    "Sources/popup.js",
+    "Sources/popupManager.js",
     "Sources/scrollView.js",
     "Sources/guiMenuItem.js",
     "Sources/guiButton.js",
