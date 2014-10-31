@@ -213,11 +213,11 @@ es.PopupManager._ToolScale = {
 };
 
 es.PopupManager.Transition = {
-    NO: 0,
-    DIMOUT: 1,
-    SCALE: 2,
-    DIMOUT_SCALE: 3,
-    TOOLTIP: 4
+    NO: 1,
+    DIMOUT: 2,
+    SCALE: 3,
+    DIMOUT_SCALE: 4,
+    TOOLTIP: 5
 };
 
 es.PopupManager.getInstance = function() {
