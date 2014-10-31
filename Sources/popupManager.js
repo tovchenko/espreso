@@ -23,10 +23,6 @@ es.PopupManager = cc.Class.extend({
         if (!popup)
             throw new Error('Trying to show an undefined popup!');
 
-        options = options || {
-            transition: es.PopupManager.Transition.DIMOUT_SCALE,
-            closeTap: true
-        };
         return this._makeLayerForPopup(popup, options);
     },
 
@@ -119,14 +115,14 @@ es.PopupManager = cc.Class.extend({
 
                 onTouchBegan: function(touch, event) {
                     var target = event.getCurrentTarget();
-                    var pt = target.convertToNodeSpace(touch);
+                    var pt = target.convertTouchToNodeSpace(touch);
                     target.__touched = !cc.rectContainsPoint(popup.getBoundingBox(), pt);
                     return true;
                 },
                 onTouchEnded: function(touch, event) {
                     var target = event.getCurrentTarget();
                     if (target.__touched) {
-                        var pt = target.convertToNodeSpace(touch);
+                        var pt = target.convertTouchToNodeSpace(touch);
                         if (options.closeTap && !cc.rectContainsPoint(popup.getBoundingBox(), pt))
                             that.dismiss(popup);
                     }
@@ -148,7 +144,7 @@ es.PopupManager = cc.Class.extend({
             throw new Error('Trying to run transition for disconnected popup!');
 
         var options = object.options || {};
-        var transition = options.transition || es.PopupManager.Transition.NO;
+        var transition = options.transition || es.PopupManager.Transition.DIMOUT_SCALE;
         switch (transition) {
             case es.PopupManager.Transition.NO: {
                 callback && callback(options, show);
