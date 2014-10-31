@@ -23,6 +23,7 @@ es.PopupManager = cc.Class.extend({
         if (!popup)
             throw new Error('Trying to show an undefined popup!');
 
+        options = options || {};
         return this._makeLayerForPopup(popup, options);
     },
 
