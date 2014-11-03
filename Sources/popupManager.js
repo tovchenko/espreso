@@ -6,11 +6,9 @@ var es = es || {};
 
 es.PopupManager = cc.Class.extend({
     _activePopups: null,
-    _isAnimating: false,
 
     ctor: function() {
         this._activePopups = [];
-        this._isAnimating = false;
     },
 
     // options: {
@@ -28,25 +26,23 @@ es.PopupManager = cc.Class.extend({
     },
 
     dismiss: function(popup) {
-        if (this._isAnimating)
-            return null;
-
         var p;
         popup = popup || ((p = _.last(this._activePopups)) && p.popup);
         if (!popup)
             throw new Error('Trying to dismiss an undefined popup!');
 
-        this._isAnimating = true;
+        var object = _.find(this._activePopups, function(item) { return item.popup === popup; });
+        if (!object)
+            throw new Error('Trying to run transition for disconnected popup!');
+
         var deferred = Q.defer();
         var that = this;
-        this._performTransition(popup, false, function(opt, show) {
+        this._performTransition(popup, object.options, false, function(opt, show) {
             that._handleTouches(popup, opt, show);
             popup.getParent().removeFromParent();
             _.remove(that._activePopups, function(obj) {
                 return obj.popup === popup;
             });
-
-            that._isAnimating = false;
             deferred.resolve();
         });
 
@@ -54,43 +50,32 @@ es.PopupManager = cc.Class.extend({
     },
 
     _makeLayerForPopup: function(popup, options) {
-        if (this._isAnimating)
-            return null;
-
         var currentScene = cc.director.getRunningScene();
         if (!currentScene)
             throw new Error('Can\'t show popup, no one run scene!');
 
-        this._isAnimating = true;
         var layer = new cc.LayerColor(cc.color(0, 0, 0, 0));
         var lastObject = _.last(this._activePopups);
         var lastLayer = lastObject && lastObject.popup && lastObject.popup.getParent();
         currentScene.addChild(layer, lastLayer ? lastLayer.getLocalZOrder() + 1 : 0);
-        this._activePopups.push({
-            popup: popup,
-            options: options
-        });
 
-        this._activatePopup(layer);
+        this._activatePopup(layer, popup, options);
 
         var deferred = Q.defer();
         var that = this;
         this._handleTouches(popup, options, true);
-        this._performTransition(popup, true, function() {
-            that._isAnimating = false;
+        this._performTransition(popup, options, true, function() {
+            that._activePopups.push({
+                popup: popup,
+                options: options
+            });
             deferred.resolve();
         });
 
         return deferred.promise;
     },
 
-    _activatePopup: function(layer) {
-        var object = _.last(this._activePopups);
-        if (!object)
-            throw new Error('No one active popup found!');
-
-        var options = object.options;
-        var popup = object.popup;
+    _activatePopup: function(layer, popup, options) {
         var sz = cc.pAdd(cc.pFromSize(cc.director.getVisibleSize()), cc.director.getVisibleOrigin());
 
         if (options.position) {
@@ -139,12 +124,8 @@ es.PopupManager = cc.Class.extend({
         }
     },
 
-    _performTransition: function(popup, show, callback) {
-        var object = _.find(this._activePopups, function(item) { return item.popup === popup; });
-        if (!object)
-            throw new Error('Trying to run transition for disconnected popup!');
-
-        var options = object.options || {};
+    _performTransition: function(popup, options, show, callback) {
+        options = options || {};
         var transition = options.transition || es.PopupManager.Transition.DIMOUT_SCALE;
         switch (transition) {
             case es.PopupManager.Transition.NO: {
