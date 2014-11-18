@@ -80,8 +80,8 @@ mkdir "$APP_ANDROID_ROOT"/assets
 #done
 
 "$APP_ROOT/../espreso/Scripts/activate_texturepacker.py"
-"$APP_ROOT/../espreso/Scripts/assemble_texture_atlases.py" "$APP_ROOT/../.." "$APP_ANDROID_ROOT/assets" "pvr.ccz"
-"$APP_ROOT/../espreso/Scripts/process_assets.py" "$APP_ROOT/../.." "$APP_ANDROID_ROOT/assets" "pvr.ccz"
+"$APP_ROOT/../espreso/Scripts/assemble_texture_atlases.py" "-appRoot" "$APP_ROOT/../.." "-fmt" "pvr.ccz"
+"$APP_ROOT/../espreso/Scripts/process_assets.py" "-appRoot" "$APP_ROOT/../.." "-dst" "$APP_ANDROID_ROOT/assets" "-fmt" "pvr.ccz"
 "$APP_ROOT/../espreso/Scripts/convert_sounds.py" "$APP_ROOT/../.." "$APP_ANDROID_ROOT/assets" "ogg"
 cp -rf "$COCOS2DX_ROOT/bindings/script" "$APP_ANDROID_ROOT"/assets
 cp "$APP_ROOT/../../main.js" "$APP_ANDROID_ROOT"/assets
