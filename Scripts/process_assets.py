@@ -4,85 +4,89 @@ import sys
 import os, os.path
 import subprocess
 import re
+import argparse
 
-# app root - sys.argv[1]
-# dst path - sys.argv[2]
-# texture format - sys.argv[3]
 
-def processTMX(srcPath, dstPath):
+def processTMX(srcPath, dstPath, fmt):
 	for filename in os.listdir(srcPath):
 		srcFilePath = os.path.join(srcPath, filename)
 		if os.path.isfile(srcFilePath):
 			ext = re.search(r'\.(.*)', filename).groups()[0].lower()
 			if ext == 'tmx':
 				processor = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'process_tmx.py')
-				subprocess.call([processor, srcFilePath, dstPath, sys.argv[3]])
+				subprocess.call([processor, srcFilePath, dstPath, fmt])
 
 def run():
-	if len(sys.argv) != 4:
-		print 'Usage: ' + os.path.basename(os.path.realpath(__file__)) + ' app_root dst_folder texture_format'
-		sys.exit(1)
+	parser = argparse.ArgumentParser(prog='PROCESS RESOURCES')
+	parser.add_argument('-appRoot')
+	parser.add_argument('-dst')
+	parser.add_argument('-fmt')
+	parser.add_argument('-lods', nargs='*', default=['HDR', 'HD', 'SD'])
+	parser.add_argument('-skipSrc', action='store_true', default=False)
+	args = parser.parse_args()
 	
 	scriptDir = os.path.dirname(os.path.realpath(__file__))
-	appRoot = sys.argv[1]
 	
-	textureFolder = os.path.join(appRoot, 'runtime/temp/Textures')
-	textureFolder = os.path.join(textureFolder, sys.argv[3])
+	textureFolder = os.path.join(args.appRoot, 'runtime/temp/Textures')
+	textureFolder = os.path.join(textureFolder, args.fmt)
 	if not os.path.exists(textureFolder): os.makedirs(textureFolder)
-		
-	texSD = os.path.join(textureFolder, 'SD')
-	if not os.path.exists(texSD): os.makedirs(texSD)
-	texHD = os.path.join(textureFolder, 'HD')
-	if not os.path.exists(texHD): os.makedirs(texHD)
-	texHDR = os.path.join(textureFolder, 'HDR')
-	if not os.path.exists(texHDR): os.makedirs(texHDR)
 	
-	textool = os.path.join(scriptDir, 'smart_png2pkm.py' if sys.argv[3] == 'pkm' else ('smart_png2pvrccz.py' if sys.argv[3] == 'pvr.ccz' else 'smart_png2png.py'))
-	srcTexsPath = os.path.join(appRoot, 'assets/Textures')
-	
-	# Scales and converts RGBA images from Shared to HDR, HD, SD folders
-	subprocess.call([textool, os.path.join(srcTexsPath, 'rgba/Shared'), texSD, 'yes', '0.25', '1024'])
-	subprocess.call([textool, os.path.join(srcTexsPath, 'rgba/Shared'), texHD, 'yes', '0.5', '2048'])
-	subprocess.call([textool, os.path.join(srcTexsPath, 'rgba/Shared'), texHDR, 'yes', '1', '4096'])
-	# Just converts RGBA images
-	subprocess.call([textool, os.path.join(srcTexsPath, 'rgba/SD'), texSD, 'yes', '1', '1024'])
-	subprocess.call([textool, os.path.join(srcTexsPath, 'rgba/HD'), texHD, 'yes', '1', '2048'])
-	subprocess.call([textool, os.path.join(srcTexsPath, 'rgba/HDR'), texHDR, 'yes', '1', '4096'])
-	# Scales and converts RGB images from Shared to HDR, HD, SD folders
-	subprocess.call([textool, os.path.join(srcTexsPath, 'rgb/Shared'), texSD, 'no', '0.25', '1024'])
-	subprocess.call([textool, os.path.join(srcTexsPath, 'rgb/Shared'), texHD, 'no', '0.5', '2048'])
-	subprocess.call([textool, os.path.join(srcTexsPath, 'rgb/Shared'), texHDR, 'no', '1', '4096'])
-	# Just converts RGB images
-	subprocess.call([textool, os.path.join(srcTexsPath, 'rgb/SD'), texSD, 'no', '1', '1024'])
-	subprocess.call([textool, os.path.join(srcTexsPath, 'rgb/HD'), texHD, 'no', '1', '2048'])
-	subprocess.call([textool, os.path.join(srcTexsPath, 'rgb/HDR'), texHDR, 'no', '1', '4096'])
-
-	# Copy
+	texSD = texHD = texHDR = dstSD = dstHD = dstHDR = None
+	for lod in args.lods:
+		if lod == 'SD':
+			texSD = os.path.join(textureFolder, 'SD')
+			dstSD = os.path.join(args.dst, 'SD')
+		elif lod == 'HD':
+			texHD = os.path.join(textureFolder, 'HD')
+			dstHD = os.path.join(args.dst, 'HD')
+		elif lod == 'HDR':
+			texHDR = os.path.join(textureFolder, 'HDR')
+			dstHDR = os.path.join(args.dst, 'HDR')
+			
+	textool = os.path.join(scriptDir, 'smart_png2pkm.py' if args.fmt == 'pkm' else ('smart_png2pvrccz.py' if args.fmt == 'pvr.ccz' else 'smart_png2png.py'))
+	srcTexsPath = os.path.join(args.appRoot, 'assets/Textures')
 	xcopy = os.path.join(scriptDir, '../Tools/xcopy')
-	
-	dstSD = os.path.join(sys.argv[2], 'SD')
-	if not os.path.exists(dstSD): os.makedirs(dstSD)
-	dstHD = os.path.join(sys.argv[2], 'HD')
-	if not os.path.exists(dstHD): os.makedirs(dstHD)
-	dstHDR = os.path.join(sys.argv[2], 'HDR')
-	if not os.path.exists(dstHDR): os.makedirs(dstHDR)
-	
-	subprocess.call([xcopy, os.path.join(texSD, '*.*'), dstSD])
-	subprocess.call([xcopy, os.path.join(texHD, '*.*'), dstHD])
-	subprocess.call([xcopy, os.path.join(texHDR, '*.*'), dstHDR])
-	
-	processTMX(os.path.join(srcTexsPath, 'rgba/SD'), dstSD)
-	processTMX(os.path.join(srcTexsPath, 'rgba/HD'), dstHD)
-	processTMX(os.path.join(srcTexsPath, 'rgba/HDR'), dstHDR)
-	processTMX(os.path.join(srcTexsPath, 'rgb/SD'), dstSD)
-	processTMX(os.path.join(srcTexsPath, 'rgb/HD'), dstHD)
-	processTMX(os.path.join(srcTexsPath, 'rgb/HDR'), dstHDR)
+		
+	if texSD:
+		if not os.path.exists(texSD): os.makedirs(texSD)
+		subprocess.call([textool, os.path.join(srcTexsPath, 'rgba/Shared'), texSD, 'yes', '0.25', '1024'])
+		subprocess.call([textool, os.path.join(srcTexsPath, 'rgba/SD'), texSD, 'yes', '1', '1024'])
+		subprocess.call([textool, os.path.join(srcTexsPath, 'rgb/Shared'), texSD, 'no', '0.25', '1024'])
+		subprocess.call([textool, os.path.join(srcTexsPath, 'rgb/SD'), texSD, 'no', '1', '1024'])
+		if not os.path.exists(dstSD): os.makedirs(dstSD)
+		subprocess.call([xcopy, os.path.join(texSD, '*.*'), dstSD])
+		processTMX(os.path.join(srcTexsPath, 'rgba/SD'), dstSD, args.fmt)
+		processTMX(os.path.join(srcTexsPath, 'rgb/SD'), dstSD, args.fmt)
+		
+	if texHD:
+		if not os.path.exists(texHD): os.makedirs(texHD)
+		subprocess.call([textool, os.path.join(srcTexsPath, 'rgba/Shared'), texHD, 'yes', '0.5', '2048'])
+		subprocess.call([textool, os.path.join(srcTexsPath, 'rgba/HD'), texHD, 'yes', '1', '2048'])
+		subprocess.call([textool, os.path.join(srcTexsPath, 'rgb/Shared'), texHD, 'no', '0.5', '2048'])
+		subprocess.call([textool, os.path.join(srcTexsPath, 'rgb/HD'), texHD, 'no', '1', '2048'])
+		if not os.path.exists(dstHD): os.makedirs(dstHD)
+		subprocess.call([xcopy, os.path.join(texHD, '*.*'), dstHD])
+		processTMX(os.path.join(srcTexsPath, 'rgba/HD'), dstHD, args.fmt)
+		processTMX(os.path.join(srcTexsPath, 'rgb/HD'), dstHD, args.fmt)
+		
+	if texHDR:
+		if not os.path.exists(texHDR): os.makedirs(texHDR)
+		subprocess.call([textool, os.path.join(srcTexsPath, 'rgba/Shared'), texHDR, 'yes', '1', '4096'])
+		subprocess.call([textool, os.path.join(srcTexsPath, 'rgba/HDR'), texHDR, 'yes', '1', '4096'])
+		subprocess.call([textool, os.path.join(srcTexsPath, 'rgb/Shared'), texHDR, 'no', '1', '4096'])
+		subprocess.call([textool, os.path.join(srcTexsPath, 'rgb/HDR'), texHDR, 'no', '1', '4096'])
+		if not os.path.exists(dstHDR): os.makedirs(dstHDR)
+		subprocess.call([xcopy, os.path.join(texHDR, '*.*'), dstHDR])
+		processTMX(os.path.join(srcTexsPath, 'rgba/HDR'), dstHDR, args.fmt)
+		processTMX(os.path.join(srcTexsPath, 'rgb/HDR'), dstHDR, args.fmt)
 
-	srcBundlePath = os.path.join(appRoot, 'assets')
-	subprocess.call([xcopy, os.path.join(srcBundlePath, 'Data/*.*'), sys.argv[2]])
-	subprocess.call([xcopy, os.path.join(scriptDir, '../Sources'), sys.argv[2]])
-	subprocess.call([xcopy, os.path.join(appRoot, 'src/*.*'), os.path.join(sys.argv[2], 'Sources')])
-	subprocess.call([xcopy, os.path.join(appRoot, 'frameworks/espreso/espreso.json'), sys.argv[2]])
+	srcBundlePath = os.path.join(args.appRoot, 'assets')
+	if not args.skipSrc:
+		subprocess.call([xcopy, os.path.join(scriptDir, '../Sources'), args.dst])
+		subprocess.call([xcopy, os.path.join(args.appRoot, 'src/*.*'), os.path.join(args.dst, 'Sources')])
+		
+	subprocess.call([xcopy, os.path.join(srcBundlePath, 'Data/*.*'), args.dst])
+	subprocess.call([xcopy, os.path.join(args.appRoot, 'frameworks/espreso/espreso.json'), args.dst])
 	
 
 # -------------- main --------------

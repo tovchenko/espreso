@@ -5,11 +5,8 @@ import os, os.path
 import subprocess
 import datetime
 import re
-import tkMessageBox
-
-# app root - sys.argv[1]
-# dst path - sys.argv[2]
-# texture format - sys.argv[3]
+import argparse
+#import tkMessageBox
 
 
 def atlasValid(srcFolder, outTexture):
@@ -111,49 +108,57 @@ def assemble(srcFolder, outTexture, scale, maxSize, hasAlpha):
 		os.remove(tmpPlist)
 	
 	
-def assembleFolder(srcDirPath, dstDirPath, scale, maxSize, hasAlpha):
+def assembleFolder(srcDirPath, dstDirPath, scale, maxSize, hasAlpha, fmt):
 	for name in os.listdir(srcDirPath):
 		srcPath = os.path.join(srcDirPath, name)
 		if os.path.isdir(srcPath):
-			assemble(srcPath, os.path.join(dstDirPath, name + '.' + sys.argv[3]), scale, maxSize, hasAlpha)
+			assemble(srcPath, os.path.join(dstDirPath, name + '.' + fmt), scale, maxSize, hasAlpha)
 		
 
 def run():
-	if len(sys.argv) != 4:
-		print 'Usage: ' + os.path.basename(os.path.realpath(__file__)) + ' app_root dst_folder texture_format'
-		sys.exit(1)
+	parser = argparse.ArgumentParser(prog='ASSEMBLE TEXTURE ATLASES')
+	parser.add_argument('-appRoot')
+	parser.add_argument('-fmt')
+	parser.add_argument('-lods', nargs='*', default=['HDR', 'HD', 'SD'])
+	args = parser.parse_args()
 		
 	scriptDir = os.path.dirname(os.path.realpath(__file__))
-	appRoot = sys.argv[1];
 	
-	textureFolder = os.path.join(appRoot, 'runtime/temp/Textures')
-	textureFolder = os.path.join(textureFolder, sys.argv[3])
+	textureFolder = os.path.join(args.appRoot, 'runtime/temp/Textures')
+	textureFolder = os.path.join(textureFolder, args.fmt)
 	if not os.path.exists(textureFolder): os.makedirs(textureFolder)
+	
+	texSD = texHD = texHDR = None
+	for lod in args.lods:
+		if lod == 'SD':
+			texSD = os.path.join(textureFolder, 'SD')
+		elif lod == 'HD':
+			texHD = os.path.join(textureFolder, 'HD')
+		elif lod == 'HDR':
+			texHDR = os.path.join(textureFolder, 'HDR')
+			
+	srcDir = os.path.join(args.appRoot, 'assets/Atlases')
+	
+	if texSD:
+		if not os.path.exists(texSD): os.makedirs(texSD)
+		assembleFolder(os.path.join(srcDir, 'rgba/Shared'), texSD, '0.25', '1024', True, args.fmt)
+		assembleFolder(os.path.join(srcDir, 'rgba/SD'), texSD, '1', '1024', True, args.fmt)
+		assembleFolder(os.path.join(srcDir, 'rgb/Shared'), texSD, '0.25', '1024', False, args.fmt)
+		assembleFolder(os.path.join(srcDir, 'rgb/SD'), texSD, '1', '1024', False, args.fmt)
 		
-	texSD = os.path.join(textureFolder, 'SD')
-	if not os.path.exists(texSD): os.makedirs(texSD)
-	texHD = os.path.join(textureFolder, 'HD')
-	if not os.path.exists(texHD): os.makedirs(texHD)
-	texHDR = os.path.join(textureFolder, 'HDR')
-	if not os.path.exists(texHDR): os.makedirs(texHDR)
-	
-	srcDir = os.path.join(appRoot, 'assets/Atlases')
-	
-	assembleFolder(os.path.join(srcDir, 'rgba/Shared'), texSD, '0.25', '1024', True)
-	assembleFolder(os.path.join(srcDir, 'rgba/Shared'), texHD, '0.5', '2048', True)
-	assembleFolder(os.path.join(srcDir, 'rgba/Shared'), texHDR, '1', '4096', True)
-	
-	assembleFolder(os.path.join(srcDir, 'rgba/SD'), texSD, '1', '1024', True)
-	assembleFolder(os.path.join(srcDir, 'rgba/HD'), texHD, '1', '2048', True)
-	assembleFolder(os.path.join(srcDir, 'rgba/HDR'), texHDR, '1', '4096', True)
-	
-	assembleFolder(os.path.join(srcDir, 'rgb/Shared'), texSD, '0.25', '1024', False)
-	assembleFolder(os.path.join(srcDir, 'rgb/Shared'), texHD, '0.5', '2048', False)
-	assembleFolder(os.path.join(srcDir, 'rgb/Shared'), texHDR, '1', '4096', False)
-	
-	assembleFolder(os.path.join(srcDir, 'rgb/SD'), texSD, '1', '1024', False)
-	assembleFolder(os.path.join(srcDir, 'rgb/HD'), texHD, '1', '2048', False)
-	assembleFolder(os.path.join(srcDir, 'rgb/HDR'), texHDR, '1', '4096', False)
+	if texHD:
+		if not os.path.exists(texHD): os.makedirs(texHD)
+		assembleFolder(os.path.join(srcDir, 'rgba/Shared'), texHD, '0.5', '2048', True, args.fmt)
+		assembleFolder(os.path.join(srcDir, 'rgba/HD'), texHD, '1', '2048', True, args.fmt)
+		assembleFolder(os.path.join(srcDir, 'rgb/Shared'), texHD, '0.5', '2048', False, args.fmt)
+		assembleFolder(os.path.join(srcDir, 'rgb/HD'), texHD, '1', '2048', False, args.fmt)
+			
+	if texHDR:
+		if not os.path.exists(texHDR): os.makedirs(texHDR)
+		assembleFolder(os.path.join(srcDir, 'rgba/Shared'), texHDR, '1', '4096', True, args.fmt)
+		assembleFolder(os.path.join(srcDir, 'rgba/HDR'), texHDR, '1', '4096', True, args.fmt)
+		assembleFolder(os.path.join(srcDir, 'rgb/Shared'), texHDR, '1', '4096', False, args.fmt)
+		assembleFolder(os.path.join(srcDir, 'rgb/HDR'), texHDR, '1', '4096', False, args.fmt)
 	
 	outfile = os.path.join(os.getcwd(), 'out.plist')
 	if os.path.isfile(outfile):
