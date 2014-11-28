@@ -49,6 +49,11 @@ es.PopupManager = cc.Class.extend({
         return deferred.promise;
     },
 
+    dismissAllPopups: function() {
+        for (var i = 0; i < this._activePopups.length; ++i)
+            this.dismiss(this._activePopups[i].popup);
+    },
+
     _makeLayerForPopup: function(popup, options) {
         var currentScene = cc.director.getRunningScene();
         if (!currentScene)
