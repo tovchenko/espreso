@@ -51,16 +51,22 @@ es.manager = {
         cc.log('Frame Size = ' + fs.width + 'x' + fs.height);
 
         var current = cc.size(0, 0);
-        for (var i = 0; i < paths.length; ++i) {
-            var sz = this._longSideToLongSide(paths[i].size, fs);
-            if ((sz.width >= current.width && sz.width < fs.width)
-               || (sz.height >= current.height && sz.height < fs.height))
-            {
-                current = sz;
-                this._resolutionDependedPath = paths[i].path;
-                cc.sys.isNative && jsb.fileUtils.setSearchResolutionsOrder([this._resolutionDependedPath]);
-                cc.director.setContentScaleFactor(paths[i].scale);
+        if (paths.length > 1) {
+            for (var i = 0; i < paths.length; ++i) {
+                var sz = this._longSideToLongSide(paths[i].size, fs);
+                if ((sz.width >= current.width && sz.width < fs.width)
+                    || (sz.height >= current.height && sz.height < fs.height)) {
+                    current = sz;
+                    this._resolutionDependedPath = paths[i].path;
+                    cc.sys.isNative && jsb.fileUtils.setSearchResolutionsOrder([this._resolutionDependedPath]);
+                    cc.director.setContentScaleFactor(paths[i].scale);
+                }
             }
+        }
+        else {
+            this._resolutionDependedPath = paths[0].path;
+            cc.sys.isNative && jsb.fileUtils.setSearchResolutionsOrder([this._resolutionDependedPath]);
+            cc.director.setContentScaleFactor(paths[0].scale);
         }
     },
 
