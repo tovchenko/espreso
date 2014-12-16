@@ -34,12 +34,12 @@ es.makeMenuItemScalable = function(menuItem, scale) {
     };
 };
 
-es.MenuItem.createScalable = function(sprite, callback) {
+es.MenuItem.createScalable = function(sprite, callback, scale) {
     var item = new cc.MenuItemSprite();
     item.setNormalImage(sprite);
     item.setAnchorPoint(0.5, 0.5);
     item.setEnabled(true);
     callback && item.setCallback(callback);
-    es.makeMenuItemScalable(item);
+    es.makeMenuItemScalable(item, scale);
     return item;
 };
