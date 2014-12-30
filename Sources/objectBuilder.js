@@ -31,6 +31,7 @@ es.ObjectBuilder = cc.Class.extend({
     _dataCachedPaths: null,
     _fonts: null,
     _fontsCachedPaths: null,
+    _bmFonts: null,
     _jsonData: null,
 
     _resIter: null,
@@ -48,6 +49,7 @@ es.ObjectBuilder = cc.Class.extend({
         this._armatures = [];
         this._data = {};
         this._fonts = [];
+        this._bmFonts = {};
         this._jsonData = null;
         this._resIter = 0;
         this._typeIter = es.ResourceType.TEXTURE;
@@ -315,6 +317,11 @@ es.ObjectBuilder = cc.Class.extend({
             if (font && -1 === this._fonts.indexOf(font)) {
                 this._fonts.push(font);
             }
+            // bmFont
+            var bmFont = this._jsonData[objectName]['bmFont'];
+            if (bmFont) {
+                this._bmFonts[objectName] = bmFont;
+            }
             // animations
             var animator = this._jsonData[objectName]['animator'];
             if (animator && -1 === this._animationsCachedPaths.indexOf(animator)) {
@@ -374,6 +381,25 @@ es.ObjectBuilder = cc.Class.extend({
                 for (key in that._fonts)
                     if (that._fonts.hasOwnProperty(key))
                         that._fontsCachedPaths.push(es.manager.makeResourcePath(that._fonts[key]));
+
+                for (key in that._bmFonts)
+                    if (that._bmFonts.hasOwnProperty(key)) {
+                        var fnt = that._bmFonts[key];
+                        var fntName = fnt[cc.sys.language];
+                        if (!fntName) {
+                            var lKeys = Object.keys(fnt);
+                            if (lKeys.length)
+                                fntName = fnt[lKeys[0]];
+                        }
+
+                        if (fntName) {
+                            var fntFile = that._getFullUrl([fntName + '.fnt'], true);
+                            that._dataCachedPaths = that._dataCachedPaths.concat(fntFile);
+
+                            var atlasFile = that._getFullUrl([fntName + '.png'], true);
+                            that._texturesCachedPaths = that._texturesCachedPaths.concat(atlasFile);
+                        }
+                    }
             })
             .then(function() {
                 var list = [].concat(
