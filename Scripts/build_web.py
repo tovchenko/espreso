@@ -25,12 +25,13 @@ def copy_resources(app_root):
     os.mkdir(res_dir)
     scripts_dir = os.path.join(app_root, 'frameworks/espreso/Scripts')
     if os.path.isdir(scripts_dir):
-		subprocess.call([os.path.join(scripts_dir, 'activate_texturepacker.py')])
-		subprocess .call([os.path.join(scripts_dir, 'assemble_texture_atlases.py'), '-appRoot', app_root, '-fmt', 'png', '-lods', 'HD'])
-		subprocess.call([os.path.join(scripts_dir, 'process_assets.py'), '-appRoot', app_root, '-dst', res_dir, '-fmt', 'png', '-lods', 'HD', '-skipSrc'])
-		subprocess.call([os.path.join(scripts_dir, 'create_audiosprite.py'), app_root, res_dir])
-		subprocess.call([os.path.join(scripts_dir, 'convert_sounds.py'), app_root, res_dir, 'ogg'])
-		subprocess.call([os.path.join(scripts_dir, 'convert_sounds.py'), app_root, res_dir, 'mp3'])
+        subprocess.call([os.path.join(scripts_dir, 'process_glyph_designer.py'), '-src', os.path.join(app_root, 'assets/Fonts'), '-dst', res_dir, '-lods', 'HD'])
+        subprocess.call([os.path.join(scripts_dir, 'activate_texturepacker.py')])
+        subprocess.call([os.path.join(scripts_dir, 'assemble_texture_atlases.py'), '-appRoot', app_root, '-fmt', 'png', '-lods', 'HD'])
+        subprocess.call([os.path.join(scripts_dir, 'process_assets.py'), '-appRoot', app_root, '-dst', res_dir, '-fmt', 'png', '-lods', 'HD', '-skipSrc'])
+        subprocess.call([os.path.join(scripts_dir, 'create_audiosprite.py'), app_root, res_dir])
+        subprocess.call([os.path.join(scripts_dir, 'convert_sounds.py'), app_root, res_dir, 'ogg'])
+        subprocess.call([os.path.join(scripts_dir, 'convert_sounds.py'), app_root, res_dir, 'mp3'])
 
 
 def run():
