@@ -71,6 +71,11 @@ es.platform = {
         superRemoveSpriteFramesFn.call(cc.spriteFrameCache, es.manager.makeResourcePath(filePath, true));
     };
 
+    var superInitWithStringFn = cc.LabelBMFont.prototype.initWithString;
+    cc.LabelBMFont.prototype.initWithString = function (str, fntFile, width, alignment, imageOffset) {
+        superInitWithStringFn.call(this, str, es.manager.makeResourcePath(fntFile, true), width, alignment, imageOffset)
+    };
+
     var superSetTexParametersFn = cc.Texture2D.prototype.setTexParameters;
     cc.Texture2D.prototype.setTexParameters = function(params) {
         if (cc.sys.isNative) {
