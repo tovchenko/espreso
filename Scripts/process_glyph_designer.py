@@ -28,10 +28,9 @@ def run():
 	glyphFiles = []
 	for file in os.listdir(args.src):
 		if os.path.splitext(file)[1] == '.GlyphProject':
-			print os.path.splitext(file)[0]
 			glyphFiles.append(os.path.splitext(file)[0])
 
-	print 'publish bmFont: ', glyphFiles
+	print 'Publish bmFont: ', glyphFiles
 
 	for file in glyphFiles:
 		print '  ', file
