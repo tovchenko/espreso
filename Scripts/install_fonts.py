@@ -11,6 +11,8 @@ def run():
 	parser.add_argument('-src')
 	args = parser.parse_args()
 
+	if not os.path.exists(args.src): return
+
 	fontFiles = []
 	for file in os.listdir(args.src):
 		if os.path.splitext(file)[1] == '.ttf':

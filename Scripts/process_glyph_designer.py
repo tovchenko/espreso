@@ -13,6 +13,8 @@ def run():
 	parser.add_argument('-lods', nargs='*', default=['HDR', 'HD', 'SD'])
 	args = parser.parse_args()
 
+	if not os.path.exists(args.src): return
+
 	dstSD = dstHD = dstHDR = None
 	for lod in args.lods:
 		if lod == 'SD':
