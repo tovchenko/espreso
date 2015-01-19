@@ -37,7 +37,7 @@ es.platform = {
                 return nameWithoutExtension + '.' + this._iosSoundExt;
             }
         } else {
-            return nameWithoutExtension + '.' + this._webSoundExt[1];
+            return nameWithoutExtension + '.' + this._webSoundExt[0];
         }
     }
 };
