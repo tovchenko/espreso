@@ -182,7 +182,7 @@ es.ObjectBuilder = cc.Class.extend({
 
             for (var snd in sounds) {
                 if (sounds.hasOwnProperty(snd)) {
-                    var sndName = es.manager.makeResourcePath(es.platform.soundFileName(sounds[snd]['src']));
+                    var sndName = es.platform.soundFileName(sounds[snd]['src']);
                     com.addEffect(snd, sndName, sounds[snd]['loop'], sounds[snd]['volume']);
                 }
             }
@@ -198,7 +198,7 @@ es.ObjectBuilder = cc.Class.extend({
 
             for (snd in music) {
                 if (music.hasOwnProperty(snd)) {
-                    var musName = es.manager.makeResourcePath(es.platform.soundFileName(music[snd]['src']));
+                    var musName = es.platform.soundFileName(music[snd]['src']);
                     com.addMusic(snd, musName, music[snd]['loop'], music[snd]['volume']);
                 }
             }
@@ -364,13 +364,11 @@ es.ObjectBuilder = cc.Class.extend({
                 for (var key in that._sounds)
                     if (that._sounds.hasOwnProperty(key))
                         that._soundsCachedPaths.push(es.platform.soundFileName(that._sounds[key]['src']));
-                that._soundsCachedPaths = that._getFullUrl(that._soundsCachedPaths);
 
                 that._musicCachedPaths = [];
                 for (key in that._music)
                     if (that._music.hasOwnProperty(key))
                         that._musicCachedPaths.push(es.platform.soundFileName(that._music[key]['src']));
-                that._musicCachedPaths = that._getFullUrl(that._musicCachedPaths);
 
                 that._dataCachedPaths = [];
                 for (key in that._data)
