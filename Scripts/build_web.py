@@ -30,7 +30,7 @@ def copy_resources(app_root):
         subprocess.call([os.path.join(scripts_dir, 'activate_texturepacker.py')])
         subprocess.call([os.path.join(scripts_dir, 'assemble_texture_atlases.py'), '-appRoot', app_root, '-fmt', 'png', '-lods', 'HD'])
         subprocess.call([os.path.join(scripts_dir, 'process_assets.py'), '-appRoot', app_root, '-dst', res_dir, '-fmt', 'png', '-lods', 'HD', '-skipSrc'])
-        subprocess.call([os.path.join(scripts_dir, 'create_audiosprite.py'), app_root, res_dir])
+        # subprocess.call([os.path.join(scripts_dir, 'create_audiosprite.py'), app_root, res_dir])
         subprocess.call([os.path.join(scripts_dir, 'convert_sounds.py'), app_root, res_dir, 'ogg'])
         subprocess.call([os.path.join(scripts_dir, 'convert_sounds.py'), app_root, res_dir, 'mp3'])
 
