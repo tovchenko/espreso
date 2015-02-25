@@ -29,11 +29,11 @@ es.PopupManager = cc.Class.extend({
         var p;
         popup = popup || ((p = _.last(this._activePopups)) && p.popup);
         if (!popup)
-            throw new Error('Trying to dismiss an undefined popup!');
+            return null;
 
         var object = _.find(this._activePopups, function(item) { return item.popup === popup; });
         if (!object)
-            throw new Error('Trying to run transition for disconnected popup!');
+            return null;
 
         var deferred = Q.defer();
         var that = this;
